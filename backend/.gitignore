@@ -1,1 +1,10 @@
 build/
+/bin/
+
+# Eclipse
+.project
+.classpath
+.cache-main
+.settings/
+
+src/main/resources/assets/

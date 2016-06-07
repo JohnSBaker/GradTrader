@@ -1,0 +1,41 @@
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.3"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "application"
+apply plugin: "com.github.johnrengelman.shadow"
+
+mainClassName = "gradtrader.App"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "io.dropwizard:dropwizard-core:0.9.2"
+    compile "io.dropwizard:dropwizard-assets:0.9.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+shadowJar {
+    from("../frontend/dist") {
+        into "assets"
+    }
+    archiveName = "gradtrader.jar"
+    mergeServiceFiles()
+}
+
+run {
+    main mainClassName
+    args "server"
+    args "config.yml"
+}
+
+jar.dependsOn(":frontend:assemble")
+shadowJar.dependsOn(":frontend:assemble")

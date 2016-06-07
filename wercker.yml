@@ -1,0 +1,32 @@
+box: rsillem/hackathon:latest
+build:
+  steps:
+    - script:
+      name: backend test
+      code: |
+        chmod +x gradlew
+        ./gradlew --project-cache-dir=$WERCKER_CACHE_DIR :backend:test
+    - script:
+      name: frontend install
+      code: |
+        cd frontend
+        mkdir -p "$WERCKER_CACHE_DIR/npm"
+        npm config set cache "$WERCKER_CACHE_DIR/npm"
+        npm install
+    - script:
+      name: frontend lint
+      code: |
+        cd frontend
+        npm run lint
+    - script:
+      name: frontend test
+      code: |
+        cd frontend
+        npm test
+deploy:
+  steps:
+    - heroku-deploy:
+        key: $HEROKU_KEY
+        key-name: DEPLOY_KEY
+        user: $HEROKU_USER
+        app-name: $HEROKU_APP_NAME

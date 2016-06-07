@@ -2,5 +2,10 @@
 node_modules/
 /bin/
 npm-debug.log
-
 dist/
+
+# Eclipse
+.project
+.classpath
+.cache-main
+.settings/

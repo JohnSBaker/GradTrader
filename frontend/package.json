@@ -7,9 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server",
-    "bundle": "webpack",
+    "test": "echo \"Error: no test specified\"",
+    "start": "webpack-dev-server --config webpack.dev.config.js",
+    "bundle": "webpack --config webpack.dev.config.js",
+    "bundle-prod": "webpack -p --config webpack.prod.config.js",
     "lint": "eslint src/. --ext .js,.jsx"
   },
   "author": "",

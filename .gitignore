@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -12,13 +11,18 @@
 hs_err_pid*
 
 # Gradle
-.gradle
+.gradle/
 build/
 
 # Eclipse
 .project
+.classpath
 .cache-main
 .settings/
+
+# Intellij
+.idea/
+**/*.iml
 
 # Frontend
 node_modules/
