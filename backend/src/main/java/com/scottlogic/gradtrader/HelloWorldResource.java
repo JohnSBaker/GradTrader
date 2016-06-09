@@ -1,4 +1,4 @@
-package gradtrader;
+package com.scottlogic.gradtrader;
 
 import com.google.common.base.Optional;
 import com.codahale.metrics.annotation.Timed;

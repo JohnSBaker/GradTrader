@@ -1,4 +1,4 @@
-package gradtrader.price;
+package com.scottlogic.gradtrader.price;
 
 public interface PriceGenerator{
 

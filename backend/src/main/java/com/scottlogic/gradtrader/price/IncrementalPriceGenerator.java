@@ -1,4 +1,4 @@
-package gradtrader.price;
+package com.scottlogic.gradtrader.price;
 
 import com.google.common.util.concurrent.AtomicDouble;
 

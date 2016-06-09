@@ -1,4 +1,4 @@
-package gradtrader;
+package com.scottlogic.gradtrader;
 
 import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;

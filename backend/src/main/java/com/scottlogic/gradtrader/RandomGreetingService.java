@@ -1,4 +1,4 @@
-package gradtrader;
+package com.scottlogic.gradtrader;
 
 import javax.inject.Singleton;
 import java.util.Random;

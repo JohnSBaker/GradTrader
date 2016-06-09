@@ -1,4 +1,4 @@
-package gradtrader.websockets;
+package com.scottlogic.gradtrader.websockets;
 
 import org.atmosphere.config.service.AtmosphereHandlerService;
 import org.atmosphere.cpr.AtmosphereResponse;

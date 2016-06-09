@@ -1,4 +1,4 @@
-package gradtrader;
+package com.scottlogic.gradtrader;
 
 import com.codahale.metrics.health.HealthCheck;
 
