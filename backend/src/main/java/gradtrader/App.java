@@ -55,7 +55,7 @@ public class App extends Application<GradTraderConfiguration> {
 	    servlet.framework().addInitParameter(ApplicationConfig.WEBSOCKET_SUPPORT, "true");
 
 	    ServletRegistration.Dynamic servletHolder = environment.servlets().addServlet("WSService", servlet);
-	    servletHolder.addMapping("/websockets/*");
+	    servletHolder.addMapping("/api/ws/*");
     }
 
 }

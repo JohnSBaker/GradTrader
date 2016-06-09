@@ -13,7 +13,7 @@ import java.io.IOException;
 
 
 @Path("/")
-@AtmosphereHandlerService(path = "/websockets",
+@AtmosphereHandlerService(path = "/api/ws/echo",
         broadcasterCache = UUIDBroadcasterCache.class,
         interceptors = {AtmosphereResourceLifecycleInterceptor.class,
                 BroadcastOnPostAtmosphereInterceptor.class,
@@ -22,7 +22,7 @@ import java.io.IOException;
         })
 public class WebSocketService extends OnMessage<String> {
     //private final ObjectMapper mapper = new ObjectMapper();
- 
+
     @Override
     public void onMessage(AtmosphereResponse response, String message) throws IOException {
         //response.write(mapper.writeValueAsString(mapper.readValue(message, User.class)));
