@@ -1,0 +1,26 @@
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs
+hs_err_pid*
+
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+.project
+.classpath
+.cache-main
+.settings/
+
+# Intellij
+.idea/
+**/*.iml
+
+# Frontend
+node_modules/
+/bin/
