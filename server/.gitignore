@@ -1,0 +1,16 @@
+build/
+/bin/
+
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+.project
+.classpath
+.cache-main
+.settings/
+
+# Intellij
+.idea/
+*.iml

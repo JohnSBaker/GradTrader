@@ -1,0 +1,4 @@
+plugins {
+    id "base"
+    id "com.moowork.node" version "0.12"
+}
