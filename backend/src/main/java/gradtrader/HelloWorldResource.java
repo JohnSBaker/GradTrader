@@ -9,15 +9,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
+import javax.inject.Inject;
 
 @Path("/helloworld")
 @Produces(MediaType.APPLICATION_JSON)
-public class HelloWorldResource { 
+public class HelloWorldResource {
     private final String template;
     private final String defaultName;
     private final AtomicLong counter;
+    private final GreetingService greetingService;
 
-    public HelloWorldResource(String template, String defaultName) {
+    public HelloWorldResource(GreetingService gs, String template, String defaultName) {
+        this.greetingService = gs;
         this.template = template;
         this.defaultName = defaultName;
         this.counter = new AtomicLong();
@@ -26,7 +29,7 @@ public class HelloWorldResource {
     @GET
     @Timed
     public Greeting sayHello(@QueryParam("name") Optional<String> name) {
-        final String value = String.format(template, name.or(defaultName));
+        final String value = greetingService.createGreeting(name.or(defaultName));
         return new Greeting(counter.incrementAndGet(), value);
     }
 }
