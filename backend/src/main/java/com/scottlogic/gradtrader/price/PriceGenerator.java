@@ -1,7 +1,7 @@
 package com.scottlogic.gradtrader.price;
 
-public interface PriceGenerator{
+import java.util.concurrent.Callable;
 
-  public Price generate();
+public interface PriceGenerator extends Callable<Price>{
 
 }

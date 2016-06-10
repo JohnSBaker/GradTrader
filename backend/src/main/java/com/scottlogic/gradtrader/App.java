@@ -5,12 +5,19 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import org.atmosphere.cpr.AtmosphereServlet;
-import org.atmosphere.cpr.ApplicationConfig;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 import javax.servlet.ServletRegistration;
+
+import org.atmosphere.cpr.ApplicationConfig;
+import org.atmosphere.cpr.AtmosphereServlet;
+import org.atmosphere.cpr.DefaultBroadcaster;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
+import com.scottlogic.gradtrader.price.PriceGenerator;
 
 public class App extends Application<GradTraderConfiguration> {
 
@@ -56,6 +63,18 @@ public class App extends Application<GradTraderConfiguration> {
 
 	    ServletRegistration.Dynamic servletHolder = environment.servlets().addServlet("WSService", servlet);
 	    servletHolder.addMapping("/api/ws/*");
+	    
+	    //TODO: guice 
+	    //PriceGenerator gbpusdPriceGenerator = new IncrementalPriceGenerator("GBPUSD", 1.0, 2.0, 0.2, 0.02);
+	    
+	    //BroadcasterFactory factory = DefaultBroadcasterFactory.getDefault();
+	    //Broadcaster broadcaster = factory.lookup("/api/ws/price/gbpusd/");
+	    
+	    //DefaultBroadcaster broadcaster = new DefaultBroadcaster();
+	    //Future<Object> future = broadcaster.scheduleFixedBroadcast(gbpusdPriceGenerator, 0, 10, TimeUnit.SECONDS);
+	    //"/api/ws/price/gbpusd",
+	    
+	    
     }
 
 }
