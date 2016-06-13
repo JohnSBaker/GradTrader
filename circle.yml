@@ -1,0 +1,13 @@
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: grad-trader
+machine:
+  java:
+      version: openjdk8
+dependencies:
+  override:
+    - chmod +x gradlew
+  cache_directories:
+    - ~/.gradle
