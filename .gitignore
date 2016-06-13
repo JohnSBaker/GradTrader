@@ -19,7 +19,7 @@ build/
 
 # Intellij
 .idea/
-**/*.iml
+*.iml
 
 # Frontend
 node_modules/
