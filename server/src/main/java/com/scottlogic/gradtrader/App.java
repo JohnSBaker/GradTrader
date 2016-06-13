@@ -12,7 +12,9 @@ import javax.servlet.ServletRegistration;
 
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
-import org.atmosphere.cpr.DefaultBroadcaster;
+import org.atmosphere.cpr.Broadcaster;
+import org.atmosphere.cpr.BroadcasterFactory;
+import org.atmosphere.cpr.DefaultBroadcasterFactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -63,17 +65,6 @@ public class App extends Application<GradTraderConfiguration> {
 
 	    ServletRegistration.Dynamic servletHolder = environment.servlets().addServlet("WSService", servlet);
 	    servletHolder.addMapping("/api/ws/*");
-
-	    //TODO: guice
-	    //PriceGenerator gbpusdPriceGenerator = new IncrementalPriceGenerator("GBPUSD", 1.0, 2.0, 0.2, 0.02);
-
-	    //BroadcasterFactory factory = DefaultBroadcasterFactory.getDefault();
-	    //Broadcaster broadcaster = factory.lookup("/api/ws/price/gbpusd/");
-
-	    //DefaultBroadcaster broadcaster = new DefaultBroadcaster();
-	    //Future<Object> future = broadcaster.scheduleFixedBroadcast(gbpusdPriceGenerator, 0, 10, TimeUnit.SECONDS);
-	    //"/api/ws/price/gbpusd",
-
 
     }
 
