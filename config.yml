@@ -1,3 +1,14 @@
+logging:
+  level: WARN
+  loggers:
+    io.dropwizard: WARN
+    com.scottlogic: DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+      logFormat: "%d %p %C %L %m%n"
 server:
   type: simple
   rootPath: /api/*
@@ -6,3 +17,5 @@ server:
   connector:
     type: http
     port: 8080
+template: Hello, %s!!!
+defaultName: GradTrader

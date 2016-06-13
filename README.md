@@ -1,16 +1,3 @@
-## GradTrader
-
-A proof-of-concept FX trading application for Scott Logic grad week.
-
-###### Clients:
-* desktop and mobile:
- * view live (mocked) Price feeds for FX pairs
- * submit RFQs
- * place Trades
- * view Trade list
-* desktop only:
- * Price history chart
-
 ###### Server:
 * Web Sockets:
  * live (mocked) Price feeds
