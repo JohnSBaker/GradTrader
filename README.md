@@ -17,7 +17,7 @@
 * Guice - Java dependency injection
 * Atmosphere - web sockets
 * MongoDB - NoSQL persistence
-* Log4J - logging
+* SLF4J and Logback - logging
 * JUnit - testing
 
 ###### Client

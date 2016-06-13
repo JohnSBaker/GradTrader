@@ -3,7 +3,9 @@ package com.scottlogic.gradtrader.websockets;
 import java.io.IOException;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
+import org.apache.log4j.Logger;
 import org.atmosphere.cache.UUIDBroadcasterCache;
 import org.atmosphere.client.TrackMessageSizeInterceptor;
 import org.atmosphere.config.service.AtmosphereHandlerService;
@@ -18,8 +20,8 @@ import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
 import com.scottlogic.gradtrader.price.PriceGenerator;
 
 
-@Path("/")
-@AtmosphereHandlerService(path = "/api/ws/echo",
+@Path("/api/ws/echo")
+@AtmosphereHandlerService(path = "/",
         broadcasterCache = UUIDBroadcasterCache.class,
         interceptors = {AtmosphereResourceLifecycleInterceptor.class,
                 BroadcastOnPostAtmosphereInterceptor.class,
@@ -27,19 +29,11 @@ import com.scottlogic.gradtrader.price.PriceGenerator;
                 HeartbeatInterceptor.class
         })
 public class WebSocketService extends OnMessage<String> {
-    private final ObjectMapper mapper = new ObjectMapper();
 
-	PriceGenerator pg = new IncrementalPriceGenerator("gbpusd", 1.0, 2.0, 0.2, 0.02);
-	
-    @Override
+    Logger logger = Logger.getLogger(WebSocketService.class);
+    
+	@Override
     public void onMessage(AtmosphereResponse response, String message) throws IOException {
-        //response.write(mapper.writeValueAsString(mapper.readValue(message, User.class)));
-    	response.write(message);
-    	try {
-			response.write(mapper.writeValueAsString(pg.call()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	response.write("Echo: " + message);
     }
 }
