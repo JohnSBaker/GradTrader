@@ -7,16 +7,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-import javax.ws.rs.PathParam;
-import javax.xml.crypto.Data;
 
 import org.atmosphere.config.service.WebSocketHandlerService;
-import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Broadcaster;
 import org.atmosphere.cpr.BroadcasterFactory;
 import org.atmosphere.util.SimpleBroadcaster;
 import org.atmosphere.websocket.WebSocket;
 import org.atmosphere.websocket.WebSocketHandlerAdapter;
+import org.atmosphere.websocket.WebSocketProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,12 +30,14 @@ public class PriceFeed extends WebSocketHandlerAdapter {
     private final ObjectMapper mapper = new ObjectMapper();
     
     private static double priceStart = 0.0;
-   
+    private static int nextClientId = 1;
+       
 	Map<String,PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>(); 
+	
+	Map<String, String> clients = new LinkedHashMap<String, String>();
 	
 	public PriceFeed(){
 		super();
-		logger.debug("PriceFeed created");
 	}
     
 	@Inject
@@ -49,10 +49,10 @@ public class PriceFeed extends WebSocketHandlerAdapter {
     		String pathInfo = webSocket.resource().getRequest().getPathInfo();
     		String[] decodedPath = pathInfo.split("/");
     		String pair = decodedPath[decodedPath.length - 1];
-    		
+    		clients.put(webSocket.uuid(), "Client-"+nextClientId++);
 	    	Broadcaster broadcaster = factory.lookup("/api/ws/price/" + pair +"/", true); 
 	        webSocket.resource().setBroadcaster(broadcaster);
-	        
+	        logger.debug("Client {} on socket {} subscribing to {}", clients.get(webSocket.uuid()), webSocket.uuid(), pair);
 	        PriceGenerator pg = priceGenerators.get(pair);
 	        if (pg==null){
 	        	logger.debug("Generate prices for " + pair);
@@ -69,9 +69,15 @@ public class PriceFeed extends WebSocketHandlerAdapter {
     }
 
     public void onTextMessage(WebSocket webSocket, String message) throws IOException {
-        AtmosphereResource r = webSocket.resource();
-        Broadcaster b = r.getBroadcaster();
-        b.broadcast(mapper.writeValueAsString(mapper.readValue(message, Data.class)));
+    	logger.debug("Client {} on socket {} says: {}", clients.get(webSocket.uuid()), webSocket.uuid(), message);
+    }
+    
+    public void onClose(WebSocket webSocket){
+    	logger.debug("Client {} closed socket {} ", clients.get(webSocket.uuid()), webSocket.uuid());
+    }
+    
+    public void onError(WebSocket webSocket,  WebSocketProcessor.WebSocketException t){
+    	logger.debug("Client {} on socket {}: error: ", clients.get(webSocket.uuid()), webSocket.uuid(), t);
     }
     
 }
