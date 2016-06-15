@@ -1,33 +1,26 @@
 package com.scottlogic.gradtrader;
 
 import io.dropwizard.Configuration;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GradTraderConfiguration extends Configuration {
-    @NotEmpty
-    private String template;
 
     @NotEmpty
-    private String defaultName = "GradTrader";
+    public List<String> validPairs;
+    
+    @JsonProperty
+	public List<String> getValidPairs() {
+		return validPairs;
+	}
 
     @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
-
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
-    }
+	public void setValidPairs(List<String> validPairs) {
+		this.validPairs = validPairs;
+	}
+    
 }

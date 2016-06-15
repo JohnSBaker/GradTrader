@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -22,21 +21,19 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scottlogic.gradtrader.GradTraderConfiguration;
 import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
-import com.scottlogic.gradtrader.price.PriceGenerator;
 
-@WebSocketHandlerService(path = "/api/ws/prices/live/", broadcaster = SimpleBroadcaster.class)
+@WebSocketHandlerService(path = "/api/ws/price/live/", broadcaster = SimpleBroadcaster.class)
 public class LivePriceFeed extends WebSocketHandlerAdapter {
 
-    Logger logger = LoggerFactory.getLogger(PriceFeed.class);
+    Logger logger = LoggerFactory.getLogger(LivePriceFeed.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
     
     private static double priceStart = 0.0;
     private static int nextClientId = 1;
        
-	private Map<String,PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>(); 
-	
 	private static List<String> validPairs = null; 
 	
 	// websocket uuid to client id

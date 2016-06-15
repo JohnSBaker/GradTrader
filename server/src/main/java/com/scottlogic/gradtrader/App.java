@@ -5,21 +5,10 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
 import javax.servlet.ServletRegistration;
 
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
-import org.atmosphere.cpr.Broadcaster;
-import org.atmosphere.cpr.BroadcasterFactory;
-import org.atmosphere.cpr.DefaultBroadcasterFactory;
-
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
-import com.scottlogic.gradtrader.price.PriceGenerator;
 
 public class App extends Application<GradTraderConfiguration> {
 
@@ -39,20 +28,14 @@ public class App extends Application<GradTraderConfiguration> {
     @Override
     public void run(GradTraderConfiguration configuration, Environment environment) {
 
-      Injector injector = Guice.createInjector(new AppInjector());
+      //Injector injector = Guice.createInjector(new AppInjector());
 
-      GreetingService greetingService = injector.getInstance(GreetingService.class);
+      PairResource pairResource = new PairResource(configuration.getValidPairs());
 
-      HelloWorldResource resource = new HelloWorldResource(
-        greetingService,
-        configuration.getTemplate(),
-        configuration.getDefaultName()
-      );
-
-      final TemplateHealthCheck healthCheck =
-             new TemplateHealthCheck(configuration.getTemplate());
-      environment.healthChecks().register("template", healthCheck);
-      environment.jersey().register(resource);
+      final PairsHealthCheck pairsHealthCheck = new PairsHealthCheck(configuration.getValidPairs());
+      environment.healthChecks().register("pairs", pairsHealthCheck);
+      
+      environment.jersey().register(pairResource);
 
       runWebSocketServer(environment);
     }
