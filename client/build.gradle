@@ -2,3 +2,31 @@ plugins {
     id "base"
     id "com.moowork.node" version "0.12"
 }
+
+node {
+    download = true
+}
+
+task bundleDev(type: NpmTask) {
+  //runs "npm run bundle"
+  args = ["run", "bundle"]
+}
+
+task bundleProd(type: NpmTask) {
+  //runs "npm run bundle-prod"
+  args = ["run", "bundle-prod"]
+}
+
+// runs webpack dev server
+task start(type: NpmTask) {
+  args = ["start"]
+}
+
+// runs frontend tests
+task test(type: NpmTask) {
+    args = ["test"]
+}
+
+bundleProd.dependsOn(npm_install)
+bundleDev.dependsOn(npm_install)
+assemble.dependsOn(bundleProd)
