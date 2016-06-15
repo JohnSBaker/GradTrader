@@ -9,19 +9,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Price{
 
+	private final long time;
 	private final double bid;
 	private final double ask;
+	private final double mid;
 	private static DecimalFormat format = new DecimalFormat("####0.000");
 	
-	public Price(String bid, String ask) throws ParseException{
+	public Price(Long time, String bid, String ask) throws ParseException{
+		this.time = time;
 		this.bid = (Double)format.parse(bid);
-		this.ask = (Double)format.parse(ask);		
+		this.ask = (Double)format.parse(ask);
+		this.mid = (this.bid + this.ask) / 2.0;
 	}
 	
 	@JsonCreator
-	public Price(@JsonProperty("bid") double bid, @JsonProperty("ask") double ask){
+	public Price(@JsonProperty("time") long time, @JsonProperty("bid") double bid, @JsonProperty("ask") double ask){
+		this.time = time;
 		this.bid = bid;
 		this.ask = ask;
+		this.mid = (bid + ask) / 2.0;
+	}
+	
+	public Long getTime(){
+		return time;
 	}
 	
 	public Double getBid() {
@@ -33,6 +43,11 @@ public class Price{
 	}
 	
 	@JsonIgnore
+	public Double getMid() {
+		return mid; //format.format(mid);
+	}
+	
+	@JsonIgnore
 	public double getBidDbl(){
 		return bid;
 	}
@@ -40,6 +55,11 @@ public class Price{
 	@JsonIgnore
 	public double getAskDbl(){
 		return ask;
+	}
+	
+	@JsonIgnore
+	public double getMidDbl(){
+		return mid;
 	}
 	
 	@JsonIgnore

@@ -9,9 +9,16 @@ import javax.servlet.ServletRegistration;
 
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 
 public class App extends Application<GradTraderConfiguration> {
 
+    Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -28,8 +35,12 @@ public class App extends Application<GradTraderConfiguration> {
     @Override
     public void run(GradTraderConfiguration configuration, Environment environment) {
 
-      //Injector injector = Guice.createInjector(new AppInjector());
+      Injector injector = Guice.createInjector(new AppInjector());
 
+      logger.debug("Create PriceHistory store...");
+
+      //PriceHistoryStore priceHistoryStore = injector.getInstance(PriceHistoryStore.class);
+      
       PairResource pairResource = new PairResource(configuration.getValidPairs());
 
       final PairsHealthCheck pairsHealthCheck = new PairsHealthCheck(configuration.getValidPairs());

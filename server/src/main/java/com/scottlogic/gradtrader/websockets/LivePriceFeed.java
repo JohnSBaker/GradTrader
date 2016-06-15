@@ -21,8 +21,10 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scottlogic.gradtrader.GradTraderConfiguration;
 import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
+import com.scottlogic.gradtrader.price.PriceGenerator;
+import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
+import com.scottlogic.gradtrader.price.history.RedisPriceHistoryStore;
 
 @WebSocketHandlerService(path = "/api/ws/price/live/", broadcaster = SimpleBroadcaster.class)
 public class LivePriceFeed extends WebSocketHandlerAdapter {
@@ -54,6 +56,9 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
 		logger.debug("Init valid pairs");
 		validPairs = new LinkedList<String>();
 		broadcasters = new LinkedHashMap<String, Broadcaster>();
+		
+		PriceHistoryStore store = new RedisPriceHistoryStore();
+		
 		String[] pairs = new String[]{"eurusd","eurgbp","gbpusd"};//,"eurjpy","gbpjpy","usdjpy"};
 		for (String pair: pairs){
 			try{
@@ -61,9 +66,10 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
 	    		Broadcaster bc = factory.get(pair);
 	    		broadcasters.put(pair,  bc);
 	    		priceStart = priceStart + 1.0;
-	        	bc.scheduleFixedBroadcast(
-	        		new IncrementalPriceGenerator(pair, priceStart, priceStart + 1.0, 0.2, 0.02),
-	        		0, 5, TimeUnit.SECONDS);
+	    		
+	    		PriceGenerator pg = new IncrementalPriceGenerator(pair, priceStart, priceStart + 1.0, 0.2, 0.02, 0.0001);
+	    		pg.setPriceHistoryStore(store);
+	        	bc.scheduleFixedBroadcast(pg, 0, 5, TimeUnit.SECONDS);
         	logger.debug("Added broadcaster for {}", pair);
 			} catch (Exception e){
 				logger.debug("Exception creating broadcaster ", e);
