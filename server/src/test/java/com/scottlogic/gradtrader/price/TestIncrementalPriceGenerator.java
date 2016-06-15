@@ -1,14 +1,17 @@
 package com.scottlogic.gradtrader.price;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.junit.Assert.*;
+import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 
 //@Ignore
 public class TestIncrementalPriceGenerator{
@@ -24,6 +27,7 @@ public class TestIncrementalPriceGenerator{
   @Before
   public void setUp(){
 	  target = new IncrementalPriceGenerator(pair, 1.0, 2.0, 0.2, 0.02, 0.0001);
+	  target.setPriceHistoryStore(Mockito.mock(PriceHistoryStore.class));
   }
 
   @Test
