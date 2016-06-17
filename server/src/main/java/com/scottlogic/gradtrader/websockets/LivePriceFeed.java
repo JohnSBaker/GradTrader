@@ -2,12 +2,9 @@ package com.scottlogic.gradtrader.websockets;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 import org.atmosphere.config.service.WebSocketHandlerService;
 import org.atmosphere.cpr.Broadcaster;
@@ -21,10 +18,12 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.Inject;
+import com.scottlogic.gradtrader.AppInjector;
+import com.scottlogic.gradtrader.GradTraderConfiguration;
 import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
 import com.scottlogic.gradtrader.price.PriceGenerator;
 import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
-import com.scottlogic.gradtrader.price.history.RedisPriceHistoryStore;
 
 @WebSocketHandlerService(path = "/api/ws/price/live/", broadcaster = SimpleBroadcaster.class)
 public class LivePriceFeed extends WebSocketHandlerAdapter {
@@ -40,12 +39,15 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
 	
 	// websocket uuid to client id
 	private Map<String, WebSocketClient> clients = new LinkedHashMap<String, WebSocketClient>();
-
-	// currency pair to broadcaster
-	private Map<String, Broadcaster> broadcasters;
 	
 	@Inject
 	private BroadcasterFactory factory;
+	
+	@Inject
+	private PriceHistoryStore store;
+	
+	@Inject
+	GradTraderConfiguration configuration;
 	
 	public LivePriceFeed(){
 		super();
@@ -54,23 +56,17 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
 	
 	private void init(){
 		logger.debug("Init valid pairs");
-		validPairs = new LinkedList<String>();
-		broadcasters = new LinkedHashMap<String, Broadcaster>();
+		validPairs = AppInjector.getConfiguration().getValidPairs();
 		
-		PriceHistoryStore store = new RedisPriceHistoryStore();
-		
-		String[] pairs = new String[]{"eurusd","eurgbp","gbpusd"};//,"eurjpy","gbpjpy","usdjpy"};
-		for (String pair: pairs){
+		for (String pair: validPairs){
 			try{
-				validPairs.add(pair);
 	    		Broadcaster bc = factory.get(pair);
-	    		broadcasters.put(pair,  bc);
 	    		priceStart = priceStart + 1.0;
 	    		
 	    		PriceGenerator pg = new IncrementalPriceGenerator(pair, priceStart, priceStart + 1.0, 0.2, 0.02, 0.0001);
 	    		pg.setPriceHistoryStore(store);
 	        	bc.scheduleFixedBroadcast(pg, 0, 5, TimeUnit.SECONDS);
-        	logger.debug("Added broadcaster for {}", pair);
+	        	logger.debug("Added broadcaster for {}", pair);
 			} catch (Exception e){
 				logger.debug("Exception creating broadcaster ", e);
 			}
@@ -88,6 +84,10 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
     		
     		ClientActionResponse response = new ClientActionResponse(newClientId, "connect", "", "success", "");
     		webSocket.resource().write(mapper.writeValueAsString(response));
+    		
+    		logger.debug("Socket open, broadcaster factory: {}", webSocket.resource().getAtmosphereConfig().getBroadcasterFactory());
+    		logger.debug("Socket open, object factory: {}", webSocket.resource().getAtmosphereConfig().getInitParameter("org.atmosphere.cpr.objectFactory"));
+    		
     	} catch (Exception e){
     		logger.error("PriceFeed error", e);
     	}
@@ -117,7 +117,7 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
     				if (validPairs.contains(subject)){
     					client.subscribe(subject);
     					try{
-    						Broadcaster bc = broadcasters.get(subject);
+    						Broadcaster bc = factory.lookup(subject);
     						if (bc.getAtmosphereResources().contains(webSocket.resource())){
 	        		    		sendResponse(webSocket, clientId, action, subject, "error", "already subscribed");
 		    					logger.debug("{} already subscribed to {}", clientId, subject);    							
@@ -139,7 +139,7 @@ public class LivePriceFeed extends WebSocketHandlerAdapter {
     				if (validPairs.contains(subject)){
     					client.unsubscribe(subject);
     					try{
-    						Broadcaster bc = broadcasters.get(subject);    						
+    						Broadcaster bc = factory.lookup(subject);
     						if (!bc.getAtmosphereResources().contains(webSocket.resource())){
             		    		sendResponse(webSocket, clientId, action, subject, "error", "not subscribed");
     	    					logger.debug("{} not subscribed to {}", client.getClientId(), subject);

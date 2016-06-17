@@ -1,26 +1,34 @@
 package com.scottlogic.gradtrader.price.history;
 
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.Pipeline;
 
+import com.google.inject.Singleton;
 import com.scottlogic.gradtrader.price.PairPrice;
 import com.scottlogic.gradtrader.price.Price;
 
+//@Singleton
 public class RedisPriceHistoryStore implements PriceHistoryStore{
 
     Logger logger = LoggerFactory.getLogger(RedisPriceHistoryStore.class);
     final JedisPool pool;
     
+//    private List<Integer> resolutions;
+//    private List<String> pairs;    
+//    private Map<String, Map<Integer, Candlestick>> candlesticks;
+    
 	public RedisPriceHistoryStore(){
 		
+	    logger.debug("Create RedisPriceHistoryStore");
 		pool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
 		
-	    logger.debug("Create RedisPriceHistoryStore");
 	    //Connecting to Redis server on localhost
 	    //jedis = new Jedis("localhost");
 	    //logger.debug("Connection to Redis server successful");
