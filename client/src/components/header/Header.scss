@@ -1,0 +1,44 @@
+@import "../../styles/modules/all";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-title-container {
+  display: flex;
+  margin-bottom: 6px;
+  color: $primary-white;
+  font-weight: $font-regular;
+  font-size: $font-m-4;
+
+  .logo,
+  .header-title {
+    padding-right: 4px;
+    align-items: flex-end;
+    display: flex;
+  }
+}
+
+.account {
+  color: $primary-blue;
+  margin-bottom: 15px;
+  display: flex;
+  font-size: $font-s-2;
+  font-weight: $font-light;
+
+  .account-settings,
+  .username,
+  .dropdown {
+    align-items: flex-end;
+    display: flex;
+  }
+
+  .account-settings {
+    margin-right: 15px;
+  }
+
+  .dropdown {
+    padding: 0 6px;
+  }
+}

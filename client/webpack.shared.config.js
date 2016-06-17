@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        include: path.resolve(__dirname, 'src/assets/styles/'),
+        exclude: /node_modules/,
         loader: 'style!css!sass',
       },
     ],

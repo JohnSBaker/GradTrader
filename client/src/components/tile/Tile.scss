@@ -1,0 +1,43 @@
+@import "../../styles/modules/all";
+@import "QuantitySelector";
+
+.tile {
+  margin-top: 12px;
+  padding: 15px 30px 21px;
+  width: 168px; //off by one px from ux designs
+  height: 182px;
+  background-color: $primary-dark-blue2;
+  color: $primary-white;
+
+  .pair {
+    text-align: center;
+    font-weight: $font-regular;
+    font-size: $font-s-3;
+    color: $primary-light-blue;
+
+    span {
+      padding: 0 4px;
+    }
+  }
+
+  .price-tickers {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .purchase-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    button {
+      background-color: $secondary-dark-blue;
+      border-color: $secondary-light-blue;
+      color: $primary-white;
+      font-weight: $font-regular;
+      font-size: $font-xs-1;
+      width: 76px;
+    }
+  }
+}

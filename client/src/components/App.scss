@@ -1,0 +1,19 @@
+@import "../styles/modules/all";
+
+#app {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 21px 18px;
+  display: flex;
+  flex-direction: column;
+  background-color: $primary-dark-blue;
+  font-family: $font-family;
+}
+
+.main-container {
+  display: flex;
+  margin-bottom: 27px;
+}

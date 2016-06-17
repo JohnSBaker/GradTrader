@@ -1,0 +1,47 @@
+@import "../../styles/modules/all";
+
+.price-ticker {
+  width: 76px;
+  display: flex;
+  text-align: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    .main {
+      width: 64px;
+      font-weight: $font-light;
+      font-size: $font-xl-2;
+      justify-content: flex-start;
+      line-height: 0.85;
+    }
+  }
+
+  .pip-delta {
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    width: 12px;
+
+    .delta {
+      font-size: 9px;
+
+      &.positive {
+        color: $tertiary-green;
+      }
+
+      &.negative {
+        color: $tertiary-red;
+      }
+
+      &.neutral {
+        color: $primary-white;
+      }
+    }
+
+    .pip {
+      font-size: $font-xs-1;
+    }
+  }
+}

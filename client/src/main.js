@@ -1,6 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
-import './assets/styles/main.scss';
+import App from './components/App';
+import { Provider } from 'react-redux';
+import store from './store/configureStore';
 import './index.html';
 
-render(<h1>hello GradTrader</h1>, document.getElementById('root'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

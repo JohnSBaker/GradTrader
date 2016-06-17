@@ -1,0 +1,19 @@
+.quantity-selector {
+  display: flex;
+  height: 21px;
+  margin-bottom: 21px;
+
+  input {
+    background-color: inherit;
+    font-weight: $font-light;
+    font-size: $font-xs-1;
+    width: 100%;
+  }
+
+  button {
+    background-color: inherit;
+    font-weight: $font-light;
+    font-size: $font-xs-2;
+    color: $primary-blue;
+  }
+}

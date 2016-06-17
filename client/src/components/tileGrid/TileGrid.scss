@@ -1,0 +1,11 @@
+@import "../../styles/modules/all";
+
+.tile-grid {
+  margin-right: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: $primary-dark-blue;
+  max-width: 708px;
+}
