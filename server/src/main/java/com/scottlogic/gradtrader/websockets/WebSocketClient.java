@@ -7,18 +7,22 @@ import org.atmosphere.websocket.WebSocket;
 
 public class WebSocketClient {
 
-	private final String wsUuid;
 	private final String clientId;
+	private final WebSocket webSocket;
 	
 	private Set<String> pairSubscriptions = new LinkedHashSet<String>();
 	
 	public WebSocketClient(WebSocket webSocket, String clientId){
-		this.wsUuid = webSocket.uuid();
+		this.webSocket = webSocket;
 		this.clientId = clientId;
+	}
+
+	public WebSocket getWebSocket(){
+		return webSocket;
 	}
 	
 	public String getWsUuid() {
-		return wsUuid;
+		return webSocket.uuid();
 	}
 
 	public String getClientId() {

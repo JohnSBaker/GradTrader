@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GradTraderConfiguration extends Configuration {
 
     @NotEmpty
-    public List<String> validPairs;
+    private List<String> validPairs;
     
     @JsonProperty
 	public List<String> getValidPairs() {
