@@ -1,6 +1,6 @@
 deployment:
   staging:
-    branch: master
+    branch: development
     heroku:
       appname: grad-trader
 machine:
