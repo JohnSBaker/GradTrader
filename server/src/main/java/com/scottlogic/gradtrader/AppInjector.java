@@ -1,12 +1,11 @@
 package com.scottlogic.gradtrader;
 
-import org.atmosphere.cpr.BroadcasterFactory;
-import org.atmosphere.cpr.DefaultBroadcasterFactory;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.scottlogic.gradtrader.price.IncrementalPriceGenerator;
 import com.scottlogic.gradtrader.price.PriceGenerationService;
+import com.scottlogic.gradtrader.price.PriceGenerator;
 import com.scottlogic.gradtrader.price.PriceService;
 import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 import com.scottlogic.gradtrader.price.history.RedisPriceHistoryStore;
@@ -40,10 +39,9 @@ public class AppInjector extends AbstractModule {
     @Override
     protected void configure() {
         //bind interfaces to implementation classes
-        //bind(PriceGenerator.class).to(IncrementalPriceGenerator.class);
-        //bind(BroadcasterFactory.class).to(DefaultBroadcasterFactory.class);
-        bind(PriceHistoryStore.class).to(RedisPriceHistoryStore.class);
         bind(PriceService.class).to(PriceGenerationService.class);
+        //bind(PriceGenerator.class).to(IncrementalPriceGenerator.class);
+        bind(PriceHistoryStore.class).to(RedisPriceHistoryStore.class);
         //bind(BroadcasterFactory.class).to(DefaultBroadcasterFactory.class);
     }
 

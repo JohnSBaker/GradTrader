@@ -1,6 +1,8 @@
 package com.scottlogic.gradtrader.price;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -11,12 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.scottlogic.gradtrader.AppInjector;
-import com.scottlogic.gradtrader.GradTraderConfiguration;
 import com.scottlogic.gradtrader.SubscriptionException;
 import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 import com.scottlogic.gradtrader.websockets.WebSocketClient;
 
-public class PriceGenerationService implements PriceService{
+public class PriceGenerationService implements PriceService {
 
     Logger logger = LoggerFactory.getLogger(PriceGenerationService.class);
 	
@@ -24,9 +25,11 @@ public class PriceGenerationService implements PriceService{
 
 	private BroadcasterFactory factory;
 	
+	private Map<String, PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>();
+	
 	@Inject
 	private PriceHistoryStore store;
-	
+
 	private List<String> validPairs;
 	
 	public PriceGenerationService(){
@@ -73,5 +76,9 @@ public class PriceGenerationService implements PriceService{
 		}
 	}
 	
+	public String call() {
+		return "";
+	}	
+
 	
 }
