@@ -1,7 +1,13 @@
 package com.scottlogic.gradtrader.price.history;
 
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +16,11 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import com.google.inject.Singleton;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scottlogic.gradtrader.AppInjector;
+import com.scottlogic.gradtrader.GradTraderConfiguration;
+import com.scottlogic.gradtrader.PriceHistory;
 import com.scottlogic.gradtrader.price.PairPrice;
 import com.scottlogic.gradtrader.price.Price;
 
@@ -19,14 +29,28 @@ public class RedisPriceHistoryStore implements PriceHistoryStore{
 
     Logger logger = LoggerFactory.getLogger(RedisPriceHistoryStore.class);
     final JedisPool pool;
+    private final ObjectMapper mapper = new ObjectMapper();
     
-//    private List<Integer> resolutions;
-//    private List<String> pairs;    
-//    private Map<String, Map<Integer, Candlestick>> candlesticks;
+    private List<Integer> resolutions;
+    private List<String> pairs;    
+    private Map<String, Map<Integer, Candlestick>> candlesticks;
     
-	public RedisPriceHistoryStore(){
+    @Inject
+	public RedisPriceHistoryStore(GradTraderConfiguration config){
 		
-	    logger.debug("Create RedisPriceHistoryStore");
+    	logger.debug("Create RedisPriceHistoryStore");
+
+    	this.pairs = AppInjector.getConfiguration().getValidPairs();
+    	this.resolutions = AppInjector.getConfiguration().getPriceHistoryResolutions();
+    	
+    	logger.debug("{} pairs", pairs.size());
+    	logger.debug("{} resolutions", resolutions.size());
+    	
+    	candlesticks = new LinkedHashMap<String, Map<Integer, Candlestick>>();
+    	for (String pair: pairs){
+    		candlesticks.put(pair, new LinkedHashMap<Integer, Candlestick>());
+    	}
+
 		pool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
 		
 	    //Connecting to Redis server on localhost
@@ -35,47 +59,84 @@ public class RedisPriceHistoryStore implements PriceHistoryStore{
 	    //check whether server is running or not
 	    //logger.debug("Redis server is running: "+jedis.ping());
 	}
-	
-	public void addPrice(PairPrice pairPrice){
-		Jedis jedis = null;
-        try {
-        	jedis = pool.getResource();
+    
+    private Map<Integer, Candlestick> getPairCandlesticks(String pair){
+    	Map<Integer, Candlestick> map = candlesticks.get(pair);
+    	if (map==null){
+    		map = new LinkedHashMap<Integer, Candlestick>();
+    		candlesticks.put(pair, map);
+    	}
+    	return map;
+    }
+        
+    private void addPrice(PairPrice pairPrice, Integer resolution){
 			String pair = pairPrice.getPair();
 			Price price = pairPrice.getPrice();
-			Double mid = price.getMid(); 
-			int res = 10000;
 			long time = price.getTime();
-			Long resStart = time / res;
-			String minKey = String.format("pair:%1$s:res:%2$d:time:%3$d:min", pair, res, resStart);
-			String maxKey = String.format("pair:%1$s:res:%2$d:time:%3$d:max", pair, res, resStart);
-			String opnKey = String.format("pair:%1$s:res:%2$d:time:%3$d:opn", pair, res, resStart);
-			String clsKey = String.format("pair:%1$s:res:%2$d:time:%3$d:cls", pair, res, resStart);
-			logger.debug("redis close key: {}", clsKey); //threadsafety issue???[B cannot be cast to java.lang.Long
-			if (jedis.exists(clsKey)) { // todo: need to check for the resStart time
-				jedis.set(clsKey, mid.toString());
-				//TODO atomic
-				Double min = Double.valueOf(jedis.get(minKey));
-				Double max = Double.valueOf(jedis.get(minKey));
-				if (min > mid){
-					jedis.set(minKey, mid.toString());				
-				} else if (max < mid){
-					jedis.set(maxKey, mid.toString());				
-				}			
-			} else {
-				logger.debug("New price history record");
-				jedis.set(opnKey, mid.toString());
-				jedis.set(clsKey, mid.toString());
-				jedis.set(minKey, mid.toString());
-				jedis.set(maxKey, mid.toString());
-			}
-        } finally {
+
+			Map<Integer, Candlestick> pairCandlesticks = getPairCandlesticks(pair); 
+			Candlestick candlestick = pairCandlesticks.get(resolution);
+        	if (candlestick==null || candlestick.getEnd() < price.getTime()){
+    			Long resStart = (time / resolution) * resolution;
+            	if (candlestick!=null){
+            		Jedis jedis = null;
+                    try {
+                    	jedis = pool.getResource();
+	            		//Issue: store never has currently changing candlestick
+	            		//Sortedset got for zrange but must zadd, no zupdate by score
+	            		//Hashes would update how we want but can't be got by range
+	            		//If we want current candlesticks included, do we need to remove and replace every time? (overhead...)
+	            		//Or use list/set/hash but getting range will be the overhead
+	            		//Or get the history from Redis and append current ones from the maps here?
+	                	String key = String.format("pair:%1$s:res:%2$d", pair, resolution);
+	                	String candleJson = mapper.writeValueAsString(candlestick);
+	                	jedis.zadd(key, resStart, candleJson);            		
+                    } catch (JsonProcessingException e) {
+            			logger.error("Error processing candlestick: ", e);
+            		} finally {
+                    	if (jedis!=null){
+                    		jedis.close();
+                    	}
+                    }
+            	}
+        		candlestick = new Candlestick(resStart, resolution, price);
+        		pairCandlesticks.put(resolution, candlestick);
+        	} else {
+        		candlestick.update(price);
+        	}
+        	//logger.debug("Save JSON to Redis: {}", candleJson);
+        	
+			//String key = String.format("pair:%1$s:res:%2$d:time:%3$d", pair, resolution, resStart);
+        	//jedis.set(key, candleJson);
+    }
+	
+	public void addPrice(PairPrice pairPrice){
+		for (Integer resolution: resolutions){
+			addPrice(pairPrice, resolution);
+		}
+	}
+	
+	public PriceHistory getHistory(String pair, Integer resolution, Long start, Long end){
+		Jedis jedis = null;
+        try {        	
+        	jedis = pool.getResource();
+        	String key = String.format("pair:%1$s:res:%2$d", pair, resolution);        	
+        	Set<String> resultset = jedis.zrangeByScore(key, start, end);
+        	List<Candlestick> results = new LinkedList<Candlestick>();
+        	for (String candleJson: resultset){
+        		Candlestick cs = mapper.readValue(candleJson, Candlestick.class);
+        		results.add(cs);
+        	}
+        	return new PriceHistory(pair, resolution, start, end, results); 
+        } catch (IOException e) {
+			logger.error("Error getting price history: ", e);
+			return null;
+		} finally {
         	if (jedis!=null){
         		jedis.close();
         	}
         }
 	}
-	
-	
 	
 	
 	

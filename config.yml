@@ -22,3 +22,8 @@ validPairs:
   - eurusd
   - gbpusd
   - eurjpy
+priceHistoryResolutions:
+  - 10000
+  - 60000
+  - 300000
+  

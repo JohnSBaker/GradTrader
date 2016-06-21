@@ -27,11 +27,10 @@ public class TestIncrementalPriceGenerator{
   @Before
   public void setUp(){
 	  target = new IncrementalPriceGenerator(pair, 1.0, 2.0, 0.2, 0.02, 0.0001);
-	  target.setPriceHistoryStore(Mockito.mock(PriceHistoryStore.class));
   }
 
   @Test
-  public void testcall() throws JsonParseException, JsonMappingException, IOException{
+  public void testCall() throws JsonParseException, JsonMappingException, IOException{
 	  assertPrice(target.call(), 0.99, 1.01);
 	  assertPrice(target.call(), 1.19, 1.21);
 	  assertPrice(target.call(), 1.39, 1.41);

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 
-public class IncrementalPriceGenerator implements PriceGenerator{
+public class IncrementalPriceGenerator extends AbstractPriceGenerator{
 
   private final String pair; 
   private double min;
@@ -20,8 +20,6 @@ public class IncrementalPriceGenerator implements PriceGenerator{
   private double current;
   private final ObjectMapper mapper = new ObjectMapper();
 
-  private PriceHistoryStore historyStore;
-  
   Logger logger = LoggerFactory.getLogger(IncrementalPriceGenerator.class);
   
   public IncrementalPriceGenerator(String pair, double min, double max, double increment, double spread, double trend){
@@ -34,16 +32,13 @@ public class IncrementalPriceGenerator implements PriceGenerator{
     this.current = min;
   }
   
-  public void setPriceHistoryStore(PriceHistoryStore historyStore){
-	  this.historyStore = historyStore;
-  }
-
   public String call() {
 	Price price = new Price(System.currentTimeMillis(), current - halfSpread, current + halfSpread);
 	PairPrice pairPrice = new PairPrice(pair, price);
 	
-	// add to price history store
-	historyStore.addPrice(pairPrice);
+	for (PriceListener listener: getListeners()){
+		listener.notify(pairPrice);
+	}
 	
     double next = current + increment;
     if (next + tolerance < min || next - tolerance > max){
@@ -55,10 +50,8 @@ public class IncrementalPriceGenerator implements PriceGenerator{
     current = next;
     try {
 	    String message = mapper.writeValueAsString(pairPrice);
-	    logger.debug(message);
 		return message; 
 	} catch (JsonProcessingException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 		return "{error:\""+pair+" Price error\"}";
 	}

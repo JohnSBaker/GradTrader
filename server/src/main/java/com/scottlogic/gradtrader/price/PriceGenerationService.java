@@ -1,8 +1,6 @@
 package com.scottlogic.gradtrader.price;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -17,7 +15,7 @@ import com.scottlogic.gradtrader.SubscriptionException;
 import com.scottlogic.gradtrader.price.history.PriceHistoryStore;
 import com.scottlogic.gradtrader.websockets.WebSocketClient;
 
-public class PriceGenerationService implements PriceService {
+public class PriceGenerationService implements PriceService, PriceListener {
 
     Logger logger = LoggerFactory.getLogger(PriceGenerationService.class);
 	
@@ -25,7 +23,7 @@ public class PriceGenerationService implements PriceService {
 
 	private BroadcasterFactory factory;
 	
-	private Map<String, PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>();
+	//private Map<String, PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>();
 	
 	@Inject
 	private PriceHistoryStore store;
@@ -50,7 +48,8 @@ public class PriceGenerationService implements PriceService {
 			broadcaster = factory.get(pair);
     		priceStart = priceStart + 1.0;    		
     		PriceGenerator pg = new IncrementalPriceGenerator(pair, priceStart, priceStart + 1.0, 0.2, 0.02, 0.0001);
-    		pg.setPriceHistoryStore(store);
+    		pg.addListener(this);
+    		//pg.setPriceHistoryStore(store);
     		broadcaster.scheduleFixedBroadcast(pg, 0, 5, TimeUnit.SECONDS);			
 		}
 		return broadcaster;
@@ -76,8 +75,11 @@ public class PriceGenerationService implements PriceService {
 		}
 	}
 	
-	public String call() {
-		return "";
+	@Override
+	public void notify(PairPrice pairPrice) {
+		//TODO: save to history
+		// add to price history store
+		store.addPrice(pairPrice);		
 	}	
 
 	
