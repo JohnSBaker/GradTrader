@@ -37,6 +37,7 @@ public class App extends Application<GradTraderConfiguration> {
       environment.healthChecks().register("configuration", injector.getInstance(ConfigurationHealthCheck.class));
 
       environment.jersey().register(injector.getInstance(PairResource.class));
+      environment.jersey().register(injector.getInstance(ResolutionResource.class));
       environment.jersey().register(injector.getInstance(PriceHistoryResource.class));
 
       runWebSocketServer(configuration, environment);
