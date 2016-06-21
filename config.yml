@@ -26,4 +26,9 @@ priceHistoryResolutions:
   - 10000
   - 60000
   - 300000
+testPrices:
+  eurgbp: 0.77
+  eurusd: 1.13
+  gbpusd: 1.47
+  eurjpy: 117.84
   

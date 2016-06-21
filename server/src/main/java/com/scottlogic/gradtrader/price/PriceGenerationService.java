@@ -19,11 +19,7 @@ public class PriceGenerationService implements PriceService, PriceListener {
 
     Logger logger = LoggerFactory.getLogger(PriceGenerationService.class);
 	
-    private static double priceStart = 0.0;
-
 	private BroadcasterFactory factory;
-	
-	//private Map<String, PriceGenerator> priceGenerators = new LinkedHashMap<String, PriceGenerator>();
 	
 	@Inject
 	private PriceHistoryStore store;
@@ -34,9 +30,28 @@ public class PriceGenerationService implements PriceService, PriceListener {
 		this.validPairs = AppInjector.getConfiguration().getValidPairs();
 		logger.debug("PriceService validPairs: {}", validPairs);
 	}
-	
+		
 	public void setFactory(BroadcasterFactory factory){
 		this.factory = factory;
+		for (String pair: validPairs){
+			initBroadcaster(pair);
+		}		
+	}
+
+	private Broadcaster initBroadcaster(String pair){
+		Broadcaster broadcaster = factory.lookup(pair);
+		if (broadcaster==null){
+			broadcaster = factory.get(pair);
+			Double testPrice = AppInjector.getConfiguration().getTestPrices().get(pair);
+    		if (testPrice==null){
+    			testPrice = 1.0;    		
+    		}
+    		PriceGenerator pg = new IncrementalPriceGenerator(pair, testPrice - 0.01, testPrice + 0.01, 0.002, 0.02, 0.00001);
+    		pg.addListener(this);
+    		broadcaster.scheduleFixedBroadcast(pg, 0, 5, TimeUnit.SECONDS);			
+    		logger.debug("Generating prices for {}", pair);
+		}
+		return broadcaster;		
 	}
 	
 	private Broadcaster lookupBroadcaster(String pair) throws SubscriptionException{
@@ -45,12 +60,7 @@ public class PriceGenerationService implements PriceService, PriceListener {
 		}
 		Broadcaster broadcaster = factory.lookup(pair);
 		if (broadcaster==null){
-			broadcaster = factory.get(pair);
-    		priceStart = priceStart + 1.0;    		
-    		PriceGenerator pg = new IncrementalPriceGenerator(pair, priceStart, priceStart + 1.0, 0.2, 0.02, 0.0001);
-    		pg.addListener(this);
-    		//pg.setPriceHistoryStore(store);
-    		broadcaster.scheduleFixedBroadcast(pg, 0, 5, TimeUnit.SECONDS);			
+			broadcaster = initBroadcaster(pair);
 		}
 		return broadcaster;
 	}
@@ -77,8 +87,6 @@ public class PriceGenerationService implements PriceService, PriceListener {
 	
 	@Override
 	public void notify(PairPrice pairPrice) {
-		//TODO: save to history
-		// add to price history store
 		store.addPrice(pairPrice);		
 	}	
 

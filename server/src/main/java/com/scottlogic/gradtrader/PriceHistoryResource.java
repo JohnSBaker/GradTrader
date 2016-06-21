@@ -24,7 +24,6 @@ public class PriceHistoryResource {
     @Inject
     public PriceHistoryResource(PriceHistoryStore store) {
     	this.store = store;
-    	logger.debug("Store for PriceHistoryResource: {}", store);
     }
 
     @GET
@@ -34,9 +33,7 @@ public class PriceHistoryResource {
     		@QueryParam("from") Long from,
     		@QueryParam("to") Long to) {
     	
-    	PriceHistory history = store.getHistory(pair, resolution, from, to);
-    	
-        return history;
+    	return store.getHistory(pair, resolution, from, to);
     }
 	
 }

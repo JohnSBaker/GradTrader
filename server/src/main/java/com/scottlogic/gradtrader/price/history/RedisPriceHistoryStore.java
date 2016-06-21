@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +19,11 @@ import redis.clients.jedis.JedisPoolConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.scottlogic.gradtrader.AppInjector;
-import com.scottlogic.gradtrader.GradTraderConfiguration;
 import com.scottlogic.gradtrader.PriceHistory;
 import com.scottlogic.gradtrader.price.PairPrice;
 import com.scottlogic.gradtrader.price.Price;
 
-//@Singleton
+@Singleton
 public class RedisPriceHistoryStore implements PriceHistoryStore{
 
     Logger logger = LoggerFactory.getLogger(RedisPriceHistoryStore.class);
@@ -35,8 +34,7 @@ public class RedisPriceHistoryStore implements PriceHistoryStore{
     private List<String> pairs;    
     private Map<String, Map<Integer, Candlestick>> candlesticks;
     
-    @Inject
-	public RedisPriceHistoryStore(GradTraderConfiguration config){
+	public RedisPriceHistoryStore(){
 		
     	logger.debug("Create RedisPriceHistoryStore");
 
@@ -53,11 +51,6 @@ public class RedisPriceHistoryStore implements PriceHistoryStore{
 
 		pool = new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379);
 		
-	    //Connecting to Redis server on localhost
-	    //jedis = new Jedis("localhost");
-	    //logger.debug("Connection to Redis server successful");
-	    //check whether server is running or not
-	    //logger.debug("Redis server is running: "+jedis.ping());
 	}
     
     private Map<Integer, Candlestick> getPairCandlesticks(String pair){
@@ -116,6 +109,7 @@ public class RedisPriceHistoryStore implements PriceHistoryStore{
 		}
 	}
 	
+	//TODO: allow missing end param, meaning up to current, in which case add current candlestick from map here? 
 	public PriceHistory getHistory(String pair, Integer resolution, Long start, Long end){
 		Jedis jedis = null;
         try {        	

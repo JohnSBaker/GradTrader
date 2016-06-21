@@ -23,13 +23,11 @@ public class PairResource {
 
     public PairResource() {
     	this.pairs = AppInjector.getConfiguration().getValidPairs();
-    	logger.debug("Pairs for resource: {}", pairs);
     }
 
     @GET
     @Timed
     public Pairs getPairs() {
-    	logger.debug("GET Pairs for resource: {}", pairs);
         return new Pairs(pairs);
     }
 }
