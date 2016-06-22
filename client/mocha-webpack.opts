@@ -1,0 +1,5 @@
+--colors
+--require test/dom.setup
+--recursive
+--webpack-config webpack.test.config.js
+test/**/*.test.js

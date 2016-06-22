@@ -29,4 +29,5 @@ task test(type: NpmTask) {
 
 bundleProd.dependsOn(npm_install)
 bundleDev.dependsOn(npm_install)
+test.dependsOn(npm_install)
 assemble.dependsOn(bundleProd)
