@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Tile from '../tile/Tile';
 import './TileGrid.scss';
 
-const TileGrid = ({ tiles }) => {
-  const tileElements = tiles ? tiles.map((tile) => (<Tile key={tile.id} />)) : null;
+class TileGrid extends Component {
 
-  return (
-    <div className="tile-grid">
-    {tileElements}
-    </div>
-  );
-};
+  componentDidMount() {
+    this.props.getValidPairs();
+  }
+
+  render() {
+    const tileElements = this.props.tiles ?
+      this.props.tiles.map((tile) => (<Tile key={tile.id} pair={tile.pair} />)) : null;
+
+    return (
+      <div className="tile-grid">
+      {tileElements}
+      </div>
+    );
+  }
+}
 
 TileGrid.propTypes = {
   tiles: React.PropTypes.array,
+  getValidPairs: PropTypes.func.isRequired,
 };
 
 export default TileGrid;

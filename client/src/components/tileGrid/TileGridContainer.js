@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import TileGrid from './TileGrid';
+import { getValidPairs } from '../../actions';
 
 const mapStateToProps = () => ({
   tiles: [
@@ -15,4 +16,6 @@ const mapStateToProps = () => ({
   ],
 });
 
-export default connect(mapStateToProps)(TileGrid);
+export default connect(mapStateToProps, {
+  getValidPairs,
+})(TileGrid);
