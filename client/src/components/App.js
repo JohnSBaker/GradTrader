@@ -8,13 +8,13 @@ import './App.scss';
 
 const App = () => (
   <div id="app">
-    <DevTools />
     <Header />
     <div className="main-container">
       <TileGrid />
       <Chart />
     </div>
     <Blotter />
+    {DevTools && <DevTools />}
   </div>
 );
 
