@@ -10,7 +10,7 @@ class TileGrid extends Component {
 
   render() {
     const tileElements = this.props.tiles ?
-      this.props.tiles.map((tile) => (<Tile key={tile.id} pair={tile.pair} />)) : null;
+      this.props.tiles.map((pair, index) => (<Tile key={index} pair={pair} />)) : null;
 
     return (
       <div className="tile-grid">

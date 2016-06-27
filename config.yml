@@ -7,6 +7,14 @@ server:
     type: http
     port: 8080
 validPairs:
-  - eurgbp
-  - eurusd
-  - gbpusd
+  - GBPUSD
+  - GBPEUR
+  - GBPCAD
+  - GBPAUD
+  - USDCHF
+  - EURUSD
+  - GBPCHF
+  - AUDUSD
+  - EURAUD
+  - NZDAUD
+  - NZDGBP
