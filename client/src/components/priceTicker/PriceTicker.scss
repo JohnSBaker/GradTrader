@@ -11,6 +11,7 @@
 
     .main {
       width: 64px;
+      height: 45px;
       font-weight: $font-light;
       font-size: $font-xl-2;
       justify-content: flex-start;
@@ -25,6 +26,7 @@
     width: 12px;
 
     .delta {
+      height: 9px;
       font-size: 9px;
 
       &.positive {
@@ -34,14 +36,15 @@
       &.negative {
         color: $tertiary-red;
       }
-
-      &.neutral {
-        color: $primary-white;
-      }
     }
 
     .pip {
       font-size: $font-xs-1;
     }
   }
+}
+
+.loading {
+  height: 64px;
+  width: 76px;
 }

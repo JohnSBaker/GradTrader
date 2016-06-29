@@ -17,8 +17,8 @@ const Tile = ({ pair }) => {
         {String.fromCharCode(dropdownArrowCode)}
       </div>
       <div className="price-tickers">
-        <PriceTicker />
-        <PriceTicker />
+        <PriceTicker pair={pair} type="bid" />
+        <PriceTicker pair={pair} type="ask" />
       </div>
       <div className="purchase-buttons">
         <button>BUY</button>

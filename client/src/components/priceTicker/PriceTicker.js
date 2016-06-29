@@ -1,19 +1,26 @@
 import React from 'react';
 import './PriceTicker.scss';
 
-const PriceTicker = (props) => {
-  const stringPrice = props.price.toString();
+const PriceTicker = ({ price, delta }) => {
+  if (!price) {
+    return <div className="loading">Loading</div>;
+  }
+
+  const stringPrice = price.toString();
   const main = stringPrice.slice(-3, -1);
   const pip = stringPrice.slice(-1);
   const start = stringPrice.slice(0, -3);
 
   let deltaIcon;
-  if (props.delta > 0) {
-    deltaIcon = <div className="delta negative">&#x25B2;</div>;
-  } else if (props.delta < 0) {
-    deltaIcon = <div className="delta positive">&#x25BC;</div>;
+  // if delta is 1 then positive
+  // if -1 then negative
+  // else display nothing
+  if (delta === 1) {
+    deltaIcon = <div className="delta positive">&#x25B2;</div>;
+  } else if (delta === -1) {
+    deltaIcon = <div className="delta negative">&#x25BC;</div>;
   } else {
-    deltaIcon = <div className="delta neutral">-</div>;
+    deltaIcon = <div className="delta"></div>;
   }
 
   return (
@@ -35,8 +42,8 @@ const PriceTicker = (props) => {
 };
 
 PriceTicker.propTypes = {
-  price: React.PropTypes.number.isRequired,
-  delta: React.PropTypes.number.isRequired,
+  price: React.PropTypes.number,
+  delta: React.PropTypes.number,
 };
 
 export default PriceTicker;
