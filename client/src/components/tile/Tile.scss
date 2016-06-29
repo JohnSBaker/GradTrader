@@ -32,12 +32,15 @@
     margin-bottom: 12px;
 
     button {
+      border-radius: 3px;
+      border-width: 1px;
       background-color: $secondary-dark-blue;
-      border-color: $secondary-light-blue;
+      border-color: $primary-light-blue;
       color: $primary-white;
       font-weight: $font-regular;
       font-size: $font-xs-1;
       width: 76px;
+      height: 24px;
     }
   }
 }

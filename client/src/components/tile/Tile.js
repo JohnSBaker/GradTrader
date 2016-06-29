@@ -26,7 +26,7 @@ const Tile = ({ pair }) => {
       </div>
       <div className="quantity-selector">
         <input />
-        <button>{baseCurrency}</button>
+        <label>{baseCurrency}</label>
       </div>
     </div>
   );
