@@ -23,6 +23,12 @@ module.exports = {
       exclude: /node_modules/,
       include: path.resolve(projectRootPath, 'src/'),
       loader: 'style!css!sass',
+    },
+    {
+      test: /\.svg$/,
+      exclude: /node_modules/,
+      include: path.resolve(projectRootPath, 'src/'),
+      loader: 'babel!svg-react',
     }],
   },
 };

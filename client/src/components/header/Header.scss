@@ -7,7 +7,7 @@
 
 .header-title-container {
   display: flex;
-  margin-bottom: 6px;
+  margin: 6px 0;
   color: $primary-white;
   font-weight: $font-regular;
   font-size: $font-m-4;
@@ -18,11 +18,14 @@
     align-items: flex-end;
     display: flex;
   }
+
+  .header-title {
+    padding-left: 5px;
+  }
 }
 
 .account {
   color: $primary-blue;
-  margin-bottom: 15px;
   display: flex;
   font-size: $font-s-2;
   font-weight: $font-light;
@@ -30,12 +33,13 @@
   .account-settings,
   .username,
   .dropdown {
-    align-items: flex-end;
+    align-items: center;
     display: flex;
   }
 
-  .account-settings {
-    margin-right: 15px;
+  .username {
+    margin-left: 15px;
+    margin-right: 6px;
   }
 
   .dropdown {

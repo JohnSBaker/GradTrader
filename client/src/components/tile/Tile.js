@@ -1,8 +1,7 @@
 import React from 'react';
 import PriceTicker from '../priceTicker/PriceTickerContainer';
 import './Tile.scss';
-
-const dropdownArrowCode = '9662';
+import CurrencyPairDropdownIcon from '../../svg/CurrencyPairDropdown.svg';
 
 const Tile = ({ pair }) => {
   const baseCurrency = pair.substr(0, 3);
@@ -14,7 +13,7 @@ const Tile = ({ pair }) => {
         <span>{baseCurrency}</span>
         |
         <span>{counterCurrency}</span>
-        {String.fromCharCode(dropdownArrowCode)}
+        <CurrencyPairDropdownIcon />
       </div>
       <div className="price-tickers">
         <PriceTicker pair={pair} type="bid" />

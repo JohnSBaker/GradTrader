@@ -1,18 +1,23 @@
 import React from 'react';
 import './Header.scss';
-
-const dropdownArrowCode = '9662';
+import AccountDropdownIcon from '../../svg/AccountDropdown.svg';
+import SettingsIcon from '../../svg/Settings.svg';
+import LogoIcon from '../../svg/Logo.svg';
 
 const Header = () => (
   <div className="header">
     <span className="header-title-container">
-      <span className="logo">Q</span>
+      <LogoIcon />
       <span className="header-title">GradTrader</span>
     </span>
     <span className="account">
-      <span className="account-settings">Q</span>
+      <span className="account-settings">
+        <SettingsIcon />
+      </span>
       <span className="username">SLogic</span>
-      <span className="dropdown">{String.fromCharCode(dropdownArrowCode)}</span>
+      <span className="dropdown">
+        <AccountDropdownIcon />
+      </span>
     </span>
   </div>
 );

@@ -1,5 +1,7 @@
 import React from 'react';
 import './PriceTicker.scss';
+import NegativeArrowIcon from '../../svg/NegativeArrow.svg';
+import PositiveArrowIcon from '../../svg/PositiveArrow.svg';
 
 const PriceTicker = ({ price, delta }) => {
   if (!price) {
@@ -16,9 +18,9 @@ const PriceTicker = ({ price, delta }) => {
   // if -1 then negative
   // else display nothing
   if (delta === 1) {
-    deltaIcon = <div className="delta positive">&#x25B2;</div>;
+    deltaIcon = <NegativeArrowIcon />;
   } else if (delta === -1) {
-    deltaIcon = <div className="delta negative">&#x25BC;</div>;
+    deltaIcon = <PositiveArrowIcon />;
   } else {
     deltaIcon = <div className="delta"></div>;
   }
