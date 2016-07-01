@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Tile from '../tile/Tile';
+import Tile from '../tile/TileContainer';
 import './TileGrid.scss';
 
 class TileGrid extends Component {

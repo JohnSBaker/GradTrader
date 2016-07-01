@@ -6,13 +6,14 @@ export const GET_VALID_PAIRS_FAILURE = 'GET_VALID_PAIRS_FAILURE';
 export const POPULATE_TILES = 'POPULATE_TILES';
 export const ADD_PRICE = 'ADD_PRICE';
 export const ADD_PRICES = 'ADD_PRICES';
+export const SET_SELECTED_TILE = 'SET_SELECTED_TILE';
 
 export const getValidPairs = () => (dispatch) => {
   dispatch({
     type: GET_VALID_PAIRS_REQUEST,
   });
 
-  return api
+  api
     .getValidPairs()
     .then(
       (pairs) => {
@@ -35,3 +36,10 @@ export const getValidPairs = () => (dispatch) => {
       }
     );
 };
+
+export const tileSelected = (pair) => (
+  {
+    type: SET_SELECTED_TILE,
+    pair,
+  }
+);
