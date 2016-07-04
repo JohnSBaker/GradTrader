@@ -1,0 +1,72 @@
+@import "../../styles/modules/all";
+
+.confirmation {
+
+  padding: 15px 30px 21px;
+  width: 168px;
+
+  div {
+    text-align: center;
+    font-size: $font-s-3;
+    font-weight: $font-light;
+  }
+
+  .confirmation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    button {
+      border-radius: 3px;
+      border-width: 1px;
+      background-color: $secondary-dark-blue;
+      border-color: $primary-light-blue;
+      color: $primary-white;
+      font-weight: $font-regular;
+      font-size: $font-xs-1;
+      width: 76px;
+      height: 24px;
+    }
+  }
+
+  .spinner-countdown {
+    height: 84px;
+    position: relative;
+
+    .spinner {
+      border-top: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 7px solid #ffffff;
+      transform: translateZ(0);
+      animation: spin 1s infinite linear;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+
+    .countdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 12px;
+      font-size: $font-m-4;
+    }
+    .spinner-container {
+      width: 100%;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -16,3 +16,16 @@ export const getValidPairs = () => (
   .then(checkStatus)
   .then(parseJSON)
 );
+
+export const getQuote = (pair, amount, type) => (
+  fetch('api/quote', {
+    method: 'post',
+    body: {
+      amount,
+      pair,
+      type,
+    },
+  })
+  .then(checkStatus)
+  .then(parseJSON)
+);

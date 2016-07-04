@@ -8,7 +8,7 @@ import { ADD_PRICE, ADD_PRICES } from '../actions';
 const transformNewPrices = (newPrices) => (
   newPrices.reduce((accumulatorObj, newPrice) => ({
     ...accumulatorObj,
-    [newPrice.pair]: {
+    [newPrice.pairName]: {
       ask: newPrice.ask,
       askDelta: newPrice.askDelta,
       bid: newPrice.bid,
@@ -22,7 +22,7 @@ const prices = (state = {}, action) => {
     case ADD_PRICE:
       return {
         ...state,
-        [action.pair]: {
+        [action.pairName]: {
           ask: action.ask,
           askDelta: action.askDelta,
           bid: action.bid,

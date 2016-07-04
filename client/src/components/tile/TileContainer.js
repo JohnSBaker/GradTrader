@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import Tile from './Tile';
+import { getQuote } from '../../reducers/quotes';
 
-const mapStateToProps = (_, { pair }) => ({
+const mapStateToProps = ({ quotes }, { pair }) => ({
+  quote: getQuote(quotes, pair.name),
   pair,
 });
 

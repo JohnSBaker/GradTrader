@@ -7,6 +7,11 @@ export const POPULATE_TILES = 'POPULATE_TILES';
 export const ADD_PRICE = 'ADD_PRICE';
 export const ADD_PRICES = 'ADD_PRICES';
 export const SET_SELECTED_TILE = 'SET_SELECTED_TILE';
+export const REQUEST_QUOTE = 'REQUEST_QUOTE';
+export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
+export const QUOTE_RESPONSE_ERROR = 'QUOTE_RESPONSE_ERROR';
+export const QUOTE_REQUEST = 'QUOTE_REQUEST';
+export const QUOTE_EXPIRED = 'QUOTE_EXPIRED';
 
 export const getValidPairs = () => (dispatch) => {
   dispatch({
@@ -37,9 +42,36 @@ export const getValidPairs = () => (dispatch) => {
     );
 };
 
-export const tileSelected = (pair) => (
+export const tileSelected = (pairName) => (
   {
     type: SET_SELECTED_TILE,
-    pair,
+    pairName,
   }
 );
+
+export const requestQuote = (pairName, amount, purchaseType) => (dispatch) => {
+  dispatch({
+    type: QUOTE_REQUEST,
+    pairName,
+    amount,
+    purchaseType,
+  });
+
+  // Will be replaced by real request when avalable
+  dispatch({
+    type: QUOTE_RESPONSE_SUCCESS,
+    amount,
+    pairName,
+    purchaseType,
+    timestamp: Date.now(),
+    id: 9876,
+    price: 1.23456,
+  });
+};
+
+export const confirmTrade = () => () => console.log('confirm trade');
+
+export const cancelTrade = (pairName) => ({
+  type: QUOTE_EXPIRED,
+  pairName,
+});

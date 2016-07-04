@@ -7,7 +7,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
     expect(
       prices(undefined, {
         type: ADD_PRICE,
-        pair: 'abcdfe',
+        pairName: 'abcdfe',
         bid: 123.345,
         ask: 444.344,
         bidDelta: 1,
@@ -30,7 +30,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action1 = {
       type: ADD_PRICE,
-      pair: 'abcdfe',
+      pairName: 'abcdfe',
       bid: 123.300,
       ask: 445.500,
       bidDelta: 1,
@@ -39,7 +39,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action2 = {
       type: ADD_PRICE,
-      pair: 'abcdfe',
+      pairName: 'abcdfe',
       bid: 223.540,
       ask: 444.0,
       bidDelta: -1,
@@ -63,14 +63,14 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action1 = {
       type: ADD_PRICE,
-      pair: 'USDEUR',
+      pairName: 'USDEUR',
       bid: 0.745,
       ask: 0.500,
     };
 
     const action2 = {
       type: ADD_PRICE,
-      pair: 'USDGBP',
+      pairName: 'USDGBP',
       bid: 3.12,
       ask: 4.0,
       bidDelta: 1,
@@ -79,7 +79,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action3 = {
       type: ADD_PRICE,
-      pair: 'EURGBP',
+      pairName: 'EURGBP',
       bid: 1.543,
       ask: 2.0,
     };
@@ -117,7 +117,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
         type: ADD_PRICES,
         prices: [
           {
-            pair: 'abcdfe',
+            pairName: 'abcdfe',
             bid: 123.345,
             ask: 444.344,
             bidDelta: 1,
@@ -144,7 +144,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pair: 'abcdfe',
+          pairName: 'abcdfe',
           bid: 123.300,
           ask: 445.500,
           bidDelta: 1,
@@ -157,7 +157,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pair: 'abcdfe',
+          pairName: 'abcdfe',
           bid: 223.540,
           ask: 444.0,
           bidDelta: -1,
@@ -185,19 +185,19 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pair: 'USDEUR',
+          pairName: 'USDEUR',
           ask: 0.500,
           bid: 0.745,
         },
         {
-          pair: 'USDGBP',
+          pairName: 'USDGBP',
           bid: 3.12,
           ask: 4.0,
           bidDelta: 1,
           askDelta: 1,
         },
         {
-          pair: 'EURGBP',
+          pairName: 'EURGBP',
           bid: 1.543,
           ask: 2.0,
         },
