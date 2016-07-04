@@ -47,3 +47,6 @@ A proof-of-concept FX trading application for Scott Logic grad week.
 * Heroku - hosting
 * Gradle - build tool
 * Webpack - bundler
+
+#### Client Broadcast
+![Client Broadcast](./doc/img/GradTrader-ClientBroadcast.png)
