@@ -2,6 +2,10 @@ package com.scottlogic.gradtrader;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.scottlogic.gradtrader.config.GradTraderConfiguration;
+import com.scottlogic.gradtrader.config.GradTraderModule;
+import com.scottlogic.gradtrader.health.PairsHealthCheck;
+import com.scottlogic.gradtrader.pair.PairResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;

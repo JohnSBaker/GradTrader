@@ -7,14 +7,36 @@ server:
     type: http
     port: 8080
 validPairs:
-  - GBPUSD
-  - GBPEUR
-  - GBPCAD
-  - GBPAUD
-  - USDCHF
-  - EURUSD
-  - GBPCHF
-  - AUDUSD
-  - EURAUD
-  - NZDAUD
-  - NZDGBP
+  GBPUSD:
+    name: GBPUSD
+    decimals: 5
+  GBPEUR:
+    name: GBPEUR
+    decimals: 5
+  GBPCAD:
+    name: GBPCAD
+    decimals: 5
+  GBPAUD:
+    name: GBPAUD
+    decimals: 5
+  USDCHF:
+    name: USDCHF
+    decimals: 5
+  EURUSD:
+    name: EURUSD
+    decimals: 5
+  GBPCHF:
+    name: GBPCHF
+    decimals: 5
+  AUDUSD:
+    name: AUDUSD
+    decimals: 5
+  EURAUD:
+    name: EURAUD
+    decimals: 5
+  NZDAUD:
+    name: NZDAUD
+    decimals: 5
+  NZDGBP:
+    name: NZDGBP
+    decimals: 5

@@ -9,7 +9,7 @@ const Tile = ({ pair }) => (
 );
 
 Tile.propTypes = {
-  pair: React.PropTypes.string.isRequired,
+  pair: React.PropTypes.object.isRequired,
 };
 
 export default Tile;

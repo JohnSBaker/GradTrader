@@ -11,10 +11,10 @@ class Pair extends Component {
 
   render() {
     const { pair, tileSelected, selectedTile } = this.props;
-    const baseCurrency = pair.substr(0, 3);
-    const counterCurrency = pair.substr(3);
+    const baseCurrency = pair.name.substr(0, 3);
+    const counterCurrency = pair.name.substr(3);
 
-    const tileClass = `pair ${selectedTile === pair ? 'selected' : ''}`;
+    const tileClass = `pair ${selectedTile === pair.name ? 'selected' : ''}`;
 
     return (
       <div
@@ -45,7 +45,7 @@ class Pair extends Component {
 }
 
 Pair.propTypes = {
-  pair: React.PropTypes.string.isRequired,
+  pair: React.PropTypes.object.isRequired,
   selectedTile: React.PropTypes.string,
   tileSelected: React.PropTypes.func.isRequired,
 };
