@@ -12,6 +12,8 @@ export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
 export const QUOTE_RESPONSE_ERROR = 'QUOTE_RESPONSE_ERROR';
 export const QUOTE_REQUEST = 'QUOTE_REQUEST';
 export const QUOTE_EXPIRED = 'QUOTE_EXPIRED';
+export const ADD_TRADE = 'ADD_TRADE';
+export const ADD_TRADES = 'ADD_TRADES';
 
 export const getValidPairs = () => (dispatch) => {
   dispatch({
@@ -42,12 +44,15 @@ export const getValidPairs = () => (dispatch) => {
     );
 };
 
-export const tileSelected = (pairName) => (
-  {
-    type: SET_SELECTED_TILE,
-    pairName,
-  }
-);
+export const tileSelected = (pairName) => ({
+  type: SET_SELECTED_TILE,
+  pairName,
+});
+
+export const addTrade = (trade) => ({
+  type: ADD_TRADE,
+  ...trade,
+});
 
 export const requestQuote = (pairName, amount, purchaseType) => (dispatch) => {
   dispatch({

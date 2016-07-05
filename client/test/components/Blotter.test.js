@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import Blotter from '../../src/components/blotter/Blotter';
 
 describe('Blotter', () => {
-  it('should contain text', () => {
-    const wrapper = shallow(<Blotter />);
-    expect(wrapper.text()).to.contain('blotter will go here');
+  it('should contain correct css class', () => {
+    const wrapper = shallow(<Blotter trades={[]} />);
+    expect(wrapper.hasClass('blotter')).to.be.true;
   });
 });

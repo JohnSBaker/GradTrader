@@ -9,6 +9,20 @@ const configureStore = () => {
 
   const store = createStore(
     rootReducer,
+    {
+      trades: [{
+        tradeId: 26374857,
+        timestamp: 1467565719,
+        time: '18:09',
+        date: '03 JUL 2016',
+        currency: 'GBP | USD',
+        direction: 'Buy',
+        quantity: 500000,
+        rate: 1.11556,
+        portfolio: 'Portfolio1',
+        user: 'SLogic',
+      }],
+    },
     compose(
       applyMiddleware(...middlewares),
       DevTools.instrument(),

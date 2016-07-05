@@ -1,6 +1,48 @@
 @import "../../styles/modules/all";
+@import "../../../node_modules/react-virtualized/styles.css";
 
 .blotter {
-  background-color: $tertiary-red;
   flex: 1;
+  width: 100%;
+  color: $primary-white;
+}
+
+.FlexTable {
+  .FlexTable__headerRow {
+    background-color: $primary-dark-blue2;
+    font-size: $font-xs-1;
+    font-weight: $font-regular;
+  }
+
+  .Grid__innerScrollContainer {
+    background-color: $primary-dark-blue;
+
+    > :nth-child(even) {
+      background-color: $primary-dark-blue2;
+    }
+  }
+
+  .FlexTable__row {
+    font-size: $font-s-3;
+    font-weight: $font-light;
+  }
+
+  .bold-cell {
+    font-weight: $font-medium;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar {
+    background-color: $primary-dark-blue;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-button {
+    background-color: $secondary-dark-blue2;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $secondary-blue;
+  }
+
 }
