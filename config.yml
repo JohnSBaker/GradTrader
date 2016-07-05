@@ -1,3 +1,14 @@
+logging:
+  level: WARN
+  loggers:
+    io.dropwizard: WARN
+    com.scottlogic: DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+      logFormat: "%d %p %C %L %m%n"
 server:
   type: simple
   rootPath: /api/*
@@ -40,3 +51,17 @@ validPairs:
   NZDGBP:
     name: NZDGBP
     decimals: 5
+testPrices:
+  GBPUSD: 134000
+  GBPEUR: 121000
+  GBPCAD: 174000
+  GBPAUD: 180000
+  USDCHF:  97000
+  EURUSD: 111000
+  GBPCHF: 131000
+  AUDUSD:  75000
+  EURAUD: 149000
+  NZDAUD:  95000
+  NZDGBP:  53000
+priceFeedMillis: 100
+clientBroadcastMillis: 1000

@@ -6,10 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Pair {
 
     private final String name;
-    private final Integer decimals;
+    private final int decimals;
 
     @JsonCreator
-    public Pair(@JsonProperty("name") String name, @JsonProperty("decimals") Integer decimals) {
+    public Pair(@JsonProperty("name") String name,
+            @JsonProperty("decimals") int decimals) {
         super();
         this.name = name;
         this.decimals = decimals;
@@ -19,7 +20,7 @@ public class Pair {
         return name;
     }
 
-    public Integer getDecimals() {
+    public int getDecimals() {
         return decimals;
     }
 

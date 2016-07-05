@@ -1,12 +1,18 @@
 package com.scottlogic.gradtrader.config;
 
-import com.scottlogic.gradtrader.pair.Pair;
 import io.dropwizard.setup.Environment;
 
 import java.util.Map;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.scottlogic.gradtrader.ScheduledExecutor;
+import com.scottlogic.gradtrader.pair.Pair;
+import com.scottlogic.gradtrader.price.feed.PriceFeedFactory;
+import com.scottlogic.gradtrader.price.feed.PriceFeedFactoryImpl;
+import com.scottlogic.gradtrader.price.source.FakePriceSourceFactory;
+import com.scottlogic.gradtrader.price.source.PriceSourceFactory;
 
 public class GradTraderModule extends AbstractModule {
 
@@ -15,7 +21,7 @@ public class GradTraderModule extends AbstractModule {
     private final Environment environment;
 
     public GradTraderModule(final GradTraderConfiguration configuration,
-                            final Environment environment) {
+            final Environment environment) {
         this.configuration = configuration;
         this.environment = environment;
     }
@@ -30,7 +36,9 @@ public class GradTraderModule extends AbstractModule {
 
     @Override
     protected void configure() {
-
+        bind(PriceFeedFactory.class).to(PriceFeedFactoryImpl.class);
+        bind(PriceSourceFactory.class).to(FakePriceSourceFactory.class);
+        bind(ScheduledThreadPoolExecutor.class).to(ScheduledExecutor.class);
     }
 
     @Provides
