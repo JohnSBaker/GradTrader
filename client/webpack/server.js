@@ -8,7 +8,7 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const app = express();
 const compiler = webpack(config);
 
-app.use(proxy('/api', { target: 'http://localhost:8080', changeOrigin: true }));
+app.use(proxy('/api', { target: 'http://localhost:80', changeOrigin: true }));
 
 app.use(webpackMiddleware(compiler, {
   noInfo: true,
