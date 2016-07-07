@@ -70,7 +70,7 @@ public class ClientBroadcaster extends SimpleBroadcaster implements
                 return null;
             }
             String message = mapper.writeValueAsString(new WebSocketMessage(
-                    "Prices", prices.values()));
+                    "prices", prices.values()));
             return message;
         } catch (JsonProcessingException e) {
             e.printStackTrace();

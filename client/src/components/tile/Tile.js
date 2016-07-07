@@ -5,6 +5,14 @@ import './Tile.scss';
 
 class Tile extends Component {
 
+  componentDidMount() {
+    this.props.subscribePrice(this.props.pair.id);
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribePrice(this.props.pair.id);
+  }
+
   render() {
     const child = this.props.quote ?
       <Confirmation pair={this.props.pair} /> :
@@ -21,6 +29,8 @@ class Tile extends Component {
 Tile.propTypes = {
   quote: PropTypes.object,
   pair: PropTypes.object.isRequired,
+  subscribePrice: PropTypes.func.isRequired,
+  unsubscribePrice: PropTypes.func.isRequired,
 };
 
 export default Tile;
