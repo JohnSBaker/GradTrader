@@ -7,7 +7,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
     expect(
       prices(undefined, {
         type: ADD_PRICE,
-        pairName: 'abcdfe',
+        pairId: 'abcdfe',
         bid: 123.345,
         ask: 444.344,
         bidDelta: 1,
@@ -30,7 +30,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action1 = {
       type: ADD_PRICE,
-      pairName: 'abcdfe',
+      pairId: 'abcdfe',
       bid: 123.300,
       ask: 445.500,
       bidDelta: 1,
@@ -39,7 +39,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action2 = {
       type: ADD_PRICE,
-      pairName: 'abcdfe',
+      pairId: 'abcdfe',
       bid: 223.540,
       ask: 444.0,
       bidDelta: -1,
@@ -63,14 +63,14 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action1 = {
       type: ADD_PRICE,
-      pairName: 'USDEUR',
+      pairId: 'USDEUR',
       bid: 0.745,
       ask: 0.500,
     };
 
     const action2 = {
       type: ADD_PRICE,
-      pairName: 'USDGBP',
+      pairId: 'USDGBP',
       bid: 3.12,
       ask: 4.0,
       bidDelta: 1,
@@ -79,7 +79,7 @@ describe('Prices Reducer - ADD_PRICE', () => {
 
     const action3 = {
       type: ADD_PRICE,
-      pairName: 'EURGBP',
+      pairId: 'EURGBP',
       bid: 1.543,
       ask: 2.0,
     };
@@ -117,7 +117,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
         type: ADD_PRICES,
         prices: [
           {
-            pairName: 'abcdfe',
+            pairId: 'abcdfe',
             bid: 123.345,
             ask: 444.344,
             bidDelta: 1,
@@ -144,7 +144,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pairName: 'abcdfe',
+          pairId: 'abcdfe',
           bid: 123.300,
           ask: 445.500,
           bidDelta: 1,
@@ -157,7 +157,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pairName: 'abcdfe',
+          pairId: 'abcdfe',
           bid: 223.540,
           ask: 444.0,
           bidDelta: -1,
@@ -185,19 +185,19 @@ describe('Prices Reducer - ADD_PRICES', () => {
       type: ADD_PRICES,
       prices: [
         {
-          pairName: 'USDEUR',
+          pairId: 'USDEUR',
           ask: 0.500,
           bid: 0.745,
         },
         {
-          pairName: 'USDGBP',
+          pairId: 'USDGBP',
           bid: 3.12,
           ask: 4.0,
           bidDelta: 1,
           askDelta: 1,
         },
         {
-          pairName: 'EURGBP',
+          pairId: 'EURGBP',
           bid: 1.543,
           ask: 2.0,
         },
@@ -231,14 +231,16 @@ describe('Prices Reducer - ADD_PRICES', () => {
 describe('Prices Reducer - getPrice selector', () => {
   it('can get bid price using selector', () => {
     const state = {
-      bid: 25.12345,
-      bidDelta: 1,
-      ask: 22,
-      askDelta: -1,
+      GDPUSD: {
+        bid: 25.12345,
+        bidDelta: 1,
+        ask: 22.00001,
+        askDelta: -1,
+      },
     };
     const type = 'bid';
 
-    expect(getPrice(state, type)).to.deep.equal({
+    expect(getPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
       price: 25.12345,
       delta: 1,
     });
@@ -246,14 +248,16 @@ describe('Prices Reducer - getPrice selector', () => {
 
   it('can get ask price using selector', () => {
     const state = {
-      bid: 25.12345,
-      bidDelta: 1,
-      ask: 22.00001,
-      askDelta: -1,
+      GDPUSD: {
+        bid: 25.12345,
+        bidDelta: 1,
+        ask: 22.00001,
+        askDelta: -1,
+      },
     };
     const type = 'ask';
 
-    expect(getPrice(state, type)).to.deep.equal({
+    expect(getPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
       price: 22.00001,
       delta: -1,
     });

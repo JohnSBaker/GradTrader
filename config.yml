@@ -19,37 +19,37 @@ server:
     port: 80
 validPairs:
   GBPUSD:
-    name: GBPUSD
+    id: GBPUSD
     decimals: 5
   GBPEUR:
-    name: GBPEUR
+    id: GBPEUR
     decimals: 5
   GBPCAD:
-    name: GBPCAD
+    id: GBPCAD
     decimals: 5
   GBPAUD:
-    name: GBPAUD
+    id: GBPAUD
     decimals: 5
   USDCHF:
-    name: USDCHF
+    id: USDCHF
     decimals: 5
   EURUSD:
-    name: EURUSD
+    id: EURUSD
     decimals: 5
   GBPCHF:
-    name: GBPCHF
+    id: GBPCHF
     decimals: 5
   AUDUSD:
-    name: AUDUSD
+    id: AUDUSD
     decimals: 5
   EURAUD:
-    name: EURAUD
+    id: EURAUD
     decimals: 5
   NZDAUD:
-    name: NZDAUD
+    id: NZDAUD
     decimals: 5
   NZDGBP:
-    name: NZDGBP
+    id: NZDGBP
     decimals: 5
 testPrices:
   GBPUSD: 134000

@@ -59,7 +59,7 @@ public class TestFakePriceSource {
             IOException {
         time = time + tickMillis;
         Price actualPrice = target.getPrice(time);
-        assertEquals(pair, actualPrice.getPair());
+        assertEquals(pair, actualPrice.getPairId());
         assertEquals(expectBid, actualPrice.getBid());
         assertEquals(expectAsk, actualPrice.getAsk());
     }

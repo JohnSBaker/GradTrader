@@ -4,6 +4,6 @@ import com.scottlogic.gradtrader.SubscriptionException;
 
 public interface PriceFeedFactory {
 
-    public PriceFeed getPriceFeed(String pair) throws SubscriptionException;
+    PriceFeed getPriceFeed(String pairId) throws SubscriptionException;
 
 }

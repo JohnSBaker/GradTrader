@@ -11,15 +11,15 @@ class Pair extends Component {
 
   render() {
     const { pair, tileSelected, selectedTile, requestQuote } = this.props;
-    const baseCurrency = pair.name.substr(0, 3);
-    const counterCurrency = pair.name.substr(3);
+    const baseCurrency = pair.id.substr(0, 3);
+    const counterCurrency = pair.id.substr(3);
 
-    const tileClass = `pair ${selectedTile === pair.name ? 'selected' : ''}`;
+    const tileClass = `pair ${selectedTile === pair.id ? 'selected' : ''}`;
 
     return (
       <div
         className={tileClass}
-        onClick={() => tileSelected(pair.name)}
+        onClick={() => tileSelected(pair.id)}
       >
         <div className="pair-dropdown">
           <span>{baseCurrency}</span>
@@ -33,10 +33,10 @@ class Pair extends Component {
         </div>
         <div className="purchase-buttons">
           <button
-            onClick={() => requestQuote(pair.name, this.amountInput.value, 'Buy')}
+            onClick={() => requestQuote(pair.id, this.amountInput.value, 'Buy')}
           >BUY</button>
           <button
-            onClick={() => requestQuote(pair.name, this.amountInput.value, 'Sell')}
+            onClick={() => requestQuote(pair.id, this.amountInput.value, 'Sell')}
           >SELL</button>
         </div>
         <div className="quantity-selector">

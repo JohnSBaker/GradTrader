@@ -4,6 +4,6 @@ import com.scottlogic.gradtrader.price.PriceException;
 
 public interface PriceSourceFactory {
 
-    public PriceSource getPriceSource(String pair) throws PriceException;
+    PriceSource getPriceSource(String pairId) throws PriceException;
 
 }

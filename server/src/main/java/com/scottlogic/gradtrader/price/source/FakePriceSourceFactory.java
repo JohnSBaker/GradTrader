@@ -13,28 +13,28 @@ public class FakePriceSourceFactory implements PriceSourceFactory {
     @Inject
     private GradTraderConfiguration configuration;
 
-    private Map<String, PriceSource> priceSources = new LinkedHashMap<String, PriceSource>();
+    private Map<String, PriceSource> priceSources = new LinkedHashMap<>();
 
-    public PriceSource getPriceSource(String pairName) throws PriceException {
-        PriceSource priceSource = priceSources.get(pairName);
+    public PriceSource getPriceSource(String pairId) throws PriceException {
+        PriceSource priceSource = priceSources.get(pairId);
         if (priceSource == null) {
-            if (!configuration.getValidPairs().containsKey(pairName)) {
+            if (!configuration.getValidPairs().containsKey(pairId)) {
                 throw new PriceException("Invalid pair");
             }
             long testPrice;
             try {
                 Map<String, Long> testPrices = configuration.getTestPrices();
-                testPrice = testPrices.get(pairName);
+                testPrice = testPrices.get(pairId);
             } catch (Exception e) {
                 throw new PriceException("Missing currency pair configuration");
             }
             Map<String, Pair> validPairs = configuration.getValidPairs();
-            Pair pair = validPairs.get(pairName);
+            Pair pair = validPairs.get(pairId);
             int priceDecimals = pair.getDecimals();
             long pointSize = (long) Math.pow(10, priceDecimals);
-            priceSource = new FakePriceSource(pairName, testPrice, 20000L,
+            priceSource = new FakePriceSource(pairId, testPrice, 20000L,
                     2 * pointSize / 100L, 2 * pointSize / 100L);
-            priceSources.put(pairName, priceSource);
+            priceSources.put(pairId, priceSource);
         }
         return priceSource;
 

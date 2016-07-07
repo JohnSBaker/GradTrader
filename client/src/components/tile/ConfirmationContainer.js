@@ -4,7 +4,7 @@ import { getQuote } from '../../reducers/quotes';
 import { confirmTrade, cancelTrade } from '../../actions';
 
 const mapStateToProps = ({ quotes }, { pair }) => ({
-  quote: getQuote(quotes, pair.name),
+  quote: getQuote(quotes, pair.id),
   pair,
 });
 

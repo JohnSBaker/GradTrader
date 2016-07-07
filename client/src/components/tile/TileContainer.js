@@ -3,7 +3,7 @@ import Tile from './Tile';
 import { getQuote } from '../../reducers/quotes';
 
 const mapStateToProps = ({ quotes }, { pair }) => ({
-  quote: getQuote(quotes, pair.name),
+  quote: getQuote(quotes, pair.id),
   pair,
 });
 

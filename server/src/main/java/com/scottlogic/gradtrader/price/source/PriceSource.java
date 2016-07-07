@@ -4,7 +4,7 @@ import com.scottlogic.gradtrader.price.Price;
 
 public interface PriceSource {
 
-    public Price getPrice();
+    Price getPrice();
 
-    public Price getPrice(long time);
+    Price getPrice(long time);
 }

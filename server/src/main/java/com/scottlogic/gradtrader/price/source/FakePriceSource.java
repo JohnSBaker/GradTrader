@@ -9,15 +9,15 @@ public class FakePriceSource implements PriceSource {
 
     Logger logger = LoggerFactory.getLogger(FakePriceSource.class);
 
-    private final String pair;
+    private final String pairId;
     private final long base;
     private final long period;
     private final long range;
     private final long halfSpread;
 
-    public FakePriceSource(String pair, long base, long period, long range,
+    public FakePriceSource(String pairId, long base, long period, long range,
             long spread) {
-        this.pair = pair;
+        this.pairId = pairId;
         this.base = base;
         this.period = period;
         this.range = range;
@@ -36,7 +36,7 @@ public class FakePriceSource implements PriceSource {
         long mid = base
                 + (Math.abs(mod(time, period) - period / 2) - (period / 4)) * 2
                 * range / period;
-        return new Price(pair, time, mid - halfSpread, mid + halfSpread);
+        return new Price(pairId, time, mid - halfSpread, mid + halfSpread);
     }
 
 }

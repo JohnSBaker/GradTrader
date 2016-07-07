@@ -20,7 +20,7 @@ public class PriceFeed {
 
     Logger logger = LoggerFactory.getLogger(PriceFeed.class);
 
-    private final String pair;
+    private final String pairId;
 
     private PriceSource priceSource;
     private ScheduledThreadPoolExecutor scheduledExecutor;
@@ -29,11 +29,11 @@ public class PriceFeed {
     private Future<?> future;
 
     @Inject
-    protected PriceFeed(String pair, PriceSourceFactory priceSourceFactory,
+    protected PriceFeed(String pairId, PriceSourceFactory priceSourceFactory,
             ScheduledThreadPoolExecutor scheduledExecutor)
             throws PriceException {
-        this.pair = pair;
-        this.priceSource = priceSourceFactory.getPriceSource(pair);
+        this.pairId = pairId;
+        this.priceSource = priceSourceFactory.getPriceSource(pairId);
         this.scheduledExecutor = scheduledExecutor;
     }
 
@@ -46,7 +46,7 @@ public class PriceFeed {
                 e.printStackTrace();
             }
         }, frequencyMillis, frequencyMillis, TimeUnit.MILLISECONDS);
-        logger.debug("Price feed for {} every {}ms", pair, frequencyMillis);
+        logger.debug("Price feed for {} every {}ms", pairId, frequencyMillis);
     }
 
     public void stop() {

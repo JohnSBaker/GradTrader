@@ -31,16 +31,16 @@ class Confirmation extends Component {
 
   cancelTrade = () => {
     this.clearIntervals();
-    this.props.cancelTrade(this.props.pair.name);
+    this.props.cancelTrade(this.props.pair.id);
   }
 
   confirmTrade = () => {
     this.clearIntervals();
-    this.props.confirmTrade(this.props.pair.name);
+    this.props.confirmTrade(this.props.pair.id);
   }
 
   render() {
-    const baseCurrency = this.props.pair.name.substr(0, 3);
+    const baseCurrency = this.props.pair.id.substr(0, 3);
     return (
       <div className="confirmation">
         <div>
@@ -69,7 +69,7 @@ class Confirmation extends Component {
 
 Confirmation.propTypes = {
   quote: React.PropTypes.object.isRequired,
-  pair: React.PropTypes.string.isRequired,
+  pair: React.PropTypes.object.isRequired,
   confirmTrade: React.PropTypes.func.isRequired,
   cancelTrade: React.PropTypes.func.isRequired,
 };

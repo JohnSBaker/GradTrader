@@ -16,25 +16,25 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
     private ScheduledThreadPoolExecutor scheduledExecutor;
     private GradTraderConfiguration configuration;
 
-    private Map<String, PriceFeed> priceFeeds = new LinkedHashMap<String, PriceFeed>();
+    private Map<String, PriceFeed> priceFeeds = new LinkedHashMap<>();
 
     @Inject
     public PriceFeedFactoryImpl(PriceSourceFactory priceSourceFactory,
-            ScheduledThreadPoolExecutor scheduledExecutor,
-            GradTraderConfiguration configuration) {
+                                ScheduledThreadPoolExecutor scheduledExecutor,
+                                GradTraderConfiguration configuration) {
         this.priceSourceFactory = priceSourceFactory;
         this.scheduledExecutor = scheduledExecutor;
         this.configuration = configuration;
     }
 
-    private PriceFeed createPriceFeed(String pair) {
-        if (!configuration.getValidPairs().containsKey(pair)) {
+    private PriceFeed createPriceFeed(String pairId) {
+        if (!configuration.getValidPairs().containsKey(pairId)) {
             return null;
         }
         try {
-            PriceFeed feed = new PriceFeed(pair, priceSourceFactory,
+            PriceFeed feed = new PriceFeed(pairId, priceSourceFactory,
                     scheduledExecutor);
-            priceFeeds.put(pair, feed);
+            priceFeeds.put(pairId, feed);
             feed.start(configuration.getPriceFeedMillis());
             return feed;
         } catch (PriceException pe) {
@@ -42,10 +42,10 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
         }
     }
 
-    public PriceFeed getPriceFeed(String pair) throws SubscriptionException {
-        PriceFeed feed = priceFeeds.get(pair);
+    public PriceFeed getPriceFeed(String pairId) throws SubscriptionException {
+        PriceFeed feed = priceFeeds.get(pairId);
         if (feed == null) {
-            feed = createPriceFeed(pair);
+            feed = createPriceFeed(pairId);
             if (feed == null) {
                 throw new SubscriptionException("Invalid pair");
             }

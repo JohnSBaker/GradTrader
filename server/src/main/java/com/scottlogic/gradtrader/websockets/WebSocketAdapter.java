@@ -91,19 +91,19 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
     }
 
     private void subscribePrice(WebSocket webSocket,
-            ClientBroadcaster clientBroadcaster, String pairName)
+            ClientBroadcaster clientBroadcaster, String pairId)
             throws SubscriptionException {
-        clientBroadcaster.subscribe(pairName);
-        sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_PRICE, pairName,
+        clientBroadcaster.subscribe(pairId);
+        sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_PRICE, pairId,
                 "success", "");
     }
 
     private void unsubscribePrice(WebSocket webSocket,
-            ClientBroadcaster clientBroadcaster, String pairName)
+            ClientBroadcaster clientBroadcaster, String pairId)
             throws SubscriptionException {
-        clientBroadcaster.unsubscribe(pairName);
+        clientBroadcaster.unsubscribe(pairId);
         sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE,
-                pairName, "success", "");
+                pairId, "success", "");
     }
 
     private void sendResponse(WebSocket webSocket, String action,

@@ -6,23 +6,23 @@ import com.scottlogic.gradtrader.websockets.WebSocketData;
 
 public class Price implements WebSocketData {
 
-    private final String pair;
+    private final String pairId;
     private final long time;
     private final long bid;
     private final long ask;
     private final long mid;
 
     @JsonCreator
-    public Price(String pair, long time, long bid, long ask) {
-        this.pair = pair;
+    public Price(String pairId, long time, long bid, long ask) {
+        this.pairId = pairId;
         this.time = time;
         this.bid = bid;
         this.ask = ask;
         this.mid = (bid + ask) / 2;
     }
 
-    public String getPair() {
-        return pair;
+    public String getPairId() {
+        return pairId;
     }
 
     public long getTime() {

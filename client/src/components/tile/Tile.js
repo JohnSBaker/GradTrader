@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Confirmation from './ConfirmationContainer';
 import Pair from './PairContainer';
 import './Tile.scss';
 
-const Tile = ({ quote, pair }) => {
-  const child = quote ? <Confirmation pair={pair} /> : <Pair pair={pair} />;
+class Tile extends Component {
 
-  return (
-    <div className="tile">
-      {child}
-    </div>
-  );
-};
+  render() {
+    const child = this.props.quote ?
+      <Confirmation pair={this.props.pair} /> :
+      <Pair pair={this.props.pair} />;
+
+    return (
+      <div className="tile">
+        {child}
+      </div>
+    );
+  }
+}
 
 Tile.propTypes = {
-  pair: React.PropTypes.object.isRequired,
-  quote: React.PropTypes.object,
+  quote: PropTypes.object,
+  pair: PropTypes.object.isRequired,
 };
 
 export default Tile;

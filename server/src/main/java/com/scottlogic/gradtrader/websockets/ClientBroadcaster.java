@@ -39,27 +39,27 @@ public class ClientBroadcaster extends SimpleBroadcaster implements
                 TimeUnit.MILLISECONDS);
     }
 
-    public void subscribe(String pair) throws SubscriptionException {
-        if (subscribedPairs.contains(pair)) {
+    public void subscribe(String pairId) throws SubscriptionException {
+        if (subscribedPairs.contains(pairId)) {
             throw new SubscriptionException("Already subscribed");
         }
-        priceFeedFactory.getPriceFeed(pair).addListener(this);
-        subscribedPairs.add(pair);
+        priceFeedFactory.getPriceFeed(pairId).addListener(this);
+        subscribedPairs.add(pairId);
     }
 
-    public void unsubscribe(String pair) throws SubscriptionException {
-        if (!subscribedPairs.contains(pair)) {
+    public void unsubscribe(String pairId) throws SubscriptionException {
+        if (!subscribedPairs.contains(pairId)) {
             throw new SubscriptionException("Not subscribed");
         }
-        priceFeedFactory.getPriceFeed(pair).removeListener(this);
-        subscribedPairs.remove(pair);
-        prices.remove(pair);
+        priceFeedFactory.getPriceFeed(pairId).removeListener(this);
+        subscribedPairs.remove(pairId);
+        prices.remove(pairId);
     }
 
     @Override
     public void notify(Price price) {
-        if (subscribedPairs.contains(price.getPair())) {
-            prices.put(price.getPair(), price);
+        if (subscribedPairs.contains(price.getPairId())) {
+            prices.put(price.getPairId(), price);
         }
     }
 

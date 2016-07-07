@@ -6,7 +6,7 @@ const quotes = (state = {}, action) => {
     case QUOTE_RESPONSE_SUCCESS:
       return {
         ...state,
-        [action.pairName]: {
+        [action.pairId]: {
           amount: action.amount,
           purchaseType: action.purchaseType,
           price: action.price,
@@ -15,7 +15,7 @@ const quotes = (state = {}, action) => {
       };
     case QUOTE_EXPIRED: {
       const newState = Object.assign({}, state);
-      delete newState[action.pairName];
+      delete newState[action.pairId];
       return newState;
     }
     default:
@@ -23,6 +23,6 @@ const quotes = (state = {}, action) => {
   }
 };
 
-export const getQuote = (state = {}, pairName) => (state[pairName]);
+export const getQuote = (state = {}, pairId) => (state[pairId]);
 
 export default quotes;

@@ -44,9 +44,9 @@ export const getValidPairs = () => (dispatch) => {
     );
 };
 
-export const tileSelected = (pairName) => ({
+export const tileSelected = (pairId) => ({
   type: SET_SELECTED_TILE,
-  pairName,
+  pairId,
 });
 
 export const addTrade = (trade) => ({
@@ -54,10 +54,10 @@ export const addTrade = (trade) => ({
   ...trade,
 });
 
-export const requestQuote = (pairName, amount, purchaseType) => (dispatch) => {
+export const requestQuote = (pairId, amount, purchaseType) => (dispatch) => {
   dispatch({
     type: QUOTE_REQUEST,
-    pairName,
+    pairId,
     amount,
     purchaseType,
   });
@@ -66,7 +66,7 @@ export const requestQuote = (pairName, amount, purchaseType) => (dispatch) => {
   dispatch({
     type: QUOTE_RESPONSE_SUCCESS,
     amount,
-    pairName,
+    pairId,
     purchaseType,
     timestamp: Date.now(),
     id: 9876,
@@ -76,7 +76,7 @@ export const requestQuote = (pairName, amount, purchaseType) => (dispatch) => {
 
 export const confirmTrade = () => () => console.log('confirm trade');
 
-export const cancelTrade = (pairName) => ({
+export const cancelTrade = (pairId) => ({
   type: QUOTE_EXPIRED,
-  pairName,
+  pairId,
 });
