@@ -30,8 +30,7 @@ public class PriceFeed {
 
     @Inject
     protected PriceFeed(String pairId, PriceSourceFactory priceSourceFactory,
-            ScheduledThreadPoolExecutor scheduledExecutor)
-            throws PriceException {
+            ScheduledThreadPoolExecutor scheduledExecutor) throws PriceException {
         this.pairId = pairId;
         this.priceSource = priceSourceFactory.getPriceSource(pairId);
         this.scheduledExecutor = scheduledExecutor;

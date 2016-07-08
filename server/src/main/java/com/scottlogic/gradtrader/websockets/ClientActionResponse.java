@@ -16,10 +16,8 @@ public class ClientActionResponse {
     private final String message;
 
     @JsonCreator
-    public ClientActionResponse(@JsonProperty("action") String action,
-            @JsonProperty("subject") String subject,
-            @JsonProperty("result") String result,
-            @JsonProperty("message") String message) {
+    public ClientActionResponse(@JsonProperty("action") String action, @JsonProperty("subject") String subject,
+            @JsonProperty("result") String result, @JsonProperty("message") String message) {
         this.action = action;
         this.subject = subject;
         this.result = result;

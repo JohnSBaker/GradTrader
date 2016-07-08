@@ -12,18 +12,17 @@ import org.atmosphere.guice.AtmosphereGuiceServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.scottlogic.gradtrader.config.GradTraderConfiguration;
 import com.scottlogic.gradtrader.config.GradTraderModule;
 import com.scottlogic.gradtrader.health.PairsHealthCheck;
 import com.scottlogic.gradtrader.pair.PairResource;
+import com.scottlogic.gradtrader.trade.RfqResource;
+import com.scottlogic.gradtrader.trade.TradeResource;
 
 public class App extends Application<GradTraderConfiguration> {
 
     Logger logger = LoggerFactory.getLogger(App.class);
-
-    private static GradTraderModule gradTraderModule;
 
     public static void main(String[] args) throws Exception {
         new App().run(args);
@@ -34,20 +33,17 @@ public class App extends Application<GradTraderConfiguration> {
         bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
     }
 
-    public static GradTraderModule getGradTraderModule() {
-        return App.gradTraderModule;
-    }
-
     @Override
-    public void run(GradTraderConfiguration configuration,
-            Environment environment) {
+    public void run(GradTraderConfiguration configuration, Environment environment) {
 
-        gradTraderModule = new GradTraderModule(configuration, environment);
-        final Injector injector = Guice.createInjector(gradTraderModule);
+        GradTraderModule gradTraderModule = new GradTraderModule(configuration, environment);
+
+        final Injector injector = gradTraderModule.getInjector();
 
         environment.jersey().register(injector.getInstance(PairResource.class));
-        environment.healthChecks().register("pairs",
-                injector.getInstance(PairsHealthCheck.class));
+        environment.healthChecks().register("pairs", injector.getInstance(PairsHealthCheck.class));
+        environment.jersey().register(injector.getInstance(RfqResource.class));
+        environment.jersey().register(injector.getInstance(TradeResource.class));
 
         runWebSocketServer(environment);
 
@@ -57,20 +53,14 @@ public class App extends Application<GradTraderConfiguration> {
     private void runWebSocketServer(Environment environment) {
         AtmosphereGuiceServlet servlet = new AtmosphereGuiceServlet();
 
-        servlet.framework().addInitParameter(
-                "org.atmosphere.cpr.objectFactory",
+        servlet.framework().addInitParameter("org.atmosphere.cpr.objectFactory",
                 "com.scottlogic.gradtrader.config.ObjectFactory");
 
-        servlet.framework().addInitParameter(
-                "com.sun.jersey.config.property.packages",
-                "gradtrader.websockets");
-        servlet.framework().addInitParameter(
-                ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
-        servlet.framework().addInitParameter(
-                ApplicationConfig.WEBSOCKET_SUPPORT, "true");
+        servlet.framework().addInitParameter("com.sun.jersey.config.property.packages", "gradtrader.websockets");
+        servlet.framework().addInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
+        servlet.framework().addInitParameter(ApplicationConfig.WEBSOCKET_SUPPORT, "true");
 
-        ServletRegistration.Dynamic servletHolder = environment.servlets()
-                .addServlet("WSService", servlet);
+        ServletRegistration.Dynamic servletHolder = environment.servlets().addServlet("WSService", servlet);
 
         servletHolder.addMapping("/api/ws/*");
     }

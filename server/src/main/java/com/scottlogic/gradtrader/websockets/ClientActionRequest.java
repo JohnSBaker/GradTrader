@@ -7,15 +7,14 @@ public class ClientActionRequest {
 
     public final static String SUBSCRIBE_PRICE = "subscribePrice";
     public final static String UNSUBSCRIBE_PRICE = "unsubscribePrice";
-    public final static String SUBSCRIBE_TRADES = "subscribeTrades";
-    public final static String UNSUBSCRIBE_TRADES = "unsubscribeTrades";
+    public final static String SUBSCRIBE_TRADE = "subscribeTrade";
+    public final static String UNSUBSCRIBE_TRADE = "unsubscribeTrade";
 
     private final String action;
     private final String subject;
 
     @JsonCreator
-    public ClientActionRequest(@JsonProperty("action") String action,
-            @JsonProperty("subject") String subject) {
+    public ClientActionRequest(@JsonProperty("action") String action, @JsonProperty("subject") String subject) {
         this.action = action;
         this.subject = subject;
     }

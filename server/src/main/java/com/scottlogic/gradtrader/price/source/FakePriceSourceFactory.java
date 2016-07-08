@@ -32,8 +32,7 @@ public class FakePriceSourceFactory implements PriceSourceFactory {
             Pair pair = validPairs.get(pairId);
             int priceDecimals = pair.getDecimals();
             long pointSize = (long) Math.pow(10, priceDecimals);
-            priceSource = new FakePriceSource(pairId, testPrice, 20000L,
-                    2 * pointSize / 100L, 2 * pointSize / 100L);
+            priceSource = new FakePriceSource(pairId, testPrice, 20000L, 2 * pointSize / 100L, 2 * pointSize / 100L);
             priceSources.put(pairId, priceSource);
         }
         return priceSource;

@@ -26,8 +26,7 @@ public class TestFakePriceSource {
     }
 
     @Test
-    public void testCall() throws JsonParseException, JsonMappingException,
-            IOException {
+    public void testCall() throws JsonParseException, JsonMappingException, IOException {
         assertPriceAfterTick(150000L, 152000L, 0L); // 0s
         assertPriceAfterTick(149800L, 151800L, 1000L);
         assertPriceAfterTick(149600L, 151600L, 1000L);
@@ -54,9 +53,8 @@ public class TestFakePriceSource {
         assertPriceAfterTick(149800L, 151800L, 900L); // 21s
     }
 
-    private void assertPriceAfterTick(long expectBid, long expectAsk,
-            long tickMillis) throws JsonParseException, JsonMappingException,
-            IOException {
+    private void assertPriceAfterTick(long expectBid, long expectAsk, long tickMillis) throws JsonParseException,
+            JsonMappingException, IOException {
         time = time + tickMillis;
         Price actualPrice = target.getPrice(time);
         assertEquals(pair, actualPrice.getPairId());

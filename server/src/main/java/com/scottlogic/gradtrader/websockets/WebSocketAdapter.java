@@ -24,22 +24,15 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    private GradTraderConfiguration configuration;
-    private BroadcasterFactory factory;
-
     @Inject
-    public WebSocketAdapter(GradTraderConfiguration configuration,
-            BroadcasterFactory factory) {
-        super();
-        this.configuration = configuration;
-        this.factory = factory;
-    }
+    private GradTraderConfiguration configuration;
+    @Inject
+    private BroadcasterFactory factory;
 
     @Override
     public void onOpen(WebSocket webSocket) throws IOException {
         try {
-            ClientActionResponse response = new ClientActionResponse("connect",
-                    "", "success", "");
+            ClientActionResponse response = new ClientActionResponse("connect", "", "success", "");
             webSocket.resource().write(mapper.writeValueAsString(response));
 
         } catch (Exception e) {
@@ -49,8 +42,7 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
 
     private ClientBroadcaster getBroadcaster(WebSocket webSocket) {
 
-        ClientBroadcaster broadcaster = (ClientBroadcaster) factory
-                .lookup(webSocket);
+        ClientBroadcaster broadcaster = (ClientBroadcaster) factory.lookup(webSocket);
         if (broadcaster == null) {
             broadcaster = (ClientBroadcaster) factory.get(webSocket);
             broadcaster.addAtmosphereResource(webSocket.resource());
@@ -60,11 +52,9 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
         return broadcaster;
     }
 
-    public void onTextMessage(WebSocket webSocket, String message)
-            throws IOException {
+    public void onTextMessage(WebSocket webSocket, String message) throws IOException {
         ClientBroadcaster clientBroadcaster = getBroadcaster(webSocket);
-        ClientActionRequest clientActionRequest = mapper.readValue(message,
-                ClientActionRequest.class);
+        ClientActionRequest clientActionRequest = mapper.readValue(message, ClientActionRequest.class);
         String subject = clientActionRequest.getSubject();
         logger.debug("{}: {}", webSocket.uuid(), message);
         String action = clientActionRequest.getAction();
@@ -76,40 +66,39 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
             case ClientActionRequest.UNSUBSCRIBE_PRICE:
                 unsubscribePrice(webSocket, clientBroadcaster, subject);
                 break;
-            case ClientActionRequest.SUBSCRIBE_TRADES:
+            case ClientActionRequest.SUBSCRIBE_TRADE:
+                subscribeTrade(webSocket, clientBroadcaster, subject);
                 break;
-            case ClientActionRequest.UNSUBSCRIBE_TRADES:
+            case ClientActionRequest.UNSUBSCRIBE_TRADE:
                 break;
             default:
-                sendResponse(webSocket, action, subject, "error",
-                        "Unknown action");
+                sendResponse(webSocket, action, subject, "error", "Unknown action");
             }
         } catch (SubscriptionException e) {
-            sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE,
-                    subject, "error", e.getMessage());
+            sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE, subject, "error", e.getMessage());
         }
     }
 
-    private void subscribePrice(WebSocket webSocket,
-            ClientBroadcaster clientBroadcaster, String pairId)
+    private void subscribePrice(WebSocket webSocket, ClientBroadcaster clientBroadcaster, String pairId)
             throws SubscriptionException {
-        clientBroadcaster.subscribe(pairId);
-        sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_PRICE, pairId,
-                "success", "");
+        clientBroadcaster.subscribePrices(pairId);
+        sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_PRICE, pairId, "success", "");
     }
 
-    private void unsubscribePrice(WebSocket webSocket,
-            ClientBroadcaster clientBroadcaster, String pairId)
+    private void unsubscribePrice(WebSocket webSocket, ClientBroadcaster clientBroadcaster, String pairId)
             throws SubscriptionException {
-        clientBroadcaster.unsubscribe(pairId);
-        sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE,
-                pairId, "success", "");
+        clientBroadcaster.unsubscribePrices(pairId);
+        sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE, pairId, "success", "");
     }
 
-    private void sendResponse(WebSocket webSocket, String action,
-            String subject, String result, String message) {
-        ClientActionResponse response = new ClientActionResponse(action,
-                subject, result, message);
+    private void subscribeTrade(WebSocket webSocket, ClientBroadcaster clientBroadcaster, String userId)
+            throws SubscriptionException {
+        clientBroadcaster.subscribeTrades(userId);
+        sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_TRADE, userId, "success", "");
+    }
+
+    private void sendResponse(WebSocket webSocket, String action, String subject, String result, String message) {
+        ClientActionResponse response = new ClientActionResponse(action, subject, result, message);
         try {
             String json = mapper.writeValueAsString(response);
             logger.debug(json);
@@ -124,8 +113,7 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
         logger.debug("Client closed socket {} ", webSocket.uuid());
     }
 
-    public void onError(WebSocket webSocket,
-            WebSocketProcessor.WebSocketException t) {
+    public void onError(WebSocket webSocket, WebSocketProcessor.WebSocketException t) {
         logger.debug("Client on socket {}: error: ", webSocket.uuid(), t);
     }
 

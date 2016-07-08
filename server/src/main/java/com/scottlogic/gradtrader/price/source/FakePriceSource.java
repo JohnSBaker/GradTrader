@@ -15,8 +15,7 @@ public class FakePriceSource implements PriceSource {
     private final long range;
     private final long halfSpread;
 
-    public FakePriceSource(String pairId, long base, long period, long range,
-            long spread) {
+    public FakePriceSource(String pairId, long base, long period, long range, long spread) {
         this.pairId = pairId;
         this.base = base;
         this.period = period;
@@ -33,9 +32,7 @@ public class FakePriceSource implements PriceSource {
     }
 
     public Price getPrice(long time) {
-        long mid = base
-                + (Math.abs(mod(time, period) - period / 2) - (period / 4)) * 2
-                * range / period;
+        long mid = base + (Math.abs(mod(time, period) - period / 2) - (period / 4)) * 2 * range / period;
         return new Price(pairId, time, mid - halfSpread, mid + halfSpread);
     }
 

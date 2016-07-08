@@ -15,12 +15,8 @@ import com.google.inject.Inject;
 @Produces(MediaType.APPLICATION_JSON)
 public class PairResource {
 
-    private final Map<String, Pair> pairs;
-
     @Inject
-    public PairResource(Map<String, Pair> pairs) {
-        this.pairs = pairs;
-    }
+    private Map<String, Pair> pairs;
 
     @GET
     @Timed
