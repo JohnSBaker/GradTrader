@@ -63,5 +63,4 @@ testPrices:
   EURAUD: 149000
   NZDAUD:  95000
   NZDGBP:  53000
-priceFeedMillis: 100
-clientBroadcastMillis: 1000
+clientBroadcastMillis: 500

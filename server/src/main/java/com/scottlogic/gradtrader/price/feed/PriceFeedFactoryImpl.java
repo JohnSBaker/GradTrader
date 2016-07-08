@@ -2,6 +2,7 @@ package com.scottlogic.gradtrader.price.feed;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
 
     private Map<String, PriceFeed> priceFeeds = new LinkedHashMap<>();
 
+    private Random random = new Random(System.currentTimeMillis());
+
     private PriceFeed createPriceFeed(String pairId) {
         if (!configuration.getValidPairs().containsKey(pairId)) {
             return null;
@@ -35,7 +38,9 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
         try {
             PriceFeed feed = new PriceFeed(pairId, priceSourceFactory, scheduledExecutor);
             priceFeeds.put(pairId, feed);
-            feed.start(configuration.getPriceFeedMillis());
+            int feedRateRange = (int) configuration.getClientBroadcastMillis();
+            int feedRate = feedRateRange / 2 + random.nextInt(feedRateRange);
+            feed.start(feedRate);
             return feed;
         } catch (PriceException pe) {
             return null;

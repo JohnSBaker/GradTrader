@@ -42,6 +42,7 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
 
     public void start(long frequencyMillis) {
         scheduleFixedBroadcast(this, 0, frequencyMillis, TimeUnit.MILLISECONDS);
+        logger.debug("Broadcast prices to client every {}ms", frequencyMillis);
     }
 
     public void subscribePrices(String pairId) throws SubscriptionException {

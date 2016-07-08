@@ -20,9 +20,6 @@ public class GradTraderConfiguration extends Configuration {
     private Map<String, Long> testPrices;
 
     @Min(1L)
-    private long priceFeedMillis;
-
-    @Min(1L)
     private long clientBroadcastMillis;
 
     @JsonProperty
@@ -33,11 +30,6 @@ public class GradTraderConfiguration extends Configuration {
     @JsonProperty
     public Map<String, Long> getTestPrices() {
         return testPrices;
-    }
-
-    @JsonProperty
-    public long getPriceFeedMillis() {
-        return priceFeedMillis;
     }
 
     @JsonProperty

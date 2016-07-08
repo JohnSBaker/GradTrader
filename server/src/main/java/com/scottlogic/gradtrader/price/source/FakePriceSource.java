@@ -21,6 +21,8 @@ public class FakePriceSource implements PriceSource {
         this.period = period;
         this.range = range;
         this.halfSpread = spread / 2;
+        logger.debug("Fake price source for {}: base {} range {} spread {} period {}ms ", pairId, base, range, spread,
+                period);
     }
 
     public Price getPrice() {
