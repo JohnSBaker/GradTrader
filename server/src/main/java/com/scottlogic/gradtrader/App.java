@@ -17,6 +17,7 @@ import com.scottlogic.gradtrader.config.GradTraderConfiguration;
 import com.scottlogic.gradtrader.config.GradTraderModule;
 import com.scottlogic.gradtrader.health.PairsHealthCheck;
 import com.scottlogic.gradtrader.pair.PairResource;
+import com.scottlogic.gradtrader.price.history.PriceHistoryResource;
 import com.scottlogic.gradtrader.trade.RfqResource;
 import com.scottlogic.gradtrader.trade.TradeResource;
 
@@ -41,6 +42,7 @@ public class App extends Application<GradTraderConfiguration> {
         final Injector injector = gradTraderModule.getInjector();
 
         environment.jersey().register(injector.getInstance(PairResource.class));
+        environment.jersey().register(injector.getInstance(PriceHistoryResource.class));
         environment.healthChecks().register("pairs", injector.getInstance(PairsHealthCheck.class));
         environment.jersey().register(injector.getInstance(RfqResource.class));
         environment.jersey().register(injector.getInstance(TradeResource.class));

@@ -34,6 +34,7 @@ public class GradTraderModule extends AbstractModule {
     private final Environment environment;
 
     private TradeManager tradeManager;
+    private PriceSourceFactory priceSourceFactory;
 
     private final Injector injector;
 
@@ -56,7 +57,6 @@ public class GradTraderModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(PriceFeedFactory.class).to(PriceFeedFactoryImpl.class);
-        bind(PriceSourceFactory.class).to(FakePriceSourceFactory.class);
         bind(ScheduledThreadPoolExecutor.class).to(ScheduledExecutor.class);
         bind(QuoteEngine.class).to(QuoteEngineImpl.class);
     }
@@ -73,6 +73,15 @@ public class GradTraderModule extends AbstractModule {
             injector.injectMembers(tradeManager);
         }
         return tradeManager;
+    }
+
+    @Provides
+    public PriceSourceFactory providePriceSourceFactory() {
+        if (priceSourceFactory == null) {
+            priceSourceFactory = new FakePriceSourceFactory();
+            injector.injectMembers(priceSourceFactory);
+        }
+        return priceSourceFactory;
     }
 
     @Provides
