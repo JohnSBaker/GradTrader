@@ -28,8 +28,17 @@ class Blotter extends Component {
               rowHeight={39}
               noRowsRenderer={this.noRowsRenderer}
               headerHeight={24}
+              className="blotter-table"
+              rowClassName={
+                ({ index }) => {
+                  if (index === -1) {
+                    return 'blotter-header-row';
+                  }
+                  return index % 2 ? 'blotter-odd-row' : 'blotter-even-row';
+                }
+              }
               rowGetter={
-               ({ index }) => (trades[index]) // Could also be a DOM element
+                ({ index }) => (trades[index])
               }
             >
               <FlexColumn

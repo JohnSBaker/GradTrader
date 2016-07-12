@@ -7,22 +7,20 @@
   color: $primary-white;
 }
 
-.FlexTable {
-  .FlexTable__headerRow {
+.blotter-table {
+  .blotter-header-row {
     background-color: $primary-dark-blue2;
     font-size: $font-xs-1;
     font-weight: $font-regular;
   }
 
-  .Grid__innerScrollContainer {
-    background-color: $primary-dark-blue;
-
-    > :nth-child(even) {
-      background-color: $primary-dark-blue2;
-    }
+  .blotter-odd-row {
+    background-color: $primary-dark-blue2;
+    font-size: $font-s-3;
+    font-weight: $font-light;
   }
 
-  .FlexTable__row {
+  .blotter-even-row {
     font-size: $font-s-3;
     font-weight: $font-light;
   }
