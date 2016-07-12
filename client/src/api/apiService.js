@@ -17,14 +17,21 @@ export const getValidPairs = () => (
   .then(parseJSON)
 );
 
-export const getQuote = (pair, amount, type) => (
+export const requestQuote = (pairId, quantity, direction, indicativePrice) => (
   fetch('api/quote', {
     method: 'post',
-    body: {
-      amount,
-      pair,
-      type,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      userId: '123',
+      portfolioId: '1234',
+      pairId,
+      quantity,
+      direction,
+      indicativePrice,
+    }),
   })
   .then(checkStatus)
   .then(parseJSON)

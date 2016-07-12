@@ -1,7 +1,8 @@
 import * as api from '../api/apiService';
+import { getQuotePrice } from '../reducers/prices';
 
 export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
-export const QUOTE_RESPONSE_ERROR = 'QUOTE_RESPONSE_ERROR';
+export const QUOTE_RESPONSE_FAILURE = 'QUOTE_RESPONSE_FAILURE';
 
 const BUY = 'BUY';
 const SELL = 'SELL';
@@ -16,17 +17,18 @@ const quoteResponseSuccess = ({ pairId, quantity, direction, price, expires, quo
   quoteId,
 });
 
-const requestQuote = (pairId, quantity, direction) => (dispatch) => {
-  // Will be replaced by real request when avalable
-  const quote = {
-    pairId,
-    quantity,
-    direction,
-    price: 1.23456,
-    expires: Date.now(),
-    quoteId: 9876,
-  };
-  dispatch(quoteResponseSuccess(quote));
+const quoteResponseFailure = (error) => ({
+  type: QUOTE_RESPONSE_FAILURE,
+  message: error.message || 'An unknown error occurred',
+});
+
+export const requestQuote = (pairId, quantity, direction) => (dispatch, getState) => {
+  const indicativePrice = getQuotePrice(getState().prices, pairId, direction);
+
+  api
+    .requestQuote(pairId, quantity, direction, indicativePrice)
+    .then((quote) => dispatch(quoteResponseSuccess(quote)))
+    .catch((error) => dispatch(quoteResponseFailure(error)));
 };
 
 export const buyRequest = (pairId, quantity) => requestQuote(pairId, quantity, BUY);

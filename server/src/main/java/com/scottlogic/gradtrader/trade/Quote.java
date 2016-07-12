@@ -13,7 +13,7 @@ public class Quote {
 
     private final long time;
     private final long expires;
-    private final String pair;
+    private final String pairId;
     private final long quantity;
     private final Direction direction;
     private final long price;
@@ -23,7 +23,7 @@ public class Quote {
     @JsonCreator
     public Quote(@JsonProperty("userId") String userId, @JsonProperty("portfolioId") String portfolioId,
             @JsonProperty("quoteId") long quoteId, @JsonProperty("time") long time,
-            @JsonProperty("expiry") long expiry, @JsonProperty("pair") String pair,
+            @JsonProperty("expiry") long expiry, @JsonProperty("pairId") String pairId,
             @JsonProperty("quantity") long quantity, @JsonProperty("direction") Direction direction,
             @JsonProperty("price") long price) {
         super();
@@ -32,7 +32,7 @@ public class Quote {
         this.quoteId = quoteId;
         this.time = time;
         this.expires = time + expiry;
-        this.pair = pair;
+        this.pairId = pairId;
         this.quantity = quantity;
         this.direction = direction;
         this.price = price;
@@ -58,8 +58,8 @@ public class Quote {
         return expires;
     }
 
-    public String getPair() {
-        return pair;
+    public String getPairId() {
+        return pairId;
     }
 
     public long getQuantity() {

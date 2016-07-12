@@ -16,7 +16,7 @@ public class QuoteEngineImpl implements QuoteEngine {
     private PriceSourceFactory priceSourceFactory;
 
     public Quote createQuote(Rfq rfq) throws PriceException {
-        Price price = priceSourceFactory.getPriceSource(rfq.getPair()).getPrice();
+        Price price = priceSourceFactory.getPriceSource(rfq.getPairId()).getPrice();
         long priceToUse;
         if (rfq.getDirection() == Direction.BUY) {
             priceToUse = price.getBid();
@@ -24,7 +24,7 @@ public class QuoteEngineImpl implements QuoteEngine {
             priceToUse = price.getAsk();
         }
         Quote quote = new Quote(rfq.getUserId(), rfq.getPortfolioId(), nextQuoteId++, System.currentTimeMillis(),
-                quoteExpiry, rfq.getPair(), rfq.getQuantity(), rfq.getDirection(), priceToUse);
+                quoteExpiry, rfq.getPairId(), rfq.getQuantity(), rfq.getDirection(), priceToUse);
         return quote;
     }
 

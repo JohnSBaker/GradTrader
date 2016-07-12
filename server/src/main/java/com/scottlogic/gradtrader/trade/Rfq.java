@@ -8,19 +8,19 @@ public class Rfq {
     private final String userId;
     private final String portfolioId;
 
-    private final String pair;
+    private final String pairId;
     private final long quantity;
     private final Direction direction;
     private final long indicativePrice;
 
     @JsonCreator
     public Rfq(@JsonProperty("userId") String userId, @JsonProperty("portfolioId") String portfolioId,
-            @JsonProperty("pair") String pair, @JsonProperty("quantity") long quantity,
+            @JsonProperty("pairId") String pairId, @JsonProperty("quantity") long quantity,
             @JsonProperty("direction") String direction, @JsonProperty("indicativePrice") long indicativePrice) {
         super();
         this.userId = userId;
         this.portfolioId = portfolioId;
-        this.pair = pair;
+        this.pairId = pairId;
         this.quantity = quantity;
         this.direction = Direction.valueOf(direction);
         this.indicativePrice = indicativePrice;
@@ -34,8 +34,8 @@ public class Rfq {
         return portfolioId;
     }
 
-    public String getPair() {
-        return pair;
+    public String getPairId() {
+        return pairId;
     }
 
     public long getQuantity() {

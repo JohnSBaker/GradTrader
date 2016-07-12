@@ -1,4 +1,5 @@
-import { ADD_PRICE, ADD_PRICES } from '../actions/prices';
+
+import { ADD_PRICES } from '../actions/prices';
 
 /**
  * Transforms the new prices from an array to an object map
@@ -29,7 +30,12 @@ const prices = (state = {}, action) => {
   }
 };
 
-export const getPrice = (state = {}, pair = {}, type) => {
+export const getQuotePrice = (state = {}, pairId, direction) => {
+  const subState = state[pairId];
+  return direction === 'BUY' ? subState.bid : subState.ask;
+};
+
+export const getFormattedPrice = (state = {}, pair = {}, type) => {
   const subState = state[pair.id];
 
   if (!subState) {

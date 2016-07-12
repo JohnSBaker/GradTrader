@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import prices, { getPrice } from '../../src/reducers/prices';
+import prices, { getFormattedPrice } from '../../src/reducers/prices';
 import { ADD_PRICES } from '../../src/actions/prices';
 
 describe('Prices Reducer - ADD_PRICES', () => {
@@ -120,7 +120,7 @@ describe('Prices Reducer - ADD_PRICES', () => {
   });
 });
 
-describe('Prices Reducer - getPrice selector', () => {
+describe('Prices Reducer - getFormattedPrice selector', () => {
   it('can get bid price using selector', () => {
     const state = {
       GDPUSD: {
@@ -132,7 +132,7 @@ describe('Prices Reducer - getPrice selector', () => {
     };
     const type = 'bid';
 
-    expect(getPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
+    expect(getFormattedPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
       price: 25.12345,
       delta: 1,
     });
@@ -149,7 +149,7 @@ describe('Prices Reducer - getPrice selector', () => {
     };
     const type = 'ask';
 
-    expect(getPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
+    expect(getFormattedPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
       price: 22.00001,
       delta: -1,
     });
