@@ -12,7 +12,7 @@ class Pair extends Component {
   render() {
     const { pair, buyRequest, sellRequest, selectTile, isSelected } = this.props;
     const baseCurrency = pair.id.substr(0, 3);
-    const counterCurrency = pair.id.substr(3);
+    const counterCurrency = pair.id.substr(3, 3);
 
     const tileClass = `pair${isSelected ? ' selected' : ''}`;
 

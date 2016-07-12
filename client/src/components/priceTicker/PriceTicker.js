@@ -1,9 +1,10 @@
 import React from 'react';
+import classnames from 'classnames';
 import './PriceTicker.scss';
 import NegativeArrowIcon from '../../svg/NegativeArrow.svg';
 import PositiveArrowIcon from '../../svg/PositiveArrow.svg';
 
-const PriceTicker = ({ price, delta }) => {
+const PriceTicker = ({ price, delta, stacked }) => {
   if (!price) {
     return <div className="loading">Loading</div>;
   }
@@ -25,8 +26,12 @@ const PriceTicker = ({ price, delta }) => {
     deltaIcon = <div className="delta"></div>;
   }
 
+  const className = classnames('price-ticker', {
+    'price-ticker-stacked': stacked,
+  });
+
   return (
-    <div className="price-ticker">
+    <div className={className}>
       <div>
         <div className="start">
           {start}
@@ -46,6 +51,11 @@ const PriceTicker = ({ price, delta }) => {
 PriceTicker.propTypes = {
   price: React.PropTypes.number,
   delta: React.PropTypes.number,
+  stacked: React.PropTypes.bool,
+};
+
+PriceTicker.defaultProps = {
+  stacked: true,
 };
 
 export default PriceTicker;

@@ -1,0 +1,41 @@
+@import "../../../styles/modules/_all";
+
+$footer-height: 72px;
+
+#app {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: $primary-dark-blue;
+  font-family: $font-family;
+}
+
+.main-container {
+  position: absolute;
+  top: 0;
+  bottom: $footer-height;
+  left: 0;
+  right: 0;
+  display: flex;
+}
+
+.footer-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: $footer-height;
+  display: flex;
+}
+
+// ToDo: Move to common location
+a {
+  text-decoration: none;
+
+  &:visited {
+    text-decoration: none;
+  }
+}

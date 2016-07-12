@@ -1,0 +1,17 @@
+@import "../../../styles/modules/_all";
+
+.routes-pair {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 30px;
+  color: $primary-white;
+  font-weight: $font-regular;
+  font-size: $font-xl-2;
+
+  &-blotter {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 30px;
+  }
+}

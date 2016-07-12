@@ -2,3 +2,9 @@ extends: airbnb
 parser: babel-eslint
 env:
   browser: true
+settings:
+  import/resolver:
+    webpack:
+      config: 'webpack/dev.config.js'
+rules:
+  max-len: [2, 140, 2]

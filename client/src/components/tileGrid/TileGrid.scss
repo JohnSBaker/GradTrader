@@ -1,4 +1,4 @@
-@import "../../styles/modules/all";
+@import "../../styles/modules/_all";
 
 .tile-grid {
   margin-right: 15px;
@@ -8,4 +8,10 @@
   justify-content: space-between;
   background-color: $primary-dark-blue;
   width: 708px;
+
+  &-tile {
+    width: 228px;
+    height: 218px;
+    display: flex;
+  }
 }

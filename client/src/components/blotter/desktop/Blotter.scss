@@ -1,12 +1,12 @@
-@import "../../styles/modules/all";
-@import "../../../node_modules/react-virtualized/styles.css";
+@import "../../../styles/modules/_all";
+@import "../../../../node_modules/react-virtualized/styles.css";
 
 .blotter {
   flex: 1;
   width: 100%;
   color: $primary-white;
 }
-
+// ToDo: Change to add custom classes rather than targeting framework ones
 .blotter-table {
   .blotter-header-row {
     background-color: $primary-dark-blue2;

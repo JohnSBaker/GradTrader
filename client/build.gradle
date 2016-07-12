@@ -5,21 +5,27 @@ plugins {
 
 node {
     download = true
+    version = '6.3.0'
 }
 
+//runs dev bundle
 task bundleDev(type: NpmTask) {
-  //runs "npm run bundle"
-  args = ["run", "bundle"]
+    args = ["run", "bundle"]
 }
 
+//runs pod bundle
 task bundleProd(type: NpmTask) {
-  //runs "npm run bundle-prod"
-  args = ["run", "bundle-prod"]
+    args = ["run", "bundle-prod"]
 }
 
 // runs webpack dev server
 task start(type: NpmTask) {
-  args = ["start"]
+    args = ["start"]
+}
+
+// runs frontend lint
+task lint(type: NpmTask) {
+    args = ["run", "lint"]
 }
 
 // runs frontend tests
@@ -29,5 +35,7 @@ task test(type: NpmTask) {
 
 bundleProd.dependsOn(npm_install)
 bundleDev.dependsOn(npm_install)
+lint.dependsOn(npm_install)
 test.dependsOn(npm_install)
+test.dependsOn(lint)
 assemble.dependsOn(bundleProd)

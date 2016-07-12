@@ -13,4 +13,6 @@ export const getTilePairs = (state = {}) => state.filter(
   (pair, index) => (index < 9)
 );
 
+export const getPair = (state = [], pairId) => (state.filter(pair => pair.id === pairId)[0]);
+
 export default pairs;

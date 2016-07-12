@@ -1,0 +1,33 @@
+@import "../../styles/modules/_all";
+@import "../../../node_modules/react-virtualized/styles.css";
+
+.price-list {
+  display: flex;
+  flex-grow: 1;
+  color: $primary-white;
+  font-weight: $font-regular;
+
+  &-header {
+    color: $secondary-light-blue;
+    text-transform: none;
+    font-size: $font-s-1;
+  }
+
+  &-row-even {
+    background-color: $primary-dark-blue2;
+  }
+
+  &-row-odd {
+    background-color: $primary-dark-blue;
+  }
+
+  &-currency {
+    color: $primary-light-blue;
+    font-size: $font-m-2;
+
+    &-counter {
+      font-weight: $font-light;
+    }
+  }
+}
+

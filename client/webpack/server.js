@@ -17,11 +17,11 @@ app.use(webpackMiddleware(compiler, {
 
 app.use(hotMiddleware(compiler));
 
-app.listen(3000, 'localhost', (err) => {
+app.listen(3000, '0.0.0.0', (err) => {
   if (err) {
     console.log(err);
     return;
   }
 
-  console.log('Listening at http://localhost:3000');
+  console.log('Listening at http://0.0.0.0:3000');
 });

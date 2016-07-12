@@ -16,6 +16,8 @@ class Blotter extends Component {
     const { trades } = this.props;
     const disableHeader = !trades.length;
 
+    const renderCurrency = ({ cellData }) => `${cellData.substr(0, 3)} | ${cellData.substr(3, 3)}`;
+
     return (
       <div className="blotter">
         <AutoSizer>
@@ -62,10 +64,11 @@ class Blotter extends Component {
               />
               <FlexColumn
                 label="Currency"
-                dataKey="currency"
+                dataKey="pair"
                 className="bold-cell"
                 flexGrow={1}
                 width={100}
+                cellRenderer={renderCurrency}
               />
               <FlexColumn
                 label="Direction"
@@ -101,7 +104,7 @@ class Blotter extends Component {
               />
             </FlexTable>
           )
-        }
+          }
         </AutoSizer>
       </div>
     );

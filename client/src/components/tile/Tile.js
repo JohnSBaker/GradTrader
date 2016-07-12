@@ -4,9 +4,18 @@ import Pair from './PairContainer';
 import './Tile.scss';
 
 class Tile extends Component {
-
   componentDidMount() {
-    this.props.subscribePrice(this.props.pair.id);
+    if (!this.props.pair) {
+      this.props.getValidPairs();
+    } else {
+      this.props.subscribePrice(this.props.pair.id);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.pair || this.props.pair !== nextProps.pair) {
+      this.props.subscribePrice(nextProps.pair.id);
+    }
   }
 
   componentWillUnmount() {
@@ -14,6 +23,11 @@ class Tile extends Component {
   }
 
   render() {
+    const { pair } = this.props;
+    if (!pair) {
+      return <div className="tile-loading">Loading</div>;
+    }
+
     const child = this.props.quote ?
       <Confirmation pair={this.props.pair} /> :
       <Pair pair={this.props.pair} />;
@@ -31,6 +45,7 @@ Tile.propTypes = {
   pair: PropTypes.object.isRequired,
   subscribePrice: PropTypes.func.isRequired,
   unsubscribePrice: PropTypes.func.isRequired,
+  getValidPairs: React.PropTypes.func.isRequired,
 };
 
 export default Tile;

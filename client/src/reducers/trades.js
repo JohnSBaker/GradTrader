@@ -23,8 +23,15 @@ const trades = (state = [], action) => {
   }
 };
 
-export const getSortedTrades = (state = []) => (
-  state.sort((a, b) => (b.timestamp - a.timestamp))
-);
+export const getSortedTrades = (state = [], pairId) => {
+  let sortedTrades;
+  if (pairId) {
+    sortedTrades = state.filter(trade => trade.pair === pairId);
+  } else {
+    sortedTrades = state.slice(0);
+  }
+  sortedTrades.sort((a, b) => (b.timestamp - a.timestamp));
+  return sortedTrades;
+};
 
 export default trades;

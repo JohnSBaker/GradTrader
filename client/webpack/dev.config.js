@@ -4,7 +4,8 @@ const config = require('./shared.config');
 const projectRootPath = path.resolve(__dirname, '../');
 
 config.devtool = 'inline-source-map';
-config.entry.unshift('webpack-hot-middleware/client');
+config.entry.desktop.push('webpack-hot-middleware/client');
+config.entry.mobile.push('webpack-hot-middleware/client');
 config.output.publicPath = 'http://localhost:3000/';
 config.plugins = [
   new webpack.HotModuleReplacementPlugin(),

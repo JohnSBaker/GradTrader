@@ -1,9 +1,10 @@
-@import "../../styles/modules/all";
+@import "../../styles/modules/_all";
 
 .confirmation {
-
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 15px 30px 21px;
-  width: 168px;
 
   div {
     text-align: center;

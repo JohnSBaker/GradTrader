@@ -1,0 +1,10 @@
+@import "../../../styles/modules/_all";
+@import "../../../../node_modules/react-virtualized/styles.css";
+
+.blotter {
+  display: flex;
+  flex-grow: 1;
+  color: $primary-white;
+  font-weight: $font-regular;
+  font-size: $font-m-3;
+}

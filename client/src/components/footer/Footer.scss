@@ -1,0 +1,27 @@
+@import "../../styles/modules/_all";
+
+.footer {
+  display: flex;
+  flex-grow: 1;
+  color: $primary-white;
+  font-weight: $font-regular;
+  font-size: $font-m-4;
+
+  &-button {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 6px;
+    background-color: $secondary-dark-blue;
+    &-selected {
+      background-color: $secondary-dark-blue2;
+    }
+  }
+
+  &-title {
+    color: $primary-white;
+    font-size: $font-s-2;
+  }
+}
+

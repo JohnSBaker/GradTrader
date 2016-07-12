@@ -1,7 +1,6 @@
 .quantity-selector {
   display: flex;
   height: 21px;
-  margin-bottom: 21px;
 
   input {
     background-color: inherit;
@@ -23,7 +22,7 @@
     border-width: 1px;
     border-style: solid;
     border-color: $primary-white;
-    line-height: 21px;
+    line-height: 1.75;
     padding: 0 4px;
     background-color: inherit;
     font-weight: $font-light;

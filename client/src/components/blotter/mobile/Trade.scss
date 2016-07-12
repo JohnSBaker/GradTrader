@@ -1,0 +1,41 @@
+@import "../../../styles/modules/_all";
+
+.trade {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  font-weight: $font-regular;
+  padding: 8px;
+
+  &-box {
+    margin: 8px 0;
+    background-color: $primary-dark-blue2;
+  }
+
+  &-first {
+    font-size: $font-s-2;
+    color: $primary-white;
+    margin-bottom: 6px;
+  }
+
+  &-last {
+    color: $primary-light-blue;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+  }
+
+  &-currency {
+    flex-basis: 50px;
+    flex-grow: 1;
+    font-size: $font-s-3;
+  }
+
+  &-time {
+    align-self: flex-end;
+    flex-basis: 50px;
+    flex-grow: 1;
+    font-size: $font-s-4;
+    text-align: right;
+  }
+}

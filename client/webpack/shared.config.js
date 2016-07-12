@@ -2,14 +2,16 @@ const path = require('path');
 const projectRootPath = path.resolve(__dirname, '../');
 
 module.exports = {
-  entry: [
-    './src/main',
-  ],
+  entry: {
+    desktop: ['./src/desktop'],
+    mobile: ['./src/mobile'],
+  },
   output: {
     path: path.join(projectRootPath, 'dist'),
-    filename: 'main.js',
+    filename: '[name].js',
   },
   resolve: {
+    root: path.resolve('./src'),
     extensions: ['', '.js'],
   },
   module: {
