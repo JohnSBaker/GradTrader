@@ -1,4 +1,4 @@
-import { ADD_TRADE, ADD_TRADES } from '../actions';
+import { ADD_TRADE } from '../actions/trades';
 
 const trades = (state = [], action) => {
   switch (action.type) {
@@ -18,11 +18,6 @@ const trades = (state = [], action) => {
           user: action.user,
         },
       ];
-    case ADD_TRADES:
-      return {
-        ...state,
-        ...action.trades,
-      };
     default:
       return state;
   }

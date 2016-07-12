@@ -1,4 +1,4 @@
-import { ADD_PRICE, ADD_PRICES } from '../actions';
+import { ADD_PRICE, ADD_PRICES } from '../actions/prices';
 
 /**
  * Transforms the new prices from an array to an object map
@@ -19,16 +19,6 @@ const transformNewPrices = (newPrices) => (
 
 const prices = (state = {}, action) => {
   switch (action.type) {
-    case ADD_PRICE:
-      return {
-        ...state,
-        [action.pairId]: {
-          ask: action.ask,
-          askDelta: action.askDelta,
-          bid: action.bid,
-          bidDelta: action.bidDelta,
-        },
-      };
     case ADD_PRICES:
       return {
         ...state,
@@ -39,7 +29,7 @@ const prices = (state = {}, action) => {
   }
 };
 
-export const getPrice = (state = {}, pair, type) => {
+export const getPrice = (state = {}, pair = {}, type) => {
   const subState = state[pair.id];
 
   if (!subState) {
@@ -59,6 +49,5 @@ export const getPrice = (state = {}, pair, type) => {
   }
   return state;
 };
-
 
 export default prices;

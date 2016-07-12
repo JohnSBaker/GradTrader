@@ -46,7 +46,7 @@ class Confirmation extends Component {
         <div>
           {this.props.quote.purchaseType}
         </div>
-        <div className="amount">{`${this.props.quote.amount} ${baseCurrency}`}</div>
+        <div className="quantity">{`${this.props.quote.quantity} ${baseCurrency}`}</div>
         <div>
           <span>@</span>
           <span>{this.props.quote.price}</span>

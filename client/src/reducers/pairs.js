@@ -1,4 +1,4 @@
-import { GET_VALID_PAIRS_SUCCESS } from '../actions';
+import { GET_VALID_PAIRS_SUCCESS } from '../actions/pairs';
 
 const pairs = (state = [], action) => {
   switch (action.type) {
@@ -8,5 +8,9 @@ const pairs = (state = [], action) => {
       return state;
   }
 };
+
+export const getTilePairs = (state = {}) => state.filter(
+  (pair, index) => (index < 9)
+);
 
 export default pairs;

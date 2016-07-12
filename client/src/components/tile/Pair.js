@@ -10,16 +10,16 @@ class Pair extends Component {
   }
 
   render() {
-    const { pair, tileSelected, selectedTile, requestQuote } = this.props;
+    const { pair, buyRequest, sellRequest, selectTile, isSelected } = this.props;
     const baseCurrency = pair.id.substr(0, 3);
     const counterCurrency = pair.id.substr(3);
 
-    const tileClass = `pair ${selectedTile === pair.id ? 'selected' : ''}`;
+    const tileClass = `pair${isSelected ? ' selected' : ''}`;
 
     return (
       <div
         className={tileClass}
-        onClick={() => tileSelected(pair.id)}
+        onClick={() => selectTile(pair.id)}
       >
         <div className="pair-dropdown">
           <span>{baseCurrency}</span>
@@ -33,10 +33,10 @@ class Pair extends Component {
         </div>
         <div className="purchase-buttons">
           <button
-            onClick={() => requestQuote(pair.id, this.amountInput.value, 'Buy')}
+            onClick={() => buyRequest(pair.id, this.amountInput.value)}
           >BUY</button>
           <button
-            onClick={() => requestQuote(pair.id, this.amountInput.value, 'Sell')}
+            onClick={() => sellRequest(pair.id, this.amountInput.value)}
           >SELL</button>
         </div>
         <div className="quantity-selector">
@@ -50,9 +50,10 @@ class Pair extends Component {
 
 Pair.propTypes = {
   pair: React.PropTypes.object.isRequired,
-  selectedTile: React.PropTypes.string,
-  tileSelected: React.PropTypes.func.isRequired,
-  requestQuote: React.PropTypes.func.isRequired,
+  isSelected: React.PropTypes.bool.isRequired,
+  selectTile: React.PropTypes.func.isRequired,
+  buyRequest: React.PropTypes.func.isRequired,
+  sellRequest: React.PropTypes.func.isRequired,
 };
 
 export default Pair;

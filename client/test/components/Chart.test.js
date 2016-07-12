@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import Chart from '../../src/components/chart/Chart';
 
 describe('Chart', () => {
-  it('should contain text', () => {
-    const wrapper = shallow(<Chart />);
-    expect(wrapper.text()).to.contain('chart will go here');
+  it('should contain correct css class', () => {
+    const wrapper = shallow(<Chart pair={{}} currentPrice={{}} />);
+    expect(wrapper.hasClass('chart')).to.be.true;
   });
 });

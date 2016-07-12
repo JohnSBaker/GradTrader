@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import Pair from './Pair';
-import { tileSelected, requestQuote } from '../../actions';
+import { buyRequest, sellRequest } from '../../actions/quotes';
+import { selectTile } from '../../actions/selectedTile';
 
-const mapStateToProps = ({ selectedTile }, { pair }) => ({
+const mapStateToProps = (state, { pair }) => ({
   pair,
-  selectedTile,
+  isSelected: state.selectedTile === pair.id,
 });
 
 export default connect(mapStateToProps, {
-  tileSelected,
-  requestQuote,
+  buyRequest,
+  sellRequest,
+  selectTile,
 }
 )(Pair);

@@ -1,4 +1,5 @@
-import { QUOTE_RESPONSE_SUCCESS, QUOTE_EXPIRED } from '../actions';
+import { QUOTE_RESPONSE_SUCCESS } from '../actions/quotes';
+import { CANCEL_TRADE } from '../actions/trades';
 
 
 const quotes = (state = {}, action) => {
@@ -7,13 +8,14 @@ const quotes = (state = {}, action) => {
       return {
         ...state,
         [action.pairId]: {
-          amount: action.amount,
-          purchaseType: action.purchaseType,
+          quantity: action.quantity,
+          direction: action.direction,
           price: action.price,
-          timestamp: action.timestamp,
+          expires: action.expires,
+          quoteId: action.quoteId,
         },
       };
-    case QUOTE_EXPIRED: {
+    case CANCEL_TRADE: {
       const newState = Object.assign({}, state);
       delete newState[action.pairId];
       return newState;
