@@ -79,12 +79,10 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
 
     @Override
     public void notify(Trade trade) {
-        // TODO: send immediately
         logger.debug("ClientBroadcaster notified of a trade");
         try {
-            broadcast(mapper.writeValueAsString(new WebSocketMessage("trade", trade)));
+            broadcast(mapper.writeValueAsString(new WebSocketMessage("trades", trade)));
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

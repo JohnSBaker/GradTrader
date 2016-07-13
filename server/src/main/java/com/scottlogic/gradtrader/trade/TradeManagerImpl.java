@@ -63,10 +63,10 @@ public class TradeManagerImpl implements TradeManager {
     }
 
     private void saveTrade(Trade trade) {
-        Map<Long, Trade> userTrades = trades.get(trade.getQuote().getUserId());
+        Map<Long, Trade> userTrades = trades.get(trade.getUserId());
         if (userTrades == null) {
             userTrades = new LinkedHashMap<Long, Trade>();
-            trades.put(trade.getQuote().getUserId(), userTrades);
+            trades.put(trade.getUserId(), userTrades);
         }
         userTrades.put(trade.getTradeId(), trade);
     }
@@ -90,7 +90,7 @@ public class TradeManagerImpl implements TradeManager {
     }
 
     private void notifyListeners(Trade trade) {
-        Set<TradeListener> tradeListeners = listeners.get(trade.getQuote().getUserId());
+        Set<TradeListener> tradeListeners = listeners.get(trade.getUserId());
         if (tradeListeners != null) {
             for (TradeListener listener : tradeListeners) {
                 try {
