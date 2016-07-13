@@ -40,16 +40,26 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
         }
     }
 
-    private ClientBroadcaster getBroadcaster(WebSocket webSocket) {
+    private ClientBroadcaster getBroadcaster(final WebSocket webSocket) {
+        ClientBroadcaster clientBroadcaster = null;
+        final SimpleBroadcaster broadcaster = factory.lookup(webSocket);
 
-        ClientBroadcaster broadcaster = (ClientBroadcaster) factory.lookup(webSocket);
-        if (broadcaster == null) {
-            broadcaster = (ClientBroadcaster) factory.get(webSocket);
-            broadcaster.addAtmosphereResource(webSocket.resource());
-            broadcaster.start(configuration.getClientBroadcastMillis());
+        if (broadcaster != null) {
+            if (broadcaster instanceof ClientBroadcaster) {
+                clientBroadcaster = (ClientBroadcaster) broadcaster;
+            } else {
+                factory.remove(webSocket);
+            }
+        }
+
+        if (clientBroadcaster == null) {
+            clientBroadcaster = (ClientBroadcaster) factory.get(ClientBroadcaster.class, webSocket);
+            clientBroadcaster.addAtmosphereResource(webSocket.resource());
+            clientBroadcaster.start(configuration.getClientBroadcastMillis());
             logger.debug("Broadcasting to new client {}");
         }
-        return broadcaster;
+
+        return clientBroadcaster;
     }
 
     public void onTextMessage(WebSocket webSocket, String message) throws IOException {

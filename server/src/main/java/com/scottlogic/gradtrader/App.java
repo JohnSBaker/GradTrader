@@ -1,5 +1,21 @@
 package com.scottlogic.gradtrader;
 
+import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.ServletRegistration;
+
+import org.atmosphere.cpr.ApplicationConfig;
+import org.atmosphere.cpr.FrameworkConfig;
+import org.atmosphere.guice.AtmosphereGuiceServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.inject.Injector;
 import com.scottlogic.gradtrader.config.DeviceTypeServletFilter;
 import com.scottlogic.gradtrader.config.GradTraderConfiguration;
@@ -9,18 +25,6 @@ import com.scottlogic.gradtrader.pair.PairResource;
 import com.scottlogic.gradtrader.price.history.PriceHistoryResource;
 import com.scottlogic.gradtrader.trade.RfqResource;
 import com.scottlogic.gradtrader.trade.TradeResource;
-import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
-import org.atmosphere.cpr.ApplicationConfig;
-import org.atmosphere.guice.AtmosphereGuiceServlet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.ServletRegistration;
-import java.util.EnumSet;
 
 public class App extends Application<GradTraderConfiguration> {
 
@@ -59,10 +63,11 @@ public class App extends Application<GradTraderConfiguration> {
     private void runWebSocketServer(final Environment environment) {
         final AtmosphereGuiceServlet servlet = new AtmosphereGuiceServlet();
 
-        servlet.framework().addInitParameter("org.atmosphere.cpr.objectFactory",
+        servlet.framework().addInitParameter(ApplicationConfig.OBJECT_FACTORY,
                 "com.scottlogic.gradtrader.config.ObjectFactory");
-
-        servlet.framework().addInitParameter("com.sun.jersey.config.property.packages", "gradtrader.websockets");
+        servlet.framework().addInitParameter(ApplicationConfig.BROADCASTER_CLASS,
+                "com.scottlogic.gradtrader.websockets.ClientBroadcaster");
+        servlet.framework().addInitParameter(FrameworkConfig.JERSEY_SCANNING_PACKAGE, "gradtrader.websockets");
         servlet.framework().addInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
         servlet.framework().addInitParameter(ApplicationConfig.WEBSOCKET_SUPPORT, "true");
 
