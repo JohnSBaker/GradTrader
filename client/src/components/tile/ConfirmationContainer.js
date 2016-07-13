@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import Confirmation from './Confirmation';
 import { getQuote } from '../../reducers/quotes';
-import { confirmTrade, cancelTrade } from '../../actions/trades';
+import { confirmTrade } from '../../actions/trades';
+import { clearQuote } from '../../actions/quotes';
 
 const mapStateToProps = ({ quotes }, { pair }) => ({
   quote: getQuote(quotes, pair.id),
@@ -11,6 +12,6 @@ const mapStateToProps = ({ quotes }, { pair }) => ({
 export default connect(
   mapStateToProps, {
     confirmTrade,
-    cancelTrade,
+    clearQuote,
   },
 )(Confirmation);

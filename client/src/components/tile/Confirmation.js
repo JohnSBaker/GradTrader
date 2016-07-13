@@ -20,7 +20,7 @@ class Confirmation extends Component {
 
     this.timeout = setTimeout(() => {
       clearInterval(this.timer);
-      this.cancelTrade();
+      this.clearQuote();
     }, 5000);
   }
 
@@ -29,9 +29,9 @@ class Confirmation extends Component {
     clearInterval(this.timeout);
   }
 
-  cancelTrade = () => {
+  clearQuote = () => {
     this.clearIntervals();
-    this.props.cancelTrade(this.props.pair.id);
+    this.props.clearQuote(this.props.pair.id);
   }
 
   confirmTrade = () => {
@@ -60,7 +60,7 @@ class Confirmation extends Component {
         </div>
         <div className="confirmation-buttons">
           <button onClick={this.confirmTrade}>CONFIRM</button>
-          <button onClick={this.cancelTrade}>CANCEL</button>
+          <button onClick={this.clearQuote}>CANCEL</button>
         </div>
       </div>
     );
@@ -71,7 +71,7 @@ Confirmation.propTypes = {
   quote: React.PropTypes.object.isRequired,
   pair: React.PropTypes.object.isRequired,
   confirmTrade: React.PropTypes.func.isRequired,
-  cancelTrade: React.PropTypes.func.isRequired,
+  clearQuote: React.PropTypes.func.isRequired,
 };
 
 export default Confirmation;

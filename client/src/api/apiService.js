@@ -36,3 +36,18 @@ export const requestQuote = (pairId, quantity, direction, indicativePrice) => (
   .then(checkStatus)
   .then(parseJSON)
 );
+
+export const confirmTrade = (quoteId) => (
+  fetch('api/trade', {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      quoteId,
+    }),
+  })
+  .then(checkStatus)
+  .then(parseJSON)
+);

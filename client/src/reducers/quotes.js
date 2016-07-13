@@ -1,5 +1,4 @@
-import { QUOTE_RESPONSE_SUCCESS } from '../actions/quotes';
-import { CANCEL_TRADE } from '../actions/trades';
+import { QUOTE_RESPONSE_SUCCESS, CLEAR_QUOTE } from '../actions/quotes';
 
 
 const quotes = (state = {}, action) => {
@@ -15,7 +14,7 @@ const quotes = (state = {}, action) => {
           quoteId: action.quoteId,
         },
       };
-    case CANCEL_TRADE: {
+    case CLEAR_QUOTE: {
       const newState = Object.assign({}, state);
       delete newState[action.pairId];
       return newState;

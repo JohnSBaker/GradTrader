@@ -3,6 +3,7 @@ import { getQuotePrice } from '../reducers/prices';
 
 export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
 export const QUOTE_RESPONSE_FAILURE = 'QUOTE_RESPONSE_FAILURE';
+export const CLEAR_QUOTE = 'CLEAR_QUOTE';
 
 const BUY = 'BUY';
 const SELL = 'SELL';
@@ -20,6 +21,11 @@ const quoteResponseSuccess = ({ pairId, quantity, direction, price, expires, quo
 const quoteResponseFailure = (error) => ({
   type: QUOTE_RESPONSE_FAILURE,
   message: error.message || 'An unknown error occurred',
+});
+
+export const clearQuote = (pairId) => ({
+  type: CLEAR_QUOTE,
+  pairId,
 });
 
 export const requestQuote = (pairId, quantity, direction) => (dispatch, getState) => {
