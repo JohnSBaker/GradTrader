@@ -1,22 +1,11 @@
-import { ADD_TRADE } from '../actions/trades';
+import { ADD_TRADES } from '../actions/trades';
 
 const trades = (state = [], action) => {
   switch (action.type) {
-    case ADD_TRADE:
+    case ADD_TRADES:
       return [
         ...state,
-        {
-          tradeId: action.tradeId,
-          timestamp: action.timestamp,
-          time: action.time,
-          date: action.date,
-          formattedPair: action.formattedPair,
-          direction: action.direction,
-          quantity: action.quantity,
-          rate: action.rate,
-          portfolio: action.portfolio,
-          user: action.user,
-        },
+        ...action.trades,
       ];
     default:
       return state;
@@ -26,7 +15,7 @@ const trades = (state = [], action) => {
 export const getSortedTrades = (state = [], pairId) => {
   let sortedTrades;
   if (pairId) {
-    sortedTrades = state.filter(trade => trade.pair === pairId);
+    sortedTrades = state.filter(trade => trade.pairId === pairId);
   } else {
     sortedTrades = state.slice(0);
   }

@@ -51,3 +51,15 @@ export const confirmTrade = (quoteId) => (
   .then(checkStatus)
   .then(parseJSON)
 );
+
+export const requestPreviousTrades = (userId) => (
+  fetch(`api/trade/${userId}`, {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(checkStatus)
+  .then(parseJSON)
+);

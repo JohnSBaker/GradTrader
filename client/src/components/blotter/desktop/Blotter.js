@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { AutoSizer, FlexTable, FlexColumn } from 'react-virtualized';
 import './Blotter.scss';
 
 class Blotter extends Component {
+
+  componentDidMount() {
+    this.props.requestPreviousTrades();
+  }
 
   noRowsRenderer() {
     return (
@@ -17,6 +22,10 @@ class Blotter extends Component {
     const disableHeader = !trades.length;
 
     const renderCurrency = ({ cellData }) => `${cellData.substr(0, 3)} | ${cellData.substr(3, 3)}`;
+
+    const renderTime = ({ cellData }) => moment(cellData).format('HH:mm');
+
+    const renderDate = ({ cellData }) => moment(cellData).format('DD MMM YYYY');
 
     return (
       <div className="blotter">
@@ -51,20 +60,22 @@ class Blotter extends Component {
               />
               <FlexColumn
                 label="Time"
-                dataKey="time"
+                dataKey="timestamp"
                 className="bold-cell"
                 flexGrow={1}
                 width={100}
+                cellRenderer={renderTime}
               />
               <FlexColumn
                 label="Date"
-                dataKey="date"
+                dataKey="timestamp"
                 flexGrow={1}
                 width={100}
+                cellRenderer={renderDate}
               />
               <FlexColumn
                 label="Currency"
-                dataKey="pair"
+                dataKey="pairId"
                 className="bold-cell"
                 flexGrow={1}
                 width={100}
@@ -85,7 +96,7 @@ class Blotter extends Component {
               />
               <FlexColumn
                 label="Rate"
-                dataKey="rate"
+                dataKey="price"
                 className="bold-cell"
                 flexGrow={1}
                 width={100}
@@ -113,6 +124,7 @@ class Blotter extends Component {
 
 Blotter.propTypes = {
   trades: React.PropTypes.array.isRequired,
+  requestPreviousTrades: React.PropTypes.func.isRequired,
 };
 
 export default Blotter;
