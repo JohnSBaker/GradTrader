@@ -8,7 +8,8 @@
     "start": "node webpack/server.js",
     "bundle": "webpack --config webpack/dev.config.js",
     "bundle-prod": "webpack -p --config webpack/prod.config.js",
-    "lint": "stylelint src/**/*.scss --syntax scss && eslint --fix ."
+    "lint": "stylelint src/**/*.scss --syntax scss && eslint .",
+    "lint-fix": "stylelint src/**/*.scss --syntax scss && eslint --fix ."
   },
   "author": "",
   "license": "ISC",

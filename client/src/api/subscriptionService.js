@@ -20,7 +20,7 @@ export const openSocketConnection = () => {
   };
 
   request.onOpen = () => {
-      socketConnected = true;
+    socketConnected = true;
     eventQueue.forEach((event) => event());
   };
 
