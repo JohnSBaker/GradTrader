@@ -14,4 +14,6 @@ public interface TradeManager {
 
     public void addListener(String userId, TradeListener listener);
 
+    public void removeListener(String userId, TradeListener listener);
+
 }

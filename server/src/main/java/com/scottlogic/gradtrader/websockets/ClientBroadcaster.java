@@ -70,6 +70,14 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
         subscribedTrades.add(userId);
     }
 
+    public void unsubscribeTrades(String userId) throws SubscriptionException {
+        if (!subscribedTrades.contains(userId)) {
+            throw new SubscriptionException("Not subscribed");
+        }
+        tradeManager.removeListener(userId, this);
+        subscribedTrades.remove(userId);
+    }
+
     @Override
     public void notify(Price price) {
         if (subscribedPairs.contains(price.getPairId())) {

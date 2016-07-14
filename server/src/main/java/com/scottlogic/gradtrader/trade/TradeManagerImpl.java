@@ -89,6 +89,13 @@ public class TradeManagerImpl implements TradeManager {
         tradeListeners.add(listener);
     }
 
+    public void removeListener(String userId, TradeListener listener) {
+        Set<TradeListener> tradeListeners = listeners.get(userId);
+        if (tradeListeners != null) {
+            tradeListeners.remove(listener);
+        }
+    }
+
     private void notifyListeners(Trade trade) {
         Set<TradeListener> tradeListeners = listeners.get(trade.getUserId());
         if (tradeListeners != null) {

@@ -80,12 +80,13 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
                 subscribeTrade(webSocket, clientBroadcaster, subject);
                 break;
             case ClientActionRequest.UNSUBSCRIBE_TRADE:
+                unsubscribeTrade(webSocket, clientBroadcaster, subject);
                 break;
             default:
                 sendResponse(webSocket, action, subject, "error", "Unknown action");
             }
         } catch (SubscriptionException e) {
-            sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_PRICE, subject, "error", e.getMessage());
+            sendResponse(webSocket, action, subject, "error", e.getMessage());
         }
     }
 
@@ -105,6 +106,12 @@ public class WebSocketAdapter extends WebSocketHandlerAdapter {
             throws SubscriptionException {
         clientBroadcaster.subscribeTrades(userId);
         sendResponse(webSocket, ClientActionRequest.SUBSCRIBE_TRADE, userId, "success", "");
+    }
+
+    private void unsubscribeTrade(WebSocket webSocket, ClientBroadcaster clientBroadcaster, String userId)
+            throws SubscriptionException {
+        clientBroadcaster.unsubscribeTrades(userId);
+        sendResponse(webSocket, ClientActionRequest.UNSUBSCRIBE_TRADE, userId, "success", "");
     }
 
     private void sendResponse(WebSocket webSocket, String action, String subject, String result, String message) {
