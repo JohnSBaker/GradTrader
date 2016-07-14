@@ -41,12 +41,13 @@ class Blotter extends Component {
               noRowsRenderer={this.noRowsRenderer}
               headerHeight={24}
               className="blotter-table"
+              gridClassName="blotter-table-body"
               rowClassName={
                 ({ index }) => {
                   if (index === -1) {
-                    return 'blotter-header-row';
+                    return 'blotter-table-header';
                   }
-                  return index % 2 ? 'blotter-odd-row' : 'blotter-even-row';
+                  return index % 2 ? 'blotter-table-body-row-odd' : 'blotter-table-body-row-even';
                 }
               }
               rowGetter={

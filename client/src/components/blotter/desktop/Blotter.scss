@@ -5,42 +5,51 @@
   flex: 1;
   width: 100%;
   color: $primary-white;
-}
-// ToDo: Change to add custom classes rather than targeting framework ones
-.blotter-table {
-  .blotter-header-row {
-    background-color: $primary-dark-blue2;
-    font-size: $font-xs-1;
-    font-weight: $font-regular;
-  }
 
-  .blotter-odd-row {
-    background-color: $primary-dark-blue2;
-    font-size: $font-s-3;
-    font-weight: $font-light;
-  }
+  &-table {
 
-  .blotter-even-row {
-    font-size: $font-s-3;
-    font-weight: $font-light;
-  }
+    &-header {
+      background-color: $primary-dark-blue2;
+      font-size: $font-xs-1;
+      font-weight: $font-regular;
+    }
 
-  .bold-cell {
-    font-weight: $font-medium;
-  }
+    &-body {
+      &:focus {
+        outline-color: transparent;
+      }
 
-  /* scrollbar */
-  ::-webkit-scrollbar {
-    background-color: $primary-dark-blue;
-    width: 6px;
-  }
+      &-row {
+        &-odd {
+          font-size: $font-s-3;
+          font-weight: $font-light;
+          background-color: $primary-dark-blue2;
+        }
 
-  ::-webkit-scrollbar-button {
-    background-color: $secondary-dark-blue2;
-  }
+        &-even {
+          font-size: $font-s-3;
+          font-weight: $font-light;
+        }
+      }
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: $secondary-blue;
-  }
+    .bold-cell {
+      font-weight: $font-medium;
+    }
 
+    /* scrollbar */
+    ::-webkit-scrollbar {
+      background-color: $primary-dark-blue;
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-button {
+      background-color: $secondary-dark-blue2;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: $secondary-blue;
+    }
+
+  }
 }
