@@ -1,11 +1,15 @@
 import atmosphere from 'atmosphere.js';
 
 let socket;
+let socketConnected = false;
 const eventQueue = [];
 const callbacks = {};
 
 const UNSUBSCRIBE_PRICE = 'unsubscribePrice';
 const SUBSCRIBE_PRICE = 'subscribePrice';
+const UNSUBSCRIBE_TRADE = 'unsubscribeTrade';
+const SUBSCRIBE_TRADE = 'subscribeTrade';
+
 
 export const openSocketConnection = () => {
   const request = {
@@ -16,6 +20,7 @@ export const openSocketConnection = () => {
   };
 
   request.onOpen = () => {
+      socketConnected = true;
     eventQueue.forEach((event) => event());
   };
 
@@ -35,6 +40,7 @@ export const openSocketConnection = () => {
   };
 
   request.onClose = (response) => {
+    socketConnected = false;
     console.log('on close');
     console.log(response);
   };
@@ -47,7 +53,7 @@ export const setCallback = (name, cb) => {
 };
 
 function sendSocketEvent(action, subject) {
-  if (!socket) {
+  if (!socket || !socketConnected) {
     eventQueue.push(() => socket.push(
         JSON.stringify({ action, subject })
       )
@@ -65,4 +71,12 @@ export const subscribePrice = (pairId) => {
 
 export const unsubscribePrice = (pairId) => {
   sendSocketEvent(UNSUBSCRIBE_PRICE, pairId);
+};
+
+export const subscribeTrade = (userId) => {
+  sendSocketEvent(SUBSCRIBE_TRADE, userId);
+};
+
+export const unsubscribeTrade = (userId) => {
+  sendSocketEvent(UNSUBSCRIBE_TRADE, userId);
 };

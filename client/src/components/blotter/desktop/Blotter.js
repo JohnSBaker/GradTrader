@@ -6,7 +6,8 @@ import './Blotter.scss';
 class Blotter extends Component {
 
   componentDidMount() {
-    this.props.requestPreviousTrades();
+      this.props.requestPreviousTrades();
+      this.props.subscribeTrade('123');
   }
 
   noRowsRenderer() {
@@ -125,6 +126,8 @@ class Blotter extends Component {
 Blotter.propTypes = {
   trades: React.PropTypes.array.isRequired,
   requestPreviousTrades: React.PropTypes.func.isRequired,
+  subscribeTrade: React.PropTypes.func.isRequired,
+  unsubscribeTrade: React.PropTypes.func.isRequired
 };
 
 export default Blotter;

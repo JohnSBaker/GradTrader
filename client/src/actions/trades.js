@@ -1,4 +1,5 @@
 import * as api from '../api/apiService';
+import * as subscription from '../api/subscriptionService';
 import { getQuote } from '../reducers/quotes';
 import { clearQuote } from './quotes';
 
@@ -30,10 +31,24 @@ export const requestPreviousTrades = () => (dispatch) => {
     .catch((error) => dispatch(requestTradesFailure(error)));
 };
 
+export const subscribeTrade = (userId) => () => {
+  subscription.subscribeTrade(userId);
+};
+
+export const unsubscribeTrade = (userId) => () => {
+  subscription.unsubscribeTrade(userId);
+};
+
 export const confirmTrade = (pairId) => (dispatch, getState) => {
   const quote = getQuote(getState().quotes, pairId);
 
   api
     .confirmTrade(quote.quoteId)
     .then(() => dispatch(clearQuote(pairId)));
+};
+
+export const setupTradeFeed = () => (dispatch) => {
+  subscription.setCallback('trades', ({ data }) => {
+    dispatch(addTrades(data));
+  });
 };
