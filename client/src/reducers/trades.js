@@ -1,4 +1,5 @@
 import { ADD_TRADES } from '../actions/trades';
+import { getPortfolioName, getUserName } from './user';
 
 const trades = (state = [], action) => {
   switch (action.type) {
@@ -12,15 +13,27 @@ const trades = (state = [], action) => {
   }
 };
 
-export const getSortedTrades = (state = [], pairId) => {
+export const getSortedTrades = (state = {}, pairId) => {
   let sortedTrades;
   if (pairId) {
-    sortedTrades = state.filter(trade => trade.pairId === pairId);
+    sortedTrades = state.trades.filter(trade => trade.pairId === pairId);
   } else {
-    sortedTrades = state.slice(0);
+    sortedTrades = state.trades.slice(0);
   }
   sortedTrades.sort((a, b) => (b.timestamp - a.timestamp));
-  return sortedTrades;
+  return sortedTrades.map((trade) => {
+    const portfolioName = getPortfolioName(state, trade.portfolioId);
+    const userName = getUserName(state);
+    return {
+      portfolioName,
+      userName,
+      tradeId: trade.tradeId,
+      pairId: trade.pairId,
+      quantity: trade.quantity,
+      direction: trade.direction,
+      price: trade.price,
+    };
+  });
 };
 
 export default trades;

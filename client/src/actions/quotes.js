@@ -1,5 +1,6 @@
 import * as api from '../api/apiService';
 import { getQuotePrice } from '../reducers/prices';
+import { getUser } from '../reducers/user';
 
 export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
 export const QUOTE_RESPONSE_FAILURE = 'QUOTE_RESPONSE_FAILURE';
@@ -29,10 +30,12 @@ export const clearQuote = (pairId) => ({
 });
 
 export const requestQuote = (pairId, quantity, direction) => (dispatch, getState) => {
-  const indicativePrice = getQuotePrice(getState().prices, pairId, direction);
+  const state = getState();
+  const indicativePrice = getQuotePrice(state.prices, pairId, direction);
+  const { id, selectedPortfolioId } = getUser(state);
 
   api
-    .requestQuote(pairId, quantity, direction, indicativePrice)
+    .requestQuote(id, selectedPortfolioId, pairId, quantity, direction, indicativePrice)
     .then((quote) => dispatch(quoteResponseSuccess(quote)))
     .catch((error) => dispatch(quoteResponseFailure(error)));
 };

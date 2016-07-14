@@ -6,10 +6,12 @@ import configureStore from './store/configureStore';
 import { openSocketConnection } from './api/subscriptionService';
 import { setupPriceFeed } from './actions/prices';
 import { setupTradeFeed } from './actions/trades';
+import { fakeLogin } from './actions/user';
 import './desktop.html';
 
 const store = configureStore();
 openSocketConnection();
+store.dispatch(fakeLogin());
 store.dispatch(setupPriceFeed());
 store.dispatch(setupTradeFeed());
 

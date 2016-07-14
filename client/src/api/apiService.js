@@ -17,7 +17,7 @@ export const getValidPairs = () => (
   .then(parseJSON)
 );
 
-export const requestQuote = (pairId, quantity, direction, indicativePrice) => (
+export const requestQuote = (userId, portfolioId, pairId, quantity, direction, indicativePrice) => (
   fetch('api/quote', {
     method: 'post',
     headers: {
@@ -25,8 +25,8 @@ export const requestQuote = (pairId, quantity, direction, indicativePrice) => (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      userId: '123',
-      portfolioId: '1234',
+      userId,
+      portfolioId,
       pairId,
       quantity,
       direction,

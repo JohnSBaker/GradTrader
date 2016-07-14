@@ -9,7 +9,7 @@ const pairs = (state = [], action) => {
   }
 };
 
-export const getTilePairs = (state = {}) => state.filter(
+export const getTilePairs = (state = []) => state.filter(
   (pair, index) => (index < 9)
 );
 

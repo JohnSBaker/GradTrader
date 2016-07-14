@@ -2,6 +2,7 @@ import * as api from '../api/apiService';
 import * as subscription from '../api/subscriptionService';
 import { getQuote } from '../reducers/quotes';
 import { clearQuote } from './quotes';
+import { getUser } from '../reducers/user';
 
 export const ADD_TRADE = 'ADD_TRADE';
 export const ADD_TRADES = 'ADD_TRADES';
@@ -23,20 +24,23 @@ const requestTradesFailure = (error) => ({
 });
 
 
-export const requestPreviousTrades = () => (dispatch) => {
-   // TODO get user id from state
+export const requestPreviousTrades = () => (dispatch, getState) => {
+  const state = getState();
+  const { id } = getUser(state);
   api
-    .requestPreviousTrades('123')
+    .requestPreviousTrades(id)
     .then((trades) => dispatch(addTrades(trades)))
     .catch((error) => dispatch(requestTradesFailure(error)));
 };
 
-export const subscribeTrade = (userId) => () => {
-  subscription.subscribeTrade(userId);
+export const subscribeTrade = () => (_, getState) => {
+  const { id } = getUser(getState());
+  subscription.subscribeTrade(id);
 };
 
-export const unsubscribeTrade = (userId) => () => {
-  subscription.unsubscribeTrade(userId);
+export const unsubscribeTrade = () => (_, getState) => {
+  const { id } = getUser(getState());
+  subscription.unsubscribeTrade(id);
 };
 
 export const confirmTrade = (pairId) => (dispatch, getState) => {

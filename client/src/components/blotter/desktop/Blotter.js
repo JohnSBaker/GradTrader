@@ -6,8 +6,8 @@ import './Blotter.scss';
 class Blotter extends Component {
 
   componentDidMount() {
-      this.props.requestPreviousTrades();
-      this.props.subscribeTrade('123');
+    this.props.requestPreviousTrades();
+    this.props.subscribeTrade();
   }
 
   noRowsRenderer() {
@@ -104,13 +104,13 @@ class Blotter extends Component {
               />
               <FlexColumn
                 label="Portfolio"
-                dataKey="portfolio"
+                dataKey="portfolioName"
                 flexGrow={1}
                 width={100}
               />
               <FlexColumn
                 label="User"
-                dataKey="user"
+                dataKey="userName"
                 flexGrow={1}
                 width={100}
               />
@@ -127,7 +127,7 @@ Blotter.propTypes = {
   trades: React.PropTypes.array.isRequired,
   requestPreviousTrades: React.PropTypes.func.isRequired,
   subscribeTrade: React.PropTypes.func.isRequired,
-  unsubscribeTrade: React.PropTypes.func.isRequired
+  unsubscribeTrade: React.PropTypes.func.isRequired,
 };
 
 export default Blotter;

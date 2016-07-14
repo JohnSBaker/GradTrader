@@ -11,6 +11,7 @@ import configureStore from './store/configureStore';
 import { openSocketConnection } from './api/subscriptionService';
 import { setupPriceFeed } from './actions/prices';
 import { setupTradeFeed } from './actions/trades';
+import { fakeLogin } from './actions/user';
 import './mobile.html';
 
 const store = configureStore();
@@ -18,6 +19,7 @@ const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 
 openSocketConnection();
+store.dispatch(fakeLogin());
 store.dispatch(setupPriceFeed());
 store.dispatch(setupTradeFeed());
 
