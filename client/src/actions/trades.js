@@ -4,12 +4,18 @@ import { getQuote } from '../reducers/quotes';
 import { clearQuote } from './quotes';
 import { getUser } from '../reducers/user';
 
-export const ADD_TRADE = 'ADD_TRADE';
 export const ADD_TRADES = 'ADD_TRADES';
+export const SET_TRADES = 'SET_TRADES';
 export const REQUEST_TRADES_FAILURE = 'REQUEST_TRADES_FAILURE';
+
 
 export const addTrades = (trades) => ({
   type: ADD_TRADES,
+  trades,
+});
+
+export const setTrades = (trades) => ({
+  type: SET_TRADES,
   trades,
 });
 
@@ -24,7 +30,7 @@ export const requestPreviousTrades = () => (dispatch, getState) => {
   const { id } = getUser(state);
   api
     .requestPreviousTrades(id)
-    .then((trades) => dispatch(addTrades(trades)))
+    .then((trades) => dispatch(setTrades(trades)))
     .catch((error) => dispatch(requestTradesFailure(error)));
 };
 

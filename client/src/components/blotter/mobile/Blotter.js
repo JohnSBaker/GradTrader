@@ -5,6 +5,15 @@ import './Blotter.scss';
 
 class Blotter extends React.Component {
 
+  componentDidMount() {
+    this.props.requestPreviousTrades();
+    this.props.subscribeTrade();
+  }
+
+  componentDidUnmount() {
+    this.props.unsubscribeTrade();
+  }
+
   noRowsRenderer() {
     return (
       <div>

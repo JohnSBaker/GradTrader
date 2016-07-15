@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Blotter from './Blotter';
-import { getSortedTrades } from '../../../reducers/trades';
-import { requestPreviousTrades, subscribeTrade, unsubscribeTrade } from '../../../actions/trades';
+import { getSortedTrades } from 'reducers/trades';
+import { requestPreviousTrades, subscribeTrade, unsubscribeTrade } from 'actions/trades';
 
-const mapStateToProps = (state) => ({
-  trades: getSortedTrades(state),
+const mapStateToProps = (state, { pairId }) => ({
+  trades: getSortedTrades(state, pairId),
 });
 
 export default connect(mapStateToProps, {

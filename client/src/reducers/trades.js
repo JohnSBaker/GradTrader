@@ -1,4 +1,4 @@
-import { ADD_TRADES } from '../actions/trades';
+import { ADD_TRADES, SET_TRADES } from '../actions/trades';
 import { getPortfolioName, getUserName } from './user';
 
 const trades = (state = [], action) => {
@@ -8,6 +8,8 @@ const trades = (state = [], action) => {
         ...state,
         ...action.trades,
       ];
+    case SET_TRADES:
+      return action.trades;
     default:
       return state;
   }
