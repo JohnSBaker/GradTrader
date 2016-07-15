@@ -33,11 +33,11 @@ class Pair extends Component {
         </div>
         <div className="purchase-buttons">
           <button
-            onClick={() => buyRequest(pair.id, this.amountInput.value)}
-          >BUY</button>
-          <button
             onClick={() => sellRequest(pair.id, this.amountInput.value)}
           >SELL</button>
+          <button
+            onClick={() => buyRequest(pair.id, this.amountInput.value)}
+          >BUY</button>
         </div>
         <div className="quantity-selector">
           <input ref={(node) => this.amountInputRef(node)} defaultValue="100000" />

@@ -15,17 +15,16 @@ public class QuoteEngineImpl implements QuoteEngine {
     @Inject
     private PriceSourceFactory priceSourceFactory;
 
-    public Quote createQuote(Rfq rfq) throws PriceException {
-        Price price = priceSourceFactory.getPriceSource(rfq.getPairId()).getPrice();
-        long priceToUse;
+    public Quote createQuote(final Rfq rfq) throws PriceException {
+        final Price price = priceSourceFactory.getPriceSource(rfq.getPairId()).getPrice();
+        final long priceToUse;
         if (rfq.getDirection() == Direction.BUY) {
-            priceToUse = price.getBid();
-        } else {
             priceToUse = price.getAsk();
+        } else {
+            priceToUse = price.getBid();
         }
-        Quote quote = new Quote(rfq.getUserId(), rfq.getPortfolioId(), nextQuoteId++, System.currentTimeMillis(),
+        final Quote quote = new Quote(rfq.getUserId(), rfq.getPortfolioId(), nextQuoteId++, System.currentTimeMillis(),
                 quoteExpiry, rfq.getPairId(), rfq.getQuantity(), rfq.getDirection(), priceToUse);
         return quote;
     }
-
 }

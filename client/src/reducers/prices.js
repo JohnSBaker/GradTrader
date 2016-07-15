@@ -32,7 +32,7 @@ const prices = (state = {}, action) => {
 
 export const getQuotePrice = (state = {}, pairId, direction) => {
   const subState = state[pairId];
-  return direction === 'BUY' ? subState.bid : subState.ask;
+  return direction === 'BUY' ? subState.ask : subState.bid;
 };
 
 export const getFormattedPrice = (state = {}, pair = {}, type) => {
