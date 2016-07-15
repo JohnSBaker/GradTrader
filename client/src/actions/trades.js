@@ -8,11 +8,6 @@ export const ADD_TRADE = 'ADD_TRADE';
 export const ADD_TRADES = 'ADD_TRADES';
 export const REQUEST_TRADES_FAILURE = 'REQUEST_TRADES_FAILURE';
 
-export const addTrade = (trade) => ({
-  type: ADD_TRADE,
-  ...trade,
-});
-
 export const addTrades = (trades) => ({
   type: ADD_TRADES,
   trades,

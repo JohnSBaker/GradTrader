@@ -46,6 +46,9 @@ Blotter.propTypes = {
   trades: React.PropTypes.array.isRequired,
   pairId: React.PropTypes.string,
   showBox: React.PropTypes.bool,
+  requestPreviousTrades: React.PropTypes.func.isRequired,
+  subscribeTrade: React.PropTypes.func.isRequired,
+  unsubscribeTrade: React.PropTypes.func.isRequired,
 };
 
 Blotter.defaultProps = {

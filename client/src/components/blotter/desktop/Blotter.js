@@ -5,11 +5,6 @@ import './Blotter.scss';
 
 class Blotter extends Component {
 
-  componentDidMount() {
-    this.props.requestPreviousTrades();
-    this.props.subscribeTrade();
-  }
-
   noRowsRenderer() {
     return (
       <div>
