@@ -9,7 +9,7 @@ import com.scottlogic.gradtrader.price.source.PriceSourceFactory;
 @Singleton
 public class QuoteEngineImpl implements QuoteEngine {
 
-    private final long quoteExpiry = 20000L;
+    private final long quoteExpiry = 5000L;
     private long nextQuoteId = 1L;
 
     @Inject

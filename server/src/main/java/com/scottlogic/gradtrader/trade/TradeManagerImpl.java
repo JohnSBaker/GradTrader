@@ -1,9 +1,11 @@
 package com.scottlogic.gradtrader.trade;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -58,8 +60,23 @@ public class TradeManagerImpl implements TradeManager {
         Trade trade = new Trade(nextTradeId++, System.currentTimeMillis(), savedQuote);
         saveTrade(trade);
         savedQuote.setAccepted();
+        quotes.remove(savedQuote.getQuoteId());
+        removeExpiredQuotes();
         notifyListeners(trade);
         return trade;
+    }
+
+    private void removeExpiredQuotes() {
+        long now = System.currentTimeMillis();
+        List<Quote> quotesToRemove = new ArrayList<Quote>();
+        for (Quote quote : quotes.values()) {
+            if (quote.getExpires() < now) {
+                quotesToRemove.add(quote);
+            }
+        }
+        for (Quote quoteToRemove : quotesToRemove) {
+            quotes.remove(quoteToRemove.getQuoteId());
+        }
     }
 
     private void saveTrade(Trade trade) {
