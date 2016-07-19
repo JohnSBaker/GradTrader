@@ -6,14 +6,14 @@ import com.scottlogic.gradtrader.price.PriceException;
 
 public interface TradeManager {
 
-    public Quote requestQuote(Rfq rfq) throws PriceException;
+    Quote requestQuote(Rfq rfq) throws PriceException;
 
-    public Trade placeTrade(Quote quote) throws TradeException;
+    Trade placeTrade(Quote quote) throws TradeException;
 
-    public Collection<Trade> getTrades(String userId);
+    Collection<Trade> getTrades(String userId);
 
-    public void addListener(String userId, TradeListener listener);
+    void addListener(String userId, TradeListener listener);
 
-    public void removeListener(String userId, TradeListener listener);
+    void removeListener(String userId, TradeListener listener);
 
 }

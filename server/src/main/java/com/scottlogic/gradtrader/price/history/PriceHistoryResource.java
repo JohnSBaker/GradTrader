@@ -12,9 +12,10 @@ import javax.ws.rs.core.MediaType;
 import com.codahale.metrics.annotation.Timed;
 import com.google.inject.Inject;
 import com.scottlogic.gradtrader.price.PriceException;
+import com.scottlogic.gradtrader.price.source.PriceSource;
 import com.scottlogic.gradtrader.price.source.PriceSourceFactory;
 
-@Path("/{pairId}/price")
+@Path("/price/{pairId}")
 @Produces(MediaType.APPLICATION_JSON)
 public class PriceHistoryResource {
 

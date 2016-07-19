@@ -13,7 +13,7 @@ import com.scottlogic.gradtrader.price.history.PriceHistory;
 
 public class FakePriceSource implements PriceSource {
 
-    Logger logger = LoggerFactory.getLogger(FakePriceSource.class);
+    private Logger logger = LoggerFactory.getLogger(FakePriceSource.class);
 
     private final String pairId;
     private final long base;
@@ -49,18 +49,19 @@ public class FakePriceSource implements PriceSource {
     }
 
     public PriceHistory getPriceHistory(long start, long end) throws PriceException {
-        long min = base - range / 2;
-        long max = base + range / 2;
+        long timestamp = (start + end) / 2;
+        long low = base - range / 2;
+        long high = base + range / 2;
         long open = getMid(start);
         long close = getMid(end);
         if (end - start < period) {
             throw new PriceException("Invalid price history resolution");
         }
-        return new PriceHistory(start, end, open, close, min, max);
+        return new PriceHistory(timestamp, open, close, low, high);
     }
 
     public Collection<PriceHistory> getPriceHistory(long from, long to, long resolution) throws PriceException {
-        List<PriceHistory> priceHistories = new LinkedList<PriceHistory>();
+        List<PriceHistory> priceHistories = new LinkedList<>();
         long start = from;
         long end;
         do {

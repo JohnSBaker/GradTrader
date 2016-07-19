@@ -2,46 +2,38 @@ package com.scottlogic.gradtrader.price.history;
 
 public class PriceHistory {
 
-    private Long start;
-    private Long end;
-    private Long open;
-    private Long close;
-    private Long min;
-    private Long max;
-    private Integer scale;
+    private long timestamp;
+    private long open;
+    private long close;
+    private long low;
+    private long high;
 
-    public PriceHistory(Long start, Long end, Long open, Long close, Long min, Long max) {
-        super();
-        this.start = start;
-        this.end = end;
+    public PriceHistory(long timestamp, long open, long close, long low, long high) {
+        this.timestamp = timestamp;
         this.open = open;
         this.close = close;
-        this.min = min;
-        this.max = max;
+        this.low = low;
+        this.high = high;
     }
 
-    public Long getStart() {
-        return start;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public Long getEnd() {
-        return end;
-    }
-
-    public Long getOpen() {
+    public long getOpen() {
         return open;
     }
 
-    public Long getClose() {
+    public long getClose() {
         return close;
     }
 
-    public Long getMin() {
-        return min;
+    public long getLow() {
+        return low;
     }
 
-    public Long getMax() {
-        return max;
+    public long getHigh() {
+        return high;
     }
 
 }
