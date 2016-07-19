@@ -1,5 +1,6 @@
-import { QUOTE_RESPONSE_SUCCESS, CLEAR_QUOTE } from '../actions/quotes';
-
+import { QUOTE_RESPONSE_SUCCESS, CLEAR_QUOTE } from 'actions/quotes';
+import formatPrice from 'utils/priceFormatter';
+import { getPair } from 'reducers/pairs';
 
 const quotes = (state = {}, action) => {
   switch (action.type) {
@@ -24,6 +25,19 @@ const quotes = (state = {}, action) => {
   }
 };
 
-export const getQuote = (state = {}, pairId) => (state[pairId]);
+export const getQuotes = (state = {}) => (state.quotes);
+
+export const getQuote = (state = {}, pairId) => (getQuotes(state)[pairId]);
+
+export const getFormattedQuote = (state = {}, pairId) => {
+  const quote = getQuotes(state)[pairId];
+  return {
+    quantity: quote.quantity,
+    direction: quote.direction,
+    formattedPrice: formatPrice(quote.price, getPair(state, pairId).decimals),
+    expires: quote.expires,
+    quoteId: quote.quoteId,
+  };
+};
 
 export default quotes;

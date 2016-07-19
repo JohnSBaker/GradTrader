@@ -9,10 +9,12 @@ const pairs = (state = [], action) => {
   }
 };
 
-export const getTilePairs = (state = []) => state.filter(
+export const getPairs = (state = {}) => (state.pairs);
+
+export const getTilePairs = (state = {}) => getPairs(state).filter(
   (pair, index) => (index < 9)
 );
 
-export const getPair = (state = [], pairId) => (state.filter(pair => pair.id === pairId)[0]);
+export const getPair = (state = {}, pairId) => (getPairs(state).find(pair => pair.id === pairId));
 
 export default pairs;

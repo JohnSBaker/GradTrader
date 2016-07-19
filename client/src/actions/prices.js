@@ -20,8 +20,8 @@ function calculatePriceDelta(state, pairId, bid, ask) {
   };
 
   if (state[pairId]) {
-    price.bidDelta = bid < state[pairId].bid ? 1 : -1;
-    price.askDelta = ask < state[pairId].ask ? 1 : -1;
+    price.bidDelta = bid < state[pairId].bid ? -1 : 1;
+    price.askDelta = ask < state[pairId].ask ? -1 : 1;
   }
 
   return price;

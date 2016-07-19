@@ -10,7 +10,7 @@ class Blotter extends Component {
     this.props.subscribeTrade();
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.props.unsubscribeTrade();
   }
 
@@ -102,7 +102,7 @@ class Blotter extends Component {
               />
               <FlexColumn
                 label="Rate"
-                dataKey="price"
+                dataKey="formattedPrice"
                 className="bold-cell"
                 flexGrow={1}
                 width={100}

@@ -8,20 +8,18 @@ const PriceTicker = ({ price, delta, stacked }) => {
   if (!price) {
     return <div className="loading">Loading</div>;
   }
-
-  const stringPrice = price.toString();
-  const main = stringPrice.slice(-3, -1);
-  const pip = stringPrice.slice(-1);
-  const start = stringPrice.slice(0, -3);
+  const main = price.slice(-3, -1);
+  const pip = price.slice(-1);
+  const start = price.slice(0, -3);
 
   let deltaIcon;
   // if delta is 1 then positive
   // if -1 then negative
   // else display nothing
   if (delta === 1) {
-    deltaIcon = <NegativeArrowIcon />;
-  } else if (delta === -1) {
     deltaIcon = <PositiveArrowIcon />;
+  } else if (delta === -1) {
+    deltaIcon = <NegativeArrowIcon />;
   } else {
     deltaIcon = <div className="delta"></div>;
   }
@@ -49,7 +47,7 @@ const PriceTicker = ({ price, delta, stacked }) => {
 };
 
 PriceTicker.propTypes = {
-  price: React.PropTypes.number,
+  price: React.PropTypes.string,
   delta: React.PropTypes.number,
   stacked: React.PropTypes.bool,
 };

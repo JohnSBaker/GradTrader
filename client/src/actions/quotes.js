@@ -31,7 +31,7 @@ export const clearQuote = (pairId) => ({
 
 export const requestQuote = (pairId, quantity, direction) => (dispatch, getState) => {
   const state = getState();
-  const indicativePrice = getQuotePrice(state.prices, pairId, direction);
+  const indicativePrice = getQuotePrice(state, pairId, direction);
   const { id, selectedPortfolioId } = getUser(state);
 
   api

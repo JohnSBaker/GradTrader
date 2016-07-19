@@ -1,5 +1,7 @@
-import { ADD_TRADES, SET_TRADES } from '../actions/trades';
-import { getPortfolioName, getUserName } from './user';
+import { ADD_TRADES, SET_TRADES } from 'actions/trades';
+import { getUser } from './user';
+import formatPrice from 'utils/priceFormatter';
+import { getPair } from 'reducers/pairs';
 
 const trades = (state = [], action) => {
   switch (action.type) {
@@ -15,17 +17,24 @@ const trades = (state = [], action) => {
   }
 };
 
-export const getSortedTrades = (state = {}, pairId) => {
+export const getTrades = (state = {}) => (state.trades);
+
+export const getBlotterTrades = (state = {}, pairId) => {
   let sortedTrades;
+
+  const tradesState = getTrades(state);
+
   if (pairId) {
-    sortedTrades = state.trades.filter(trade => trade.pairId === pairId);
+    sortedTrades = tradesState.filter(trade => trade.pairId === pairId);
   } else {
-    sortedTrades = state.trades.slice(0);
+    sortedTrades = tradesState.slice(0);
   }
+
   sortedTrades.sort((a, b) => (b.timestamp - a.timestamp));
   return sortedTrades.map((trade) => {
-    const portfolioName = getPortfolioName(state, trade.portfolioId);
-    const userName = getUserName(state);
+    const user = getUser(state);
+    const portfolioName = user.portfolios[trade.portfolioId];
+    const userName = user.name;
     return {
       portfolioName,
       userName,
@@ -33,7 +42,7 @@ export const getSortedTrades = (state = {}, pairId) => {
       pairId: trade.pairId,
       quantity: trade.quantity,
       direction: trade.direction,
-      price: trade.price,
+      formattedPrice: formatPrice(trade.price, getPair(state, trade.pairId).decimals),
     };
   });
 };

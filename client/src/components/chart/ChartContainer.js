@@ -5,7 +5,7 @@ import { getFormattedPrice } from '../../reducers/prices';
 
 const mapStateToProps = (state) => {
   const pair = getSelectedTilePair(state);
-  const currentPrice = getFormattedPrice(state.prices, pair, 'ask');
+  const currentPrice = getFormattedPrice(state, pair, 'ask');
   return {
     pair,
     currentPrice,

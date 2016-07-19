@@ -5,9 +5,9 @@ import { getPair } from 'reducers/pairs';
 import { getValidPairs } from 'actions/pairs';
 import { subscribePrice, unsubscribePrice } from 'actions/prices';
 
-const mapStateToProps = ({ quotes, pairs }, { pairId }) => ({
-  quote: getQuote(quotes, pairId),
-  pair: getPair(pairs, pairId),
+const mapStateToProps = (state, { pairId }) => ({
+  quote: getQuote(state, pairId),
+  pair: getPair(state, pairId),
 });
 
 export default connect(mapStateToProps, {

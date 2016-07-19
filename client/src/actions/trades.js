@@ -45,7 +45,7 @@ export const unsubscribeTrade = () => (_, getState) => {
 };
 
 export const confirmTrade = (pairId) => (dispatch, getState) => {
-  const quote = getQuote(getState().quotes, pairId);
+  const quote = getQuote(getState(), pairId);
 
   api
     .confirmTrade(quote.quoteId)

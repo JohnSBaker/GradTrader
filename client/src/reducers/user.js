@@ -16,8 +16,4 @@ const user = (state = {}, action) => {
 
 export const getUser = (state = {}) => (state.user);
 
-export const getUserName = (state = {}) => (getUser(state).name);
-
-export const getPortfolioName = (state = {}, id) => (getUser(state).portfolios[id]);
-
 export default user;

@@ -10,7 +10,7 @@ class Blotter extends React.Component {
     this.props.subscribeTrade();
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.props.unsubscribeTrade();
   }
 

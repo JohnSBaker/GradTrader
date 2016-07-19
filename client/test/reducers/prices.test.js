@@ -123,34 +123,38 @@ describe('Prices Reducer - ADD_PRICES', () => {
 describe('Prices Reducer - getFormattedPrice selector', () => {
   it('can get bid price using selector', () => {
     const state = {
-      GDPUSD: {
-        bid: 25.12345,
-        bidDelta: 1,
-        ask: 22.00001,
-        askDelta: -1,
+      prices: {
+        GDPUSD: {
+          bid: 2512345,
+          bidDelta: 1,
+          ask: 2200001,
+          askDelta: -1,
+        },
       },
     };
     const type = 'bid';
 
-    expect(getFormattedPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
-      price: 25.12345,
+    expect(getFormattedPrice(state, { id: 'GDPUSD', decimals: 5 }, type)).to.deep.equal({
+      price: '25.12345',
       delta: 1,
     });
   });
 
   it('can get ask price using selector', () => {
     const state = {
-      GDPUSD: {
-        bid: 25.12345,
-        bidDelta: 1,
-        ask: 22.00001,
-        askDelta: -1,
+      prices: {
+        GDPUSD: {
+          bid: 2512345,
+          bidDelta: 1,
+          ask: 2200001,
+          askDelta: -1,
+        },
       },
     };
     const type = 'ask';
 
-    expect(getFormattedPrice(state, { id: 'GDPUSD' }, type)).to.deep.equal({
-      price: 22.00001,
+    expect(getFormattedPrice(state, { id: 'GDPUSD', decimals: 5 }, type)).to.deep.equal({
+      price: '22.00001',
       delta: -1,
     });
   });

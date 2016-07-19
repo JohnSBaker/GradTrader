@@ -49,7 +49,7 @@ class Confirmation extends Component {
         <div className="quantity">{`${this.props.quote.quantity} ${baseCurrency}`}</div>
         <div>
           <span>@</span>
-          <span>{this.props.quote.price}</span>
+          <span>{this.props.quote.formattedPrice}</span>
         </div>
         <div className="spinner-countdown">
           <div className="spinner-container">

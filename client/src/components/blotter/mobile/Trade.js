@@ -13,7 +13,7 @@ const Trade = ({ trade, showCurrency, showBox }) => {
   const base = trade.pairId.substr(0, 3);
   const counter = trade.pairId.substr(3, 3);
   const time = moment(trade.timestamp).fromNow();
-  const rate = trade.price;
+  const rate = trade.formattedPrice;
   const className = classnames('trade', {
     'trade-box': showBox,
   });

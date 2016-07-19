@@ -1,5 +1,6 @@
 
-import { ADD_PRICES } from '../actions/prices';
+import { ADD_PRICES } from 'actions/prices';
+import formatPrice from 'utils/priceFormatter';
 
 /**
  * Transforms the new prices from an array to an object map
@@ -30,27 +31,29 @@ const prices = (state = {}, action) => {
   }
 };
 
+export const getPrices = (state = {}) => (state.prices);
+
 export const getQuotePrice = (state = {}, pairId, direction) => {
-  const subState = state[pairId];
-  return direction === 'BUY' ? subState.ask : subState.bid;
+  const price = getPrices(state)[pairId] || {};
+  return direction === 'BUY' ? price.ask : price.bid;
 };
 
 export const getFormattedPrice = (state = {}, pair = {}, type) => {
-  const subState = state[pair.id];
+  const price = getPrices(state)[pair.id];
 
-  if (!subState) {
-    return state;
+  if (!price) {
+    return {};
   }
 
   if (type === 'bid') {
     return {
-      price: subState.bid,
-      delta: subState.bidDelta,
+      price: formatPrice(price.bid, pair.decimals),
+      delta: price.bidDelta,
     };
   } else if (type === 'ask') {
     return {
-      price: subState.ask,
-      delta: subState.askDelta,
+      price: formatPrice(price.ask, pair.decimals),
+      delta: price.askDelta,
     };
   }
   return state;
