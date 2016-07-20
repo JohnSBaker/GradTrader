@@ -6,6 +6,6 @@ import Chart from '../../src/components/chart/Chart';
 describe('Chart', () => {
   it('should contain correct css class', () => {
     const wrapper = shallow(<Chart pair={{}} currentPrice={{}} />);
-    expect(wrapper.hasClass('chart')).to.be.true;
+    expect(wrapper.hasClass('chart-select-pair')).to.be.true;
   });
 });

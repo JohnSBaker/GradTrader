@@ -1,8 +1,134 @@
-@import "../../styles/modules/_all";
+@import "../../styles/modules/all";
 
 .chart {
   margin-top: 12px;
   flex: 1;
-  background-color: $primary-white;
   text-align: center;
+
+  &-loading,
+  &-select-pair {
+    color: $primary-white;
+    margin-top: 12px;
+    flex: 1;
+    text-align: center;
+  }
+
+  // D3FC default styles with some colour changes
+  // https://github.com/ScottLogic/d3fc/blob/master/src/fc.css
+
+  .axis,
+  .annotation {
+    text {
+      stroke: none;
+      fill: $primary-white;
+      font-size: $font-xs-1;
+      font-weight: $font-light;
+    }
+  }
+
+  .label {
+    stroke: none;
+    fill: $primary-white;
+    font-size: $font-m-4;
+    font-weight: $font-regular;
+  }
+
+  /* Transparent overlay for interactive tools */
+  .overlay {
+    stroke-width: 0;
+    fill-opacity: 0;
+  }
+
+  .background {
+    stroke: $secondary-dark-blue2;
+    fill: $primary-dark-blue;
+  }
+
+  .plot-area {
+    overflow: hidden;
+  }
+
+  .y-axis .label,
+  .x-axis .label,
+  .title .label {
+    text-anchor: middle;
+  }
+
+  .y-axis.right .label,
+  .x-axis.top .label,
+  .y-axis.left .label,
+  .title .label {
+    dominant-baseline: text-before-edge;
+  }
+
+  .x-axis.bottom .label {
+    dominant-baseline: middle;
+  }
+
+  .cartesian-chart {
+    overflow: visible;
+
+    /* see: https://github.com/ScottLogic/d3fc/issues/779 */
+    vertical-align: middle;
+  }
+
+  /* Axis */
+  .domain,
+  .tick line,
+  .tick path {
+    fill: none;
+    stroke-width: 1;
+    stroke: $secondary-dark-blue2;
+  }
+
+  .tick.orient-bottom text,
+  .tick.orient-top text {
+    text-anchor: middle;
+  }
+
+  .tick.orient-left text {
+    text-anchor: end;
+  }
+
+  .tick.orient-right text {
+    text-anchor: start;
+  }
+
+  /* Series Type Defaults */
+  .candlestick {
+    stroke: $primary-light-blue;
+  }
+  .candlestick.down {
+    fill: $primary-dark-blue;
+  }
+  .candlestick.up {
+    fill: $primary-light-blue;
+  }
+
+  .area {
+    stroke-opacity: 0;
+  }
+
+  .line {
+    fill-opacity: 0;
+  }
+
+  /* Annotations */
+  .annotation > line {
+    fill-opacity: 0;
+    stroke: $primary-white;
+    stroke-width: 1;
+    stroke-dasharray: 3, 3;
+  }
+
+  .annotation .right-handle text,
+  .annotation .top-handle text {
+    text-anchor: end;
+  }
+
+  .gridline {
+    stroke: $secondary-dark-blue2;
+    stroke-width: 1;
+  }
+
 }

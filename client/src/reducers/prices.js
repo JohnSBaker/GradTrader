@@ -38,6 +38,11 @@ export const getQuotePrice = (state = {}, pairId, direction) => {
   return direction === 'BUY' ? price.ask : price.bid;
 };
 
+export const getMidPrice = (state = {}, pairId) => {
+  const price = getPrices(state)[pairId] || {};
+  return (price.ask + price.bid) / 2;
+};
+
 export const getFormattedPrice = (state = {}, pair = {}, type) => {
   const price = getPrices(state)[pair.id];
 

@@ -16,8 +16,11 @@
   "dependencies": {
     "babel-polyfill": "^6.9.1",
     "classnames": "^2.2.5",
+    "d3": "^3.5.17",
+    "d3fc": "^10.1.0",
     "es6-promise": "^3.2.1",
     "moment": "^2.14.1",
+    "query-string": "^4.2.2",
     "react": "^15.2.0",
     "react-addons-shallow-compare": "^15.2.0",
     "react-dom": "^15.2.0",

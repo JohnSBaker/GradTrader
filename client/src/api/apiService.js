@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import querystring from 'query-string';
 
 const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
@@ -63,3 +64,16 @@ export const requestPreviousTrades = (userId) => (
   .then(checkStatus)
   .then(parseJSON)
 );
+
+export const requestTradeHistory = ({ pairId, resolution, from, to }) => {
+  const params = querystring.stringify({ resolution, from, to });
+  return fetch(`api/price/${pairId}?${params}`, {
+    method: 'get',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(checkStatus)
+  .then(parseJSON);
+};
