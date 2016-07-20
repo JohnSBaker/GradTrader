@@ -38,10 +38,11 @@ export const getBlotterTrades = (state = {}, pairId) => {
     return {
       portfolioName,
       userName,
-      tradeId: trade.tradeId,
+      direction: trade.direction,
       pairId: trade.pairId,
       quantity: trade.quantity,
-      direction: trade.direction,
+      timestamp: trade.timestamp,
+      tradeId: trade.tradeId,
       formattedPrice: formatPrice(trade.price, getPair(state, trade.pairId).decimals),
     };
   });
