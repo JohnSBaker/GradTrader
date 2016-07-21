@@ -20,6 +20,7 @@
     "d3fc": "^10.1.0",
     "es6-promise": "^3.2.1",
     "moment": "^2.14.1",
+    "normalize.css": "^4.0.0",
     "query-string": "^4.2.2",
     "react": "^15.2.0",
     "react-addons-shallow-compare": "^15.2.0",
