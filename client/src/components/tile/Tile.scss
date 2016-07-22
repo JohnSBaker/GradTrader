@@ -2,8 +2,7 @@
 
 .tile {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  margin-top: 12px;
-  background-color: $primary-dark-blue2;
   color: $primary-white;
 }

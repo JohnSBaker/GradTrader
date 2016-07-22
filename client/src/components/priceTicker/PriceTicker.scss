@@ -23,6 +23,11 @@
     line-height: 0.85;
   }
 
+  .start {
+    display: flex;
+    font-size: $font-xs-2;
+  }
+
   .pip-delta {
     display: flex;
     align-items: center;
@@ -39,11 +44,6 @@
       &.negative {
         color: $tertiary-red;
       }
-    }
-
-    .start {
-      display: flex;
-      font-size: $font-xs-2;
     }
 
     .pip {

@@ -1,25 +1,44 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PriceTicker from 'components/priceTicker/PriceTickerContainer';
 import 'components/tile/Pair.scss';
 import CurrencyPairDropdownIcon from 'svg/CurrencyPairDropdown.svg';
 
 class Pair extends Component {
 
-  amountInputRef(node) {
-    this.amountInput = node;
+  constructor(props) {
+    super(props);
+    this.state = {
+      quantity: 100000,
+    };
+  }
+
+  handleQuantityChange(event) {
+    this.setState({ quantity: event.target.value });
+  }
+
+  handleClick() {
+    const { pair, selectTile, isSelectable } = this.props;
+    if (isSelectable) {
+      selectTile(pair.id);
+    }
   }
 
   render() {
-    const { pair, buyRequest, sellRequest, selectTile, isSelected } = this.props;
+    const { pair, buyRequest, sellRequest, isSelected, isSelectable } = this.props;
+    const { quantity } = this.state;
     const baseCurrency = pair.id.substr(0, 3);
     const counterCurrency = pair.id.substr(3, 3);
 
-    const tileClass = `pair${isSelected ? ' selected' : ''}`;
+    const tileClass = classnames('pair', {
+      'pair-selected': isSelected,
+      'pair-selectable': isSelectable,
+    });
 
     return (
       <div
         className={tileClass}
-        onClick={() => selectTile(pair.id)}
+        onClick={() => this.handleClick()}
       >
         <div className="pair-dropdown">
           <span>{baseCurrency}</span>
@@ -27,21 +46,30 @@ class Pair extends Component {
           <span>{counterCurrency}</span>
           <CurrencyPairDropdownIcon />
         </div>
-        <div className="price-tickers">
+        <div className="pair-price-tickers">
           <PriceTicker pair={pair} type="bid" />
           <PriceTicker pair={pair} type="ask" />
         </div>
-        <div className="purchase-buttons">
+        <div className="pair-purchase-buttons">
           <button
-            onClick={() => sellRequest(pair.id, this.amountInput.value)}
-          >SELL</button>
+            className="pair-purchase-button"
+            onClick={() => sellRequest(pair.id, quantity)}
+          >SELL
+          </button>
           <button
-            onClick={() => buyRequest(pair.id, this.amountInput.value)}
-          >BUY</button>
+            className="pair-purchase-button"
+            onClick={() => buyRequest(pair.id, quantity)}
+          >BUY
+          </button>
         </div>
-        <div className="quantity-selector">
-          <input ref={(node) => this.amountInputRef(node)} defaultValue="100000" />
-          <label>{baseCurrency}</label>
+        <div className="pair-quantity">
+          <input
+            className="pair-quantity-value"
+            onChange={(event) => this.handleQuantityChange(event)}
+            value={quantity}
+          />
+          <label className="pair-quantity-label">
+            {baseCurrency}</label>
         </div>
       </div>
     );
@@ -51,9 +79,14 @@ class Pair extends Component {
 Pair.propTypes = {
   pair: React.PropTypes.object.isRequired,
   isSelected: React.PropTypes.bool.isRequired,
+  isSelectable: React.PropTypes.bool,
   selectTile: React.PropTypes.func.isRequired,
   buyRequest: React.PropTypes.func.isRequired,
   sellRequest: React.PropTypes.func.isRequired,
+};
+
+Pair.defaultProps = {
+  isSelectable: true,
 };
 
 export default Pair;

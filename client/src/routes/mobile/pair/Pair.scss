@@ -9,8 +9,17 @@
   font-weight: $font-regular;
   font-size: $font-xl-2;
 
+  &-tile {
+    display: flex;
+    flex-direction: column;
+    width: 228px;
+    height: 218px;
+    align-self: center;
+  }
+
   &-blotter {
     display: flex;
+    flex-direction: column;
     flex-grow: 1;
     margin-top: 30px;
   }

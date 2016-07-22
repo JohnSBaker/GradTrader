@@ -1,4 +1,3 @@
-
 import { ADD_PRICES } from 'actions/prices';
 import formatPrice from 'utils/priceFormatter';
 

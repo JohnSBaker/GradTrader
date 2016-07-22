@@ -10,8 +10,11 @@
   width: 708px;
 
   &-tile {
+    display: flex;
+    flex-direction: column;
     width: 228px;
     height: 218px;
-    display: flex;
+    margin-top: 12px;
+    background-color: $primary-dark-blue2;
   }
 }

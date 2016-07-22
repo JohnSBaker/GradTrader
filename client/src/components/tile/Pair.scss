@@ -1,5 +1,4 @@
 @import "../../styles/modules/_all";
-@import "QuantitySelector";
 
 .pair {
   display: flex;
@@ -7,12 +6,16 @@
   flex-grow: 1;
   padding: 15px 30px 21px;
 
-  &:hover,
-  &.selected {
+  &-selected,
+  &-selectable:hover {
     background-color: rgba($primary-light-blue, 0.15);
   }
 
-  .pair-dropdown {
+  &-selectable {
+    cursor: pointer;
+  }
+
+  &-dropdown {
     text-align: center;
     font-weight: $font-regular;
     font-size: $font-s-3;
@@ -23,29 +26,62 @@
     }
   }
 
-  .price-tickers {
+  &-price-tickers {
     margin: 15px 0;
     display: flex;
     flex-grow: 1;
     justify-content: space-between;
   }
 
-  .purchase-buttons {
+  &-purchase-buttons {
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
 
-    button {
-      border-radius: 3px;
-      border-width: 1px;
-      background-color: $secondary-dark-blue;
-      border-color: $primary-light-blue;
-      color: $primary-white;
-      font-weight: $font-regular;
-      font-size: $font-xs-1;
-      width: 76px;
-      height: 24px;
-    }
   }
 
+  &-purchase-button {
+    border-radius: 3px;
+    border-width: 1px;
+    padding: 0;
+    background-color: $secondary-dark-blue;
+    border-color: $primary-light-blue;
+    color: $primary-white;
+    font-weight: $font-regular;
+    font-size: $font-xs-1;
+    width: 76px;
+    height: 24px;
+  }
+
+  &-quantity {
+    display: flex;
+    height: 21px;
+
+    &-value,
+    &-label {
+      background-color: inherit;
+      border-radius: 3px;
+      font-weight: $font-light;
+      font-size: $font-xs-1;
+      border-width: 1px;
+      border-style: solid;
+      border-color: $primary-white;
+    }
+
+    &-value {
+      color: $primary-white;
+      padding: 1px 5px;
+      margin-right: -1px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      overflow: hidden;
+    }
+
+    &-label {
+      color: $primary-blue;
+      padding: 2px 4px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }

@@ -6,7 +6,10 @@ import 'routes/mobile/pair/Pair.scss';
 const Pair = ({ params }) => (
   <div className="routes-pair">
     <div className="routes-pair-tile">
-      <Tile pairId={params.pairId} />
+      <Tile
+        pairId={params.pairId}
+        isSelectable={false}
+      />
     </div>
     <div className="routes-pair-blotter">
       <Blotter pairId={params.pairId} showBox={false} />

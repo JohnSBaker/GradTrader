@@ -23,14 +23,17 @@ class Tile extends Component {
   }
 
   render() {
-    const { pair } = this.props;
+    const { pair, isSelectable } = this.props;
     if (!pair) {
       return <div className="tile-loading">Loading</div>;
     }
 
     const child = this.props.quote ?
       <Confirmation pair={this.props.pair} /> :
-      <Pair pair={this.props.pair} />;
+      <Pair
+        pair={this.props.pair}
+        isSelectable={isSelectable}
+      />;
 
     return (
       <div className="tile">
@@ -43,9 +46,14 @@ class Tile extends Component {
 Tile.propTypes = {
   quote: PropTypes.object,
   pair: PropTypes.object.isRequired,
+  isSelectable: React.PropTypes.bool,
+  getValidPairs: PropTypes.func.isRequired,
   subscribePrice: PropTypes.func.isRequired,
   unsubscribePrice: PropTypes.func.isRequired,
-  getValidPairs: React.PropTypes.func.isRequired,
+};
+
+Pair.defaultProps = {
+  isSelectable: true,
 };
 
 export default Tile;
