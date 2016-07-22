@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import PriceList from 'components/priceList/PriceListContainer';
-import './Pairs.scss';
+import 'routes/mobile/pairs/Pairs.scss';
 
 const Pairs = (props, { router }) => {
   const onPairSelected = (pair) => {

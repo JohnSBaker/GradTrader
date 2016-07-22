@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import Pair from './Pair';
-import { buyRequest, sellRequest } from '../../actions/quotes';
-import { selectTile } from '../../actions/selectedTile';
+import Pair from 'components/tile/Pair';
+import { buyRequest, sellRequest } from 'actions/quotes';
+import { selectTile } from 'actions/selectedTile';
 
 const mapStateToProps = (state, { pair }) => ({
   pair,

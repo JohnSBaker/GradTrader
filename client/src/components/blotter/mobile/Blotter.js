@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoSizer, VirtualScroll } from 'react-virtualized';
-import Trade from './Trade';
-import './Blotter.scss';
+import Trade from 'components/blotter/mobile/Trade';
+import 'components/blotter/mobile/Blotter.scss';
 
 class Blotter extends React.Component {
 

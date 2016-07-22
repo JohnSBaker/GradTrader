@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Tile from 'components/tile/TileContainer';
 import Blotter from 'components/blotter/mobile/BlotterContainer';
-import './Pair.scss';
+import 'routes/mobile/pair/Pair.scss';
 
 const Pair = ({ params }) => (
   <div className="routes-pair">

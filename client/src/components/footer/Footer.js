@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import classnames from 'classnames';
-import './Footer.scss';
+import 'components/footer/Footer.scss';
 import MyTradesIcon from 'svg/MyTrades.svg';
 
 const buttons = [

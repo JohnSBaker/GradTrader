@@ -1,4 +1,4 @@
-import { LOGIN } from '../actions/user';
+import { LOGIN } from 'actions/user';
 
 const user = (state = {}, action) => {
   switch (action.type) {

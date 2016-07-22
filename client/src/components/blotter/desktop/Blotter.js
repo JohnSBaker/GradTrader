@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { AutoSizer, FlexTable, FlexColumn } from 'react-virtualized';
-import './Blotter.scss';
+import 'components/blotter/desktop/Blotter.scss';
 
 class Blotter extends Component {
 

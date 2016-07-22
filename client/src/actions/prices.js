@@ -1,4 +1,4 @@
-import * as subscription from '../api/subscriptionService';
+import * as subscription from 'api/subscriptionService';
 
 export const SUBSCRIBE_PRICE_REQUEST = 'SUBSCRIBE_PRICE_REQUEST';
 export const ADD_PRICES = 'ADD_PRICES';

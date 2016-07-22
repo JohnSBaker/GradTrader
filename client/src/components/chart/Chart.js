@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import './Chart.scss';
+import 'components/chart/Chart.scss';
 import moment from 'moment';
-import { update, destroy } from './d3Chart';
+import { update, destroy } from 'components/chart/d3Chart';
 
 class Chart extends Component {
 

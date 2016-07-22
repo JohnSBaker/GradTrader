@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Confirmation.scss';
+import 'components/tile/Confirmation.scss';
 
 class Confirmation extends Component {
 

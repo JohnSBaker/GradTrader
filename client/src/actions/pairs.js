@@ -1,4 +1,4 @@
-import * as api from '../api/apiService';
+import * as api from 'api/apiService';
 
 export const GET_VALID_PAIRS_SUCCESS = 'GET_VALID_PAIRS_SUCCESS';
 export const GET_VALID_PAIRS_FAILURE = 'GET_VALID_PAIRS_FAILURE';

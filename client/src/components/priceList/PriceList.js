@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { AutoSizer, FlexTable, FlexColumn } from 'react-virtualized';
 import PriceTicker from 'components/priceTicker/PriceTickerContainer';
-import './PriceList.scss';
+import 'components/priceList/PriceList.scss';
 
 class PriceList extends Component {
   componentDidMount() {

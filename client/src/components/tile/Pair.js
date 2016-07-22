@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PriceTicker from '../priceTicker/PriceTickerContainer';
-import './Pair.scss';
-import CurrencyPairDropdownIcon from '../../svg/CurrencyPairDropdown.svg';
+import PriceTicker from 'components/priceTicker/PriceTickerContainer';
+import 'components/tile/Pair.scss';
+import CurrencyPairDropdownIcon from 'svg/CurrencyPairDropdown.svg';
 
 class Pair extends Component {
 

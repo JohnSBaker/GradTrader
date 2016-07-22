@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Footer from 'components/footer/Footer';
-import './App.scss';
+import 'components/app/mobile/App.scss';
 
 const App = ({ children, location }) => (
   <div id="app">

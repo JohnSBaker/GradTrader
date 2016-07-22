@@ -1,6 +1,6 @@
-import * as api from '../api/apiService';
-import { getQuotePrice } from '../reducers/prices';
-import { getUser } from '../reducers/user';
+import * as api from 'api/apiService';
+import { getQuotePrice } from 'reducers/prices';
+import { getUser } from 'reducers/user';
 
 export const QUOTE_RESPONSE_SUCCESS = 'QUOTE_RESPONSE_SUCCESS';
 export const QUOTE_RESPONSE_FAILURE = 'QUOTE_RESPONSE_FAILURE';

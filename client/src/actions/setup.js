@@ -1,6 +1,6 @@
-import { fakeLogin } from './user';
-import { setupPriceFeed } from './prices';
-import { setupTradeFeed } from './trades';
+import { fakeLogin } from 'actions/user';
+import { setupPriceFeed } from 'actions/prices';
+import { setupTradeFeed } from 'actions/trades';
 
 export const setup = () => (dispatch) => {
   dispatch(fakeLogin());

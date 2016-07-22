@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
-import './PriceTicker.scss';
-import NegativeArrowIcon from '../../svg/NegativeArrow.svg';
-import PositiveArrowIcon from '../../svg/PositiveArrow.svg';
+import 'components/priceTicker/PriceTicker.scss';
+import NegativeArrowIcon from 'svg/NegativeArrow.svg';
+import PositiveArrowIcon from 'svg/PositiveArrow.svg';
 
 const PriceTicker = ({ price, delta, stacked }) => {
   if (!price) {

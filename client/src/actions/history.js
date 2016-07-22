@@ -1,4 +1,4 @@
-import * as api from '../api/apiService';
+import * as api from 'api/apiService';
 
 export const ADD_TRADE_HISTORY = 'ADD_TRADE_HISTORY';
 export const REQUEST_TRADE_HISTORY_FAILURE = 'REQUEST_TRADE_HISTORY_FAILURE';

@@ -1,4 +1,4 @@
-import { GET_VALID_PAIRS_SUCCESS } from '../actions/pairs';
+import { GET_VALID_PAIRS_SUCCESS } from 'actions/pairs';
 
 const pairs = (state = [], action) => {
   switch (action.type) {

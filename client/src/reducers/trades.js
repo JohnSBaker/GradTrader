@@ -1,5 +1,5 @@
 import { ADD_TRADES, SET_TRADES } from 'actions/trades';
-import { getUser } from './user';
+import { getUser } from 'reducers/user';
 import formatPrice from 'utils/priceFormatter';
 import { getPair } from 'reducers/pairs';
 

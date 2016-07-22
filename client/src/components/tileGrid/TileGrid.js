@@ -1,6 +1,6 @@
 import React from 'react';
-import Tile from '../tile/TileContainer';
-import './TileGrid.scss';
+import Tile from 'components/tile/TileContainer';
+import 'components/tileGrid/TileGrid.scss';
 
 class TileGrid extends React.Component {
 

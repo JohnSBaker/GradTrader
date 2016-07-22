@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Blotter from './Blotter';
+import Blotter from 'components/blotter/mobile/Blotter';
 import { getBlotterTrades } from 'reducers/trades';
 import { requestPreviousTrades, subscribeTrade, unsubscribeTrade } from 'actions/trades';
 

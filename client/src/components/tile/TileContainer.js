@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Tile from './Tile';
+import Tile from 'components/tile/Tile';
 import { getQuote } from 'reducers/quotes';
 import { getPair } from 'reducers/pairs';
 import { getValidPairs } from 'actions/pairs';

@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import pairs from './pairs';
-import trades from './trades';
-import prices from './prices';
-import quotes from './quotes';
-import selectedTile from './selectedTile';
-import user from './user';
-import history from './history';
+import pairs from 'reducers/pairs';
+import trades from 'reducers/trades';
+import prices from 'reducers/prices';
+import quotes from 'reducers/quotes';
+import selectedTile from 'reducers/selectedTile';
+import user from 'reducers/user';
+import history from 'reducers/history';
 
 const rootReducer = combineReducers({
   routing: routerReducer,

@@ -1,4 +1,4 @@
-import { SELECT_TILE } from '../actions/selectedTile';
+import { SELECT_TILE } from 'actions/selectedTile';
 
 const selectedTile = (state = null, action) => {
   switch (action.type) {

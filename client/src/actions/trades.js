@@ -1,8 +1,8 @@
-import * as api from '../api/apiService';
-import * as subscription from '../api/subscriptionService';
-import { getQuote } from '../reducers/quotes';
-import { clearQuote } from './quotes';
-import { getUser } from '../reducers/user';
+import * as api from 'api/apiService';
+import * as subscription from 'api/subscriptionService';
+import { getQuote } from 'reducers/quotes';
+import { clearQuote } from 'actions/quotes';
+import { getUser } from 'reducers/user';
 
 export const ADD_TRADES = 'ADD_TRADES';
 export const SET_TRADES = 'SET_TRADES';

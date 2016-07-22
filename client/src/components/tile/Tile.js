@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Confirmation from './ConfirmationContainer';
-import Pair from './PairContainer';
-import './Tile.scss';
+import Confirmation from 'components/tile/ConfirmationContainer';
+import Pair from 'components/tile/PairContainer';
+import 'components/tile/Tile.scss';
 
 class Tile extends Component {
   componentDidMount() {

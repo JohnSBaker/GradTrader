@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import classnames from 'classnames';
-import './Trade.scss';
+import 'components/blotter/mobile/Trade.scss';
 
 const directions = {
   BUY: 'Bought',

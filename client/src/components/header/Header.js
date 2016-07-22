@@ -1,8 +1,8 @@
 import React from 'react';
-import './Header.scss';
-import AccountDropdownIcon from '../../svg/AccountDropdown.svg';
-import SettingsIcon from '../../svg/Settings.svg';
-import LogoIcon from '../../svg/Logo.svg';
+import 'components/header/Header.scss';
+import AccountDropdownIcon from 'svg/AccountDropdown.svg';
+import SettingsIcon from 'svg/Settings.svg';
+import LogoIcon from 'svg/Logo.svg';
 
 const Header = () => (
   <div className="header">

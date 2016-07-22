@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Chart from './Chart';
+import Chart from 'components/chart/Chart';
 import { getSelectedTilePair } from 'reducers/selectedTile';
 import { getMidPrice } from 'reducers/prices';
 import { requestTradeHistory } from 'actions/history';
