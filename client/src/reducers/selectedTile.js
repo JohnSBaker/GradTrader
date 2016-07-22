@@ -9,10 +9,12 @@ const selectedTile = (state = null, action) => {
   }
 };
 
-export const getSelectedTilePair = (state = {}) => (
+export const getSelectedTile = (state = {}) => state.selectedTile;
+
+export const getSelectedTilePairOrDefault = (state = {}) => (
   state.pairs.find(
     (pair) => (pair.id === state.selectedTile)
-  ) || {}
+  ) || state.pairs[0] || {}
 );
 
 export default selectedTile;

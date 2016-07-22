@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import Chart from 'components/chart/Chart';
-import { getSelectedTilePair } from 'reducers/selectedTile';
+import { getSelectedTilePairOrDefault } from 'reducers/selectedTile';
 import { getMidPrice } from 'reducers/prices';
 import { requestTradeHistory } from 'actions/history';
 import { getTradeHistory } from 'reducers/history';
 
 const mapStateToProps = (state) => {
-  const pair = getSelectedTilePair(state);
+  const pair = getSelectedTilePairOrDefault(state);
   return {
     pair,
     currentPrice: getMidPrice(state, pair.id),
