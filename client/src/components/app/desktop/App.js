@@ -3,7 +3,6 @@ import TileGrid from 'components/tileGrid/TileGridContainer';
 import Header from 'components/header/Header';
 import Chart from 'components/chart/ChartContainer';
 import Blotter from 'components/blotter/desktop/BlotterContainer';
-import DevTools from 'components/devTools/DevTools';
 import 'components/app/desktop/App.scss';
 
 const App = () => (
@@ -14,7 +13,6 @@ const App = () => (
       <Chart />
     </div>
     <Blotter />
-    {DevTools && <DevTools />}
   </div>
 );
 
