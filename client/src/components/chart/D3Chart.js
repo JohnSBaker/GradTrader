@@ -105,7 +105,7 @@ class D3Chart {
       .xTicks(0);
 
     const multi = fc.series.multi()
-      .series([candlestick, closeLine, gridLine])
+      .series([gridLine, candlestick, closeLine])
       .mapping((series) => (series === candlestick ? data.priceHistory : [data.currentPrice]));
 
     chartMain.plotArea(multi);
