@@ -7,6 +7,7 @@ import quotes from 'reducers/quotes';
 import selectedTile from 'reducers/selectedTile';
 import user from 'reducers/user';
 import history from 'reducers/history';
+import chart from 'reducers/chart';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   selectedTile,
   user,
   history,
+  chart,
 });
 
 export default rootReducer;

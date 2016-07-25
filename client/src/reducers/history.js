@@ -1,11 +1,14 @@
-import { ADD_TRADE_HISTORY } from 'actions/history';
+import { ADD_PRICE_HISTORY } from 'actions/history';
 
 const history = (state = {}, action) => {
   switch (action.type) {
-    case ADD_TRADE_HISTORY:
+    case ADD_PRICE_HISTORY:
       return {
         ...state,
-        [action.pairId]: [...action.history],
+        [action.pairId]: {
+          ...state[action.pairId],
+          [action.resolution]: [...action.history],
+        },
       };
     default:
       return state;
@@ -14,18 +17,17 @@ const history = (state = {}, action) => {
 
 const getHistory = (state = {}) => (state.history);
 
-export const getTradeHistory = (state = {}, pairId) => {
+export const getPriceHistory = (state = {}, pairId, resolution) => {
   const historyForPair = getHistory(state)[pairId];
 
   if (historyForPair) {
-    return historyForPair.map(({ timestamp, open, high, low, close }) => ({
-      date: new Date(timestamp),
-      open,
-      high,
-      low,
-      close,
-    }));
+    const historyForResolution = historyForPair[resolution];
+
+    if (historyForResolution) {
+      return historyForResolution;
+    }
   }
+
   return null;
 };
 

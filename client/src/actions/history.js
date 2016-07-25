@@ -1,22 +1,30 @@
 import * as api from 'api/apiService';
 
-export const ADD_TRADE_HISTORY = 'ADD_TRADE_HISTORY';
-export const REQUEST_TRADE_HISTORY_FAILURE = 'REQUEST_TRADE_HISTORY_FAILURE';
+export const ADD_PRICE_HISTORY = 'ADD_PRICE_HISTORY';
+export const REQUEST_PRICE_HISTORY_FAILURE = 'REQUEST_PRICE_HISTORY_FAILURE';
 
-const addTradeHistory = (history, pairId) => ({
-  type: ADD_TRADE_HISTORY,
+const addPriceHistory = (history, resolution, pairId) => ({
+  type: ADD_PRICE_HISTORY,
   history,
+  resolution,
   pairId,
 });
 
-const requestTradeHistoryFailure = (error) => ({
-  type: REQUEST_TRADE_HISTORY_FAILURE,
+const requestPriceHistoryFailure = (error) => ({
+  type: REQUEST_PRICE_HISTORY_FAILURE,
   message: error.message || 'An unknown error occurred',
 });
 
-export const requestTradeHistory = (pairId, resolution, from, to) => (dispatch) => {
+export const requestPriceHistory = (pairId, resolution, from, to) => (dispatch) => {
   api
-    .requestTradeHistory({ pairId, resolution, from, to })
-    .then((history) => dispatch(addTradeHistory(history, pairId)))
-    .catch((error) => dispatch(requestTradeHistoryFailure(error)));
+    .requestPriceHistory({ pairId, resolution, from, to })
+    .then((history) => {
+      dispatch(addPriceHistory(history.map((price) => ({
+        ...price,
+        date: new Date(price.timestamp),
+      })), resolution, pairId));
+    })
+    .catch((error) => {
+      dispatch(requestPriceHistoryFailure(error));
+    });
 };

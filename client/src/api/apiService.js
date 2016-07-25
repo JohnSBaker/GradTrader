@@ -65,7 +65,7 @@ export const requestPreviousTrades = (userId) => (
   .then(parseJSON)
 );
 
-export const requestTradeHistory = ({ pairId, resolution, from, to }) => {
+export const requestPriceHistory = ({ pairId, resolution, from, to }) => {
   const params = querystring.stringify({ resolution, from, to });
   return fetch(`api/price/${pairId}?${params}`, {
     method: 'get',
