@@ -17,6 +17,7 @@ server:
   connector:
     type: http
     port: 80
+clientBroadcastMillis: 500
 validPairs:
   GBPUSD:
     id: GBPUSD
@@ -51,16 +52,37 @@ validPairs:
   NZDGBP:
     id: NZDGBP
     decimals: 5
-testPrices:
-  GBPUSD: 134000
-  GBPEUR: 121000
-  GBPCAD: 174000
-  GBPAUD: 180000
-  USDCHF:  97000
-  EURUSD: 111000
-  GBPCHF: 131000
-  AUDUSD:  75000
-  EURAUD: 149000
-  NZDAUD:  95000
-  NZDGBP:  53000
-clientBroadcastMillis: 500
+priceConfigurations:
+  GBPUSD:
+   basePrice: 134000
+   broadcastFrequencyMillis: 250
+  GBPEUR:
+   basePrice: 121000
+   broadcastFrequencyMillis: 250
+  GBPCAD:
+   basePrice: 174000
+   broadcastFrequencyMillis: 5000
+  GBPAUD:
+   basePrice: 180000
+   broadcastFrequencyMillis: 5000
+  USDCHF:
+   basePrice:  97000
+   broadcastFrequencyMillis: 1000
+  EURUSD:
+   basePrice: 111000
+   broadcastFrequencyMillis: 250
+  GBPCHF:
+   basePrice: 131000
+   broadcastFrequencyMillis: 1000
+  AUDUSD:
+   basePrice:  75000
+   broadcastFrequencyMillis: 1000
+  EURAUD:
+   basePrice: 149000
+   broadcastFrequencyMillis: 1000
+  NZDAUD:
+   basePrice:   95000
+   broadcastFrequencyMillis: 60000
+  NZDGBP:
+   basePrice:   53000
+   broadcastFrequencyMillis: 30000

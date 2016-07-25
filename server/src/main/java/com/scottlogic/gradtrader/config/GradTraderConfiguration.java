@@ -1,15 +1,13 @@
 package com.scottlogic.gradtrader.config;
 
-import io.dropwizard.Configuration;
-
-import java.util.Map;
-
-import javax.validation.constraints.Min;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.scottlogic.gradtrader.pair.Pair;
+import com.scottlogic.gradtrader.price.source.PriceConfiguration;
+import io.dropwizard.Configuration;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Min;
+import java.util.Map;
 
 public class GradTraderConfiguration extends Configuration {
 
@@ -17,7 +15,7 @@ public class GradTraderConfiguration extends Configuration {
     private Map<String, Pair> validPairs;
 
     @NotEmpty
-    private Map<String, Long> testPrices;
+    private Map<String, PriceConfiguration> priceConfigurations;
 
     @Min(1L)
     private long clientBroadcastMillis;
@@ -28,13 +26,12 @@ public class GradTraderConfiguration extends Configuration {
     }
 
     @JsonProperty
-    public Map<String, Long> getTestPrices() {
-        return testPrices;
+    public Map<String, PriceConfiguration> getPriceConfigurations() {
+        return priceConfigurations;
     }
 
     @JsonProperty
     public long getClientBroadcastMillis() {
         return clientBroadcastMillis;
     }
-
 }

@@ -1,12 +1,5 @@
 package com.scottlogic.gradtrader.price.feed;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Random;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.scottlogic.gradtrader.ScheduledExecutor;
@@ -14,6 +7,12 @@ import com.scottlogic.gradtrader.SubscriptionException;
 import com.scottlogic.gradtrader.config.GradTraderConfiguration;
 import com.scottlogic.gradtrader.price.PriceException;
 import com.scottlogic.gradtrader.price.source.PriceSourceFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
 
 @Singleton
 public class PriceFeedFactoryImpl implements PriceFeedFactory {
@@ -27,27 +26,25 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
     @Inject
     private ScheduledExecutor scheduledExecutor;
 
-    private Map<String, PriceFeed> priceFeeds = new LinkedHashMap<>();
+    private final Map<String, PriceFeed> priceFeeds = new LinkedHashMap<>();
 
-    private Random random = new Random(System.currentTimeMillis());
+    private final Random random = new Random(System.currentTimeMillis());
 
-    private PriceFeed createPriceFeed(String pairId) {
+    private PriceFeed createPriceFeed(final String pairId) {
         if (!configuration.getValidPairs().containsKey(pairId)) {
             return null;
         }
         try {
-            PriceFeed feed = new PriceFeed(pairId, priceSourceFactory, scheduledExecutor);
+            final PriceFeed feed = new PriceFeed(pairId, priceSourceFactory, scheduledExecutor);
             priceFeeds.put(pairId, feed);
-            int feedRateRange = (int) configuration.getClientBroadcastMillis();
-            int feedRate = feedRateRange / 2 + random.nextInt(feedRateRange);
-            feed.start(feedRate);
+            feed.start();
             return feed;
-        } catch (PriceException pe) {
+        } catch (final PriceException pe) {
             return null;
         }
     }
 
-    public PriceFeed getPriceFeed(String pairId) throws SubscriptionException {
+    public PriceFeed getPriceFeed(final String pairId) throws SubscriptionException {
         PriceFeed feed = priceFeeds.get(pairId);
         if (feed == null) {
             feed = createPriceFeed(pairId);
@@ -57,5 +54,4 @@ public class PriceFeedFactoryImpl implements PriceFeedFactory {
         }
         return feed;
     }
-
 }

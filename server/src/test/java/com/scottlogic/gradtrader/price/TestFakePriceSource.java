@@ -1,63 +1,80 @@
 package com.scottlogic.gradtrader.price;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.scottlogic.gradtrader.price.source.FakePriceSource;
+import org.junit.Before;
+import org.junit.Test;
 
-//@Ignore
+import java.io.IOException;
+
+import static org.junit.Assert.assertEquals;
+
 public class TestFakePriceSource {
 
     private final String pair = "gbpusd";
-
+    private int frequenceMillis = 1;
+    private long basePrice = 100;
     private FakePriceSource target;
-
-    private Long time = 1467021300000L;
+    private Long time;
 
     @Before
     public void setUp() {
-        target = new FakePriceSource(pair, 150000L, 20000L, 2000L, 2000L);
+        time = 0L;
+        final FakePriceSource.Period[] periods = new FakePriceSource.Period[]{
+                new FakePriceSource.Period(100, 500, FakePriceSource.Function.NONE)
+        };
+
+        final FakePriceSource.Period[] spreadPeriods = new FakePriceSource.Period[]{
+                new FakePriceSource.Period(10, 100, FakePriceSource.Function.NONE)
+        };
+        target = new FakePriceSource(pair, frequenceMillis, basePrice, periods, spreadPeriods);
     }
 
     @Test
-    public void testCall() throws JsonParseException, JsonMappingException, IOException {
-        assertPriceAfterTick(150000L, 152000L, 0L); // 0s
-        assertPriceAfterTick(149800L, 151800L, 1000L);
-        assertPriceAfterTick(149600L, 151600L, 1000L);
-        assertPriceAfterTick(149400L, 151400L, 1000L);
-        assertPriceAfterTick(149200L, 151200L, 1000L);
-        assertPriceAfterTick(149000L, 151000L, 1000L); // 5s
-        assertPriceAfterTick(148800L, 150800L, 1000L);
-        assertPriceAfterTick(148600L, 150600L, 1000L);
-        assertPriceAfterTick(148400L, 150400L, 1000L);
-        assertPriceAfterTick(148200L, 150200L, 1000L);
-        assertPriceAfterTick(148000L, 150000L, 1000L); // 10s
-        assertPriceAfterTick(148200L, 150200L, 1000L);
-        assertPriceAfterTick(148400L, 150400L, 1000L);
-        assertPriceAfterTick(148600L, 150600L, 1000L);
-        assertPriceAfterTick(148800L, 150800L, 1000L);
-        assertPriceAfterTick(149000L, 151000L, 1000L); // 15s
-        assertPriceAfterTick(149200L, 151200L, 1000L);
-        assertPriceAfterTick(149400L, 151400L, 1000L);
-        assertPriceAfterTick(149600L, 151600L, 1000L);
-        assertPriceAfterTick(149800L, 151800L, 1000L);
-        assertPriceAfterTick(150000L, 152000L, 1000L); // 20s
-        assertPriceAfterTick(149998L, 151998L, 10L); // 20.010s
-        assertPriceAfterTick(149980L, 151980L, 90L); // 20.100s
-        assertPriceAfterTick(149800L, 151800L, 900L); // 21s
+    public void testCallInitial() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 100, 0);
     }
 
-    private void assertPriceAfterTick(long expectBid, long expectAsk, long tickMillis) throws JsonParseException,
-            JsonMappingException, IOException {
+    @Test
+    public void testCallOnePeriod() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 100, 100);
+    }
+
+    @Test
+    public void testCallOneSpreadPeriod() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(350, 350, 50);
+    }
+
+    @Test
+    public void testCallOneTick() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 110, 1);
+    }
+
+    @Test
+    public void testCallTwoTicks() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 120, 2);
+    }
+
+    @Test
+    public void testCallThreeTicks() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 130, 3);
+    }
+
+    @Test
+    public void testCallFourTicks() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 140, 4);
+    }
+
+    @Test
+    public void testCallFiveTicks() throws JsonParseException, JsonMappingException, IOException, PriceException {
+        assertPriceAfterTick(100, 150, 5);
+    }
+
+    private void assertPriceAfterTick(final long expectBid, final long expectAsk, final int tickMillis) throws JsonParseException,
+            JsonMappingException, IOException, PriceException {
         time = time + tickMillis;
-        Price actualPrice = target.getPrice(time);
-        assertEquals(pair, actualPrice.getPairId());
+        final Price actualPrice = target.getPrice(time);
         assertEquals(expectBid, actualPrice.getBid());
         assertEquals(expectAsk, actualPrice.getAsk());
     }

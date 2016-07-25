@@ -1,27 +1,28 @@
 package com.scottlogic.gradtrader.websockets;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
-
-import org.atmosphere.config.service.BroadcasterService;
-import org.atmosphere.util.SimpleBroadcaster;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.scottlogic.gradtrader.SubscriptionException;
 import com.scottlogic.gradtrader.price.Price;
 import com.scottlogic.gradtrader.price.PriceListener;
+import com.scottlogic.gradtrader.price.feed.PriceFeed;
 import com.scottlogic.gradtrader.price.feed.PriceFeedFactory;
+import com.scottlogic.gradtrader.price.source.PriceSource;
 import com.scottlogic.gradtrader.trade.Trade;
 import com.scottlogic.gradtrader.trade.TradeListener;
 import com.scottlogic.gradtrader.trade.TradeManager;
+import org.atmosphere.config.service.BroadcasterService;
+import org.atmosphere.util.SimpleBroadcaster;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 @BroadcasterService
 public class ClientBroadcaster extends SimpleBroadcaster implements PriceListener, TradeListener, Callable<String> {
@@ -40,37 +41,41 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
     @Inject
     private TradeManager tradeManager;
 
-    public void start(long frequencyMillis) {
+    public void start(final long frequencyMillis) {
         scheduleFixedBroadcast(this, 0, frequencyMillis, TimeUnit.MILLISECONDS);
         logger.debug("Broadcast prices to client every {}ms", frequencyMillis);
     }
 
-    public void subscribePrices(String pairId) throws SubscriptionException {
+    public void subscribePrices(final String pairId) throws SubscriptionException {
         if (subscribedPairs.contains(pairId)) {
             throw new SubscriptionException("Already subscribed");
         }
-        priceFeedFactory.getPriceFeed(pairId).addListener(this);
+        final PriceFeed priceFeed = priceFeedFactory.getPriceFeed(pairId);
+        final PriceSource priceSource = priceFeed.getPriceSource();
         subscribedPairs.add(pairId);
+        notify(priceSource.getPrice());
+        priceFeed.addListener(this);
     }
 
-    public void unsubscribePrices(String pairId) throws SubscriptionException {
+    public void unsubscribePrices(final String pairId) throws SubscriptionException {
         if (!subscribedPairs.contains(pairId)) {
             throw new SubscriptionException("Not subscribed");
         }
-        priceFeedFactory.getPriceFeed(pairId).removeListener(this);
+        final PriceFeed priceFeed = priceFeedFactory.getPriceFeed(pairId);
+        priceFeed.removeListener(this);
         subscribedPairs.remove(pairId);
         prices.remove(pairId);
     }
 
-    public void subscribeTrades(String userId) throws SubscriptionException {
+    public void subscribeTrades(final String userId) throws SubscriptionException {
         if (subscribedTrades.contains(userId)) {
             throw new SubscriptionException("Already subscribed");
         }
-        tradeManager.addListener(userId, this);
         subscribedTrades.add(userId);
+        tradeManager.addListener(userId, this);
     }
 
-    public void unsubscribeTrades(String userId) throws SubscriptionException {
+    public void unsubscribeTrades(final String userId) throws SubscriptionException {
         if (!subscribedTrades.contains(userId)) {
             throw new SubscriptionException("Not subscribed");
         }
@@ -79,18 +84,18 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
     }
 
     @Override
-    public void notify(Price price) {
+    public void notify(final Price price) {
         if (subscribedPairs.contains(price.getPairId())) {
             prices.put(price.getPairId(), price);
         }
     }
 
     @Override
-    public void notify(Trade trade) {
+    public void notify(final Trade trade) {
         logger.debug("ClientBroadcaster notified of a trade");
         try {
             broadcast(mapper.writeValueAsString(new WebSocketMessage("trades", trade)));
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             e.printStackTrace();
         }
     }
@@ -101,12 +106,11 @@ public class ClientBroadcaster extends SimpleBroadcaster implements PriceListene
             if (prices.isEmpty()) {
                 return null;
             }
-            String message = mapper.writeValueAsString(new WebSocketMessage("prices", prices.values()));
+            final String message = mapper.writeValueAsString(new WebSocketMessage("prices", prices.values()));
             return message;
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             e.printStackTrace();
             return "{error:\" Client Price broadcast error\"}";
         }
     }
-
 }
