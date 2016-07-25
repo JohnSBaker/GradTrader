@@ -7,15 +7,19 @@ import LogoIcon from 'svg/Logo.svg';
 const Header = () => (
   <div className="header">
     <span className="header-title-container">
-      <LogoIcon />
-      <span className="header-title">GradTrader</span>
+      <span className="header-logo">
+        <LogoIcon />
+      </span>
+      <span className="header-title">
+        GradTrader
+      </span>
     </span>
-    <span className="account">
-      <span className="account-settings">
+    <span className="header-account">
+      <span className="header-account-settings">
         <SettingsIcon />
       </span>
-      <span className="username">SLogic</span>
-      <span className="dropdown">
+      <span className="header-account-username">SLogic</span>
+      <span className="header-account-dropdown">
         <AccountDropdownIcon />
       </span>
     </span>

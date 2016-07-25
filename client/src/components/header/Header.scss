@@ -3,46 +3,47 @@
 .header {
   display: flex;
   justify-content: space-between;
-}
-
-.header-title-container {
-  display: flex;
   margin: 6px 0;
-  color: $primary-white;
-  font-weight: $font-regular;
-  font-size: $font-m-4;
 
-  .logo,
-  .header-title {
-    padding-right: 4px;
-    align-items: flex-end;
+  &-logo {
+    color: $primary-white;
+    font-weight: $font-regular;
+    font-size: $font-m-4;
+    padding-right: 8px;
+  }
+
+  &-title-container {
+    position: relative;
+  }
+
+  &-title {
+    position: absolute;
+    bottom: 6px;
+    color: $primary-white;
+    font-weight: $font-regular;
+    font-size: $font-m-4;
+  }
+
+  &-account {
+    color: $primary-blue;
     display: flex;
-  }
+    font-size: $font-s-2;
+    font-weight: $font-light;
 
-  .header-title {
-    padding-left: 5px;
-  }
-}
+    &-settings,
+    &-username,
+    &-dropdown {
+      align-items: center;
+      display: flex;
+    }
 
-.account {
-  color: $primary-blue;
-  display: flex;
-  font-size: $font-s-2;
-  font-weight: $font-light;
+    &-username {
+      margin-left: 15px;
+      margin-right: 6px;
+    }
 
-  .account-settings,
-  .username,
-  .dropdown {
-    align-items: center;
-    display: flex;
-  }
-
-  .username {
-    margin-left: 15px;
-    margin-right: 6px;
-  }
-
-  .dropdown {
-    padding: 0 6px;
+    &-dropdown {
+      padding: 0 6px;
+    }
   }
 }
