@@ -13,19 +13,31 @@ class Pair extends Component {
     };
   }
 
+  onBuyClick(event, pairId, quantity) {
+    const { buyRequest } = this.props;
+    buyRequest(pairId, quantity);
+    event.preventDefault();
+  }
+
+  onSellClick(event, pairId, quantity) {
+    const { sellRequest } = this.props;
+    sellRequest(pairId, quantity);
+    event.preventDefault();
+  }
+
   handleQuantityChange(event) {
     this.setState({ quantity: event.target.value });
   }
 
-  handleClick() {
+  handleClick(event) {
     const { pair, selectTile, isSelectable } = this.props;
-    if (isSelectable) {
+    if (isSelectable && !event.defaultPrevented) {
       selectTile(pair.id);
     }
   }
 
   render() {
-    const { pair, buyRequest, sellRequest, isSelected, isSelectable } = this.props;
+    const { pair, isSelected, isSelectable } = this.props;
     const { quantity } = this.state;
     const baseCurrency = pair.id.substr(0, 3);
     const counterCurrency = pair.id.substr(3, 3);
@@ -38,7 +50,7 @@ class Pair extends Component {
     return (
       <div
         className={tileClass}
-        onClick={() => this.handleClick()}
+        onClick={(event) => this.handleClick(event)}
       >
         <div className="pair-dropdown">
           <span>{baseCurrency}</span>
@@ -53,12 +65,12 @@ class Pair extends Component {
         <div className="pair-purchase-buttons">
           <button
             className="pair-purchase-button"
-            onClick={() => sellRequest(pair.id, quantity)}
+            onClick={(event) => this.onSellClick(event, pair.id, quantity)}
           >SELL
           </button>
           <button
             className="pair-purchase-button"
-            onClick={() => buyRequest(pair.id, quantity)}
+            onClick={(event) => this.onBuyClick(event, pair.id, quantity)}
           >BUY
           </button>
         </div>
