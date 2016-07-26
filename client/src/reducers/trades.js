@@ -1,7 +1,8 @@
-import { ADD_TRADES, SET_TRADES } from 'actions/trades';
+import { ADD_TRADES, SET_TRADES, SORT_BLOTTER } from 'actions/trades';
 import { getUser } from 'reducers/user';
 import formatPrice from 'utils/priceFormatter';
 import { getPair } from 'reducers/pairs';
+import { SortDirection } from 'react-virtualized';
 
 const trades = (state = [], action) => {
   switch (action.type) {
@@ -17,7 +18,19 @@ const trades = (state = [], action) => {
   }
 };
 
+export const blotterSort = (state = {}, action) => {
+  switch (action.type) {
+    case SORT_BLOTTER:
+      return action.blotterSort;
+    default:
+      return state;
+  }
+};
+
 export const getTrades = (state = {}) => (state.trades);
+
+export const getBlotterSort = (state = {}) =>
+  (state.blotterSort || {sortBy: 'tradeId', sortDirection: SortDirection.ASC});
 
 export const getBlotterTrades = (state = {}, pairId) => {
   let sortedTrades;

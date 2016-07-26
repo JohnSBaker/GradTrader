@@ -7,7 +7,6 @@ class Blotter extends Component {
 
   constructor (props, context) {
       super(props, context)
-      this._headerRenderer = this._headerRenderer.bind(this)
       this._sort = this._sort.bind(this)
     }
 
@@ -28,38 +27,13 @@ class Blotter extends Component {
     );
   }
 
-  _sortBy = 'tradeId';
-  _sortDirection = SortDirection.ASC;
-
   _sort ({ sortBy, sortDirection }) {
-    //TODO: emit action to update store, instead of this component having state?
-    this._sortBy = sortBy;
-    this._sortDirection = sortDirection;
-    console.log("Sort by %s (%s)", this._sortBy, this._sortDirection);
-  }
-
-  _headerRenderer ({
-    columnData,
-    dataKey,
-    disableSort,
-    label,
-    sortBy,
-    sortDirection
-  }) {
-    return (
-      <div>
-        {label}
-        {this._sortBy === dataKey &&
-          <SortIndicator sortDirection={sortDirection} />
-        }
-      </div>
-    )
+    this.props.sortBlotter({sortBy: sortBy, sortDirection: sortDirection});
   }
 
   render() {
-    const sortDirection = this._sortDirection;
-    const sortBy = this._sortBy;
-    const { trades } = this.props;
+    const { trades, blotterSort } = this.props;
+    const { sortBy, sortDirection } = blotterSort;
     const high = (sortDirection === SortDirection.ASC ? 1 : -1)
     const sortedTrades = trades
         .sort((a, b) => (a[sortBy]>b[sortBy]?high:(a[sortBy]<b[sortBy]?-high:0)));
@@ -98,8 +72,8 @@ class Blotter extends Component {
                 ({ index }) => (sortedTrades[index])
               }
               sort={this._sort}
-              sortBy={this._sortBy}
-              sortDirection={this._sortDirection}
+              sortBy={sortBy}
+              sortDirection={sortDirection}
             >
               <FlexColumn
                 label="Trade ID"
@@ -129,8 +103,6 @@ class Blotter extends Component {
                 flexGrow={1}
                 width={100}
                 cellRenderer={renderCurrency}
-                disableSort={false}
-                headerRenderer={this._headerRenderer}
               />
               <FlexColumn
                 label="Direction"
@@ -175,9 +147,11 @@ class Blotter extends Component {
 
 Blotter.propTypes = {
   trades: React.PropTypes.array.isRequired,
+  blotterSort: React.PropTypes.object.isRequired,
   requestPreviousTrades: React.PropTypes.func.isRequired,
   subscribeTrade: React.PropTypes.func.isRequired,
   unsubscribeTrade: React.PropTypes.func.isRequired,
+  sortBlotter: React.PropTypes.func.isRequired,
 };
 
 export default Blotter;

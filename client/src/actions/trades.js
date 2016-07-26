@@ -7,7 +7,7 @@ import { getUser } from 'reducers/user';
 export const ADD_TRADES = 'ADD_TRADES';
 export const SET_TRADES = 'SET_TRADES';
 export const REQUEST_TRADES_FAILURE = 'REQUEST_TRADES_FAILURE';
-
+export const SORT_BLOTTER = 'SORT_BLOTTER';
 
 export const addTrades = (trades) => ({
   type: ADD_TRADES,
@@ -24,6 +24,10 @@ const requestTradesFailure = (error) => ({
   message: error.message || 'An unknown error occurred',
 });
 
+export const sortBlotter = (blotterSort) => ({
+  type: SORT_BLOTTER,
+  blotterSort,
+});
 
 export const requestPreviousTrades = () => (dispatch, getState) => {
   const state = getState();
