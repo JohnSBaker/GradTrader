@@ -2,20 +2,20 @@
 
 .price-ticker {
   display: flex;
+  flex-direction: row;
   flex-grow: 1;
   text-align: center;
 
-  div {
-    display: flex;
+  &-loading {
+    font-size: $font-s-3;
+    text-align: center;
   }
 
   &-stacked {
-    div {
-      flex-direction: column;
-    }
+    flex-direction: column;
   }
 
-  .main {
+  &-main {
     display: flex;
     font-weight: $font-light;
     font-size: $font-xl-2;
@@ -23,37 +23,35 @@
     line-height: 0.85;
   }
 
-  .start {
+  &-start {
     display: flex;
     font-size: $font-xs-2;
+    &-stacked {
+      align-self: center;
+      padding-right: $font-xs-1;
+    }
   }
 
-  .pip-delta {
+  &-main-pip-delta {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &-pip-delta {
     display: flex;
     align-items: center;
     flex-direction: column-reverse;
 
-    .delta {
-      height: $font-xs-3;
-      font-size: $font-xs-3;
+  }
 
-      &.positive {
-        color: $tertiary-green;
-      }
+  &-delta {
+    height: $font-xs-3;
+    font-size: $font-xs-3;
+  }
 
-      &.negative {
-        color: $tertiary-red;
-      }
-    }
-
-    .pip {
-      display: flex;
-      font-size: $font-xs-1;
-    }
+  &-pip {
+    display: flex;
+    font-size: $font-xs-1;
   }
 }
 
-.loading {
-  font-size: $font-s-3;
-  text-align: center;
-}
