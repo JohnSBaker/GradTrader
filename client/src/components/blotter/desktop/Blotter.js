@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { AutoSizer, FlexTable, FlexColumn } from 'react-virtualized';
+import { AutoSizer, FlexTable, FlexColumn, SortIndicator, SortDirection } from 'react-virtualized';
 import 'components/blotter/desktop/Blotter.scss';
 
 class Blotter extends Component {
+
+  constructor (props, context) {
+      super(props, context)
+      this._headerRenderer = this._headerRenderer.bind(this)
+      this._sort = this._sort.bind(this)
+    }
 
   componentDidMount() {
     this.props.requestPreviousTrades();
@@ -22,8 +28,42 @@ class Blotter extends Component {
     );
   }
 
+  _sortBy = 'tradeId';
+  _sortDirection = SortDirection.ASC;
+
+  _sort ({ sortBy, sortDirection }) {
+    //TODO: emit action to update store, instead of this component having state?
+    this._sortBy = sortBy;
+    this._sortDirection = sortDirection;
+    console.log("Sort by %s (%s)", this._sortBy, this._sortDirection);
+  }
+
+  _headerRenderer ({
+    columnData,
+    dataKey,
+    disableSort,
+    label,
+    sortBy,
+    sortDirection
+  }) {
+    return (
+      <div>
+        {label}
+        {this._sortBy === dataKey &&
+          <SortIndicator sortDirection={sortDirection} />
+        }
+      </div>
+    )
+  }
+
   render() {
+    const sortDirection = this._sortDirection;
+    const sortBy = this._sortBy;
     const { trades } = this.props;
+    const high = (sortDirection === SortDirection.ASC ? 1 : -1)
+    const sortedTrades = trades
+        .sort((a, b) => (a[sortBy]>b[sortBy]?high:(a[sortBy]<b[sortBy]?-high:0)));
+
     const disableHeader = !trades.length;
 
     const renderCurrency = ({ cellData }) => `${cellData.substr(0, 3)} | ${cellData.substr(3, 3)}`;
@@ -55,8 +95,11 @@ class Blotter extends Component {
                 }
               }
               rowGetter={
-                ({ index }) => (trades[index])
+                ({ index }) => (sortedTrades[index])
               }
+              sort={this._sort}
+              sortBy={this._sortBy}
+              sortDirection={this._sortDirection}
             >
               <FlexColumn
                 label="Trade ID"
@@ -86,6 +129,8 @@ class Blotter extends Component {
                 flexGrow={1}
                 width={100}
                 cellRenderer={renderCurrency}
+                disableSort={false}
+                headerRenderer={this._headerRenderer}
               />
               <FlexColumn
                 label="Direction"
